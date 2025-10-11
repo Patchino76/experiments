@@ -76,12 +76,17 @@ def plot_segmentation(df, segments_dict, matrix_profile_col='Ore'):
         
         # Highlight segments with different colors
         for seg_idx, (start, end) in enumerate(segments):
+            if end <= start:
+                continue
+
             color = colors[seg_idx % len(colors)]
-            ax.plot(df.index[start:end], df[col_name].iloc[start:end], 
+            slice_end = min(end, len(df))
+            ax.plot(df.index[start:slice_end], df[col_name].iloc[start:slice_end], 
                    color=color, linewidth=2, label=f'motif {seg_idx + 1}' if idx == 0 else '')
             
             # Add shaded regions
-            ax.axvspan(df.index[start], df.index[end], alpha=0.1, color=color)
+            span_end_idx = df.index[slice_end - 1]
+            ax.axvspan(df.index[start], span_end_idx, alpha=0.1, color=color)
         
         ax.set_ylabel(col_name, fontsize=10)
         ax.grid(True, alpha=0.3)
