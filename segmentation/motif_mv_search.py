@@ -13,7 +13,7 @@ def load_data(filepath):
     return df
 
 # Discover multivariate motifs using STUMPY
-def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motifs=50, radius=3.0):
+def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motifs=50, radius=3.0, max_instances_per_motif=10):
     """
     Discover repeating motifs/patterns in multivariate time series using STUMPY
     
@@ -23,10 +23,12 @@ def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motif
     - window_size: length of the pattern to search (e.g., 240 minutes)
     - max_motifs: maximum number of motif groups to find
     - radius: distance threshold for motif matching (lower = more strict)
+    - max_instances_per_motif: maximum number of windows to include per motif group
     
     Returns:
-    - motif_segments: list of dictionaries with motif information
-    - mps: multivariate matrix profile
+    - motif_info_list: list of dictionaries with motif information
+    - segment_tuples: list of (start, end, motif_id) tuples
+    - mps: multivariate matrix profile summary
     """
     # Prepare multivariate time series
     print(f"  Preparing multivariate time series with {len(feature_columns)} features...")
@@ -42,42 +44,82 @@ def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motif
     
     print(f"  Computing multivariate matrix profile (shape: {T.shape})...")
     # Compute multivariate matrix profile
-    mps = stumpy.mstump(T, m=window_size)
-    
-    # Extract the distance profile (first column contains distances)
-    mp_distances = mps[:, 0]
+    matrix_profile, profile_indices = stumpy.mstump(T, m=window_size)
+    mp_distances = np.sqrt(np.mean(matrix_profile**2, axis=0))
+    mps = np.column_stack((mp_distances, profile_indices[0]))
     
     print(f"  Discovering multivariate motifs...")
-    motif_segments = []
+    motif_info_list = []
+    segment_tuples = []
     used_indices = set()
-    
-    # Find top motifs
+    n_windows = matrix_profile.shape[1]
+
     for motif_idx in range(max_motifs):
-        # Find the best motif pair that hasn't been used
-        motif_pair = None
-        min_dist = float('inf')
-        
-        for i in range(len(mp_distances)):
+        seed_idx = None
+        seed_distance = float('inf')
+
+        for i in range(n_windows):
             if i in used_indices:
                 continue
-            if mp_distances[i] < min_dist:
-                nn_idx = int(mps[i, 1])  # Nearest neighbor index
-                # Check if neighbor is far enough away and not used
-                if abs(i - nn_idx) >= window_size and nn_idx not in used_indices:
-                    min_dist = mp_distances[i]
-                    motif_pair = (i, nn_idx)
-        
-        if motif_pair is None or min_dist > radius:
+            dist = mp_distances[i]
+            if np.isnan(dist) or np.isinf(dist):
+                continue
+            if dist < seed_distance:
+                seed_distance = dist
+                seed_idx = i
+
+        if seed_idx is None:
             break
-        
-        # Store motif instances
+        if radius is not None and seed_distance > radius:
+            break
+
+        distance_components = []
+        for dim in range(T.shape[0]):
+            query = T[dim, seed_idx:seed_idx + window_size]
+            if len(query) < window_size:
+                continue
+            distance_profile = stumpy.mass(query, T[dim])
+            distance_components.append(distance_profile[:n_windows])
+
+        if not distance_components:
+            continue
+
+        distance_components = np.array(distance_components)
+        aggregated_profile = np.sqrt(np.mean(distance_components**2, axis=0))
+
+        sorted_candidates = np.argsort(aggregated_profile)
+        motif_indices = []
+        for idx in sorted_candidates:
+            if len(motif_indices) >= max_instances_per_motif:
+                break
+            if idx >= n_windows:
+                continue
+            dist = aggregated_profile[idx]
+            if np.isnan(dist) or np.isinf(dist):
+                continue
+            if radius is not None and dist > radius:
+                break
+            if idx in used_indices:
+                continue
+            if any(abs(idx - existing_idx) < window_size for existing_idx in motif_indices):
+                continue
+            motif_indices.append(idx)
+
+        if seed_idx not in motif_indices:
+            motif_indices.insert(0, seed_idx)
+
+        motif_indices.sort()
+        motif_distances = [aggregated_profile[idx] for idx in motif_indices]
+        motif_distance_value = (float(np.mean([dist for idx, dist in zip(motif_indices, motif_distances) if idx != seed_idx]))
+                                if len(motif_indices) > 1 else float(seed_distance))
+
         motif_info = {
             'motif_id': motif_idx + 1,
             'instances': [],
-            'distance': min_dist
+            'distance': motif_distance_value
         }
-        
-        for idx in motif_pair:
+
+        for idx in motif_indices:
             instance = {
                 'start': idx,
                 'end': idx + window_size,
@@ -85,23 +127,22 @@ def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motif
                         for col in feature_columns}
             }
             motif_info['instances'].append(instance)
-            motif_segments.append((idx, idx + window_size, motif_idx + 1))
-            
+            segment_tuples.append((idx, idx + window_size, motif_idx + 1))
+
             used_indices.add(idx)
-            # Mark nearby indices as used to avoid overlap
             for offset in range(-window_size, window_size):
-                if 0 <= idx + offset < len(df):
-                    used_indices.add(idx + offset)
-        
-        motif_segments.append(motif_info)
-    
-    # Separate motif_info from segments
-    motif_info_list = [m for m in motif_segments if isinstance(m, dict)]
-    segment_tuples = [m for m in motif_segments if isinstance(m, tuple)]
-    
+                neighbor = idx + offset
+                if 0 <= neighbor < n_windows:
+                    used_indices.add(neighbor)
+
+        motif_info_list.append(motif_info)
+
     print(f"  Found {len(motif_info_list)} motif groups with {len(segment_tuples)} total instances")
-    print(f"  Average distance: {np.mean([m['distance'] for m in motif_info_list]):.3f}")
-    
+    if motif_info_list:
+        print(f"  Average distance: {np.mean([m['distance'] for m in motif_info_list]):.3f}")
+    else:
+        print("  Average distance: N/A")
+
     return motif_info_list, segment_tuples, mps
 
 # Plot individual motifs with all instances
@@ -277,24 +318,21 @@ def extract_motif_segments(df, segment_tuples):
 # Main execution
 if __name__ == "__main__":
     # Configuration
-    SEGMENTATION_FEATURES = ['WaterZumpf', 'DensityHC']
+    SEGMENTATION_FEATURES = ['WaterZumpf', 'DensityHC', 'PulpHC', 'PressureHC']
     WINDOW_SIZE = 240  # Fixed window length in minutes
-    MAX_MOTIFS = 50    # Maximum number of motif groups to discover
-    RADIUS = 3.0       # Distance threshold (lower = more strict matching)
+    MAX_MOTIFS = 10    # Maximum number of motif groups to discover
+    MAX_INSTANCES_PER_MOTIF = 8  # Maximum windows per motif group
+    RADIUS = 6    # Distance threshold (lower = more strict matching)
     TOP_MOTIFS_TO_PLOT = 10  # Number of top motifs to plot individually
     
     # Load data
     df = load_data('data_initial.csv')
+    df = df.iloc[:20000,:]
     
     print(f"Loaded data: {len(df)} rows")
     print(f"Columns: {df.columns.tolist()}")
     
-    # Verify segmentation features exist
-    missing_features = [f for f in SEGMENTATION_FEATURES if f not in df.columns]
-    if missing_features:
-        print(f"Warning: Missing features {missing_features}")
-        SEGMENTATION_FEATURES = [f for f in SEGMENTATION_FEATURES if f in df.columns]
-    
+   
     print(f"\n{'='*60}")
     print(f"MULTIVARIATE MOTIF DISCOVERY")
     print(f"{'='*60}")
@@ -310,7 +348,8 @@ if __name__ == "__main__":
         df, SEGMENTATION_FEATURES, 
         window_size=WINDOW_SIZE,
         max_motifs=MAX_MOTIFS,
-        radius=RADIUS
+        radius=RADIUS,
+        max_instances_per_motif=MAX_INSTANCES_PER_MOTIF
     )
     
     # Show statistics
@@ -356,9 +395,9 @@ if __name__ == "__main__":
     print(f"SEGMENT SUMMARY")
     print(f"{'='*60}")
     segment_summary = stacked_df.groupby('motif_id').agg({
-        'segment_id': 'count',
+        'segment_id': pd.Series.nunique,
         'segment_length': 'first'
-    }).rename(columns={'segment_id': 'num_instances'})
+    }).rename(columns={'segment_id': 'num_windows'})
     print(segment_summary)
     
     print(f"\n{'='*60}")
