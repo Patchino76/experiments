@@ -327,7 +327,7 @@ if __name__ == "__main__":
     
     # Load data
     df = load_data('data_initial.csv')
-    df = df.iloc[:20000,:]
+    # df = df.iloc[:50000,:]
     
     print(f"Loaded data: {len(df)} rows")
     print(f"Columns: {df.columns.tolist()}")
