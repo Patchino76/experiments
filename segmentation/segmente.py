@@ -13,14 +13,14 @@ def load_data(filepath):
     return df
 
 # Segment time series using STUMPY
-def segment_time_series(data, column_name, window_size=10, n_regimes=5):
+def segment_time_series(data, column_name, window_size=50, n_regimes=100):
     """
     Segment time series using STUMPY's FLUSS algorithm
     
     Parameters:
     - data: pandas Series or numpy array
     - column_name: name of the column being processed
-    - window_size: subsequence length for matrix profile
+    - window_size: subsequence length for matrix profile (larger = captures longer patterns)
     - n_regimes: number of regimes/segments to identify
     
     Returns:
@@ -32,9 +32,11 @@ def segment_time_series(data, column_name, window_size=10, n_regimes=5):
     ts = (ts - np.mean(ts)) / np.std(ts)
     
     # Compute matrix profile
+    print(f"  Computing matrix profile for {column_name}...")
     mp = stumpy.stump(ts, m=window_size)
     
     # Compute the corrected arc curve (CAC) for regime identification
+    print(f"  Computing FLUSS segmentation...")
     cac, regime_locations = stumpy.fluss(mp[:, 1], L=window_size, 
                                          n_regimes=n_regimes, 
                                          excl_factor=1)
@@ -48,6 +50,11 @@ def segment_time_series(data, column_name, window_size=10, n_regimes=5):
             segments.append((start, loc))
             start = loc
     segments.append((start, len(ts)))
+    
+    # Calculate segment statistics
+    segment_lengths = [end - start for start, end in segments]
+    avg_length = np.mean(segment_lengths)
+    print(f"  Created {len(segments)} segments, avg length: {avg_length:.1f} rows (~{avg_length:.1f} minutes)")
     
     return segments, cac
 
@@ -76,17 +83,22 @@ def plot_segmentation(df, segments_dict, matrix_profile_col='Ore'):
         
         # Highlight segments with different colors
         for seg_idx, (start, end) in enumerate(segments):
-            if end <= start:
+            if start >= len(df):
+                continue
+
+            slice_start = max(start, 0)
+            slice_end = min(end, len(df))
+            if slice_end <= slice_start:
                 continue
 
             color = colors[seg_idx % len(colors)]
-            slice_end = min(end, len(df))
-            ax.plot(df.index[start:slice_end], df[col_name].iloc[start:slice_end], 
+            ax.plot(df.index[slice_start:slice_end], df[col_name].iloc[slice_start:slice_end], 
                    color=color, linewidth=2, label=f'motif {seg_idx + 1}' if idx == 0 else '')
             
             # Add shaded regions
-            span_end_idx = df.index[slice_end - 1]
-            ax.axvspan(df.index[start], span_end_idx, alpha=0.1, color=color)
+            span_start = df.index[slice_start]
+            span_end = df.index[slice_end - 1]
+            ax.axvspan(span_start, span_end, alpha=0.1, color=color)
         
         ax.set_ylabel(col_name, fontsize=10)
         ax.grid(True, alpha=0.3)
@@ -182,10 +194,14 @@ if __name__ == "__main__":
     
     # Segment each sensor
     segments_dict = {}
-    window_size = 10
-    n_regimes = 4
+    
+    # Fine-tuned parameters for ~240 minute segments
+    # For 115K rows, we want ~480 segments (115000/240)
+    window_size = 50  # Larger window to capture longer patterns
+    n_regimes = 480   # Target number of segments for ~240 min each
     
     print(f"\nSegmenting time series with window_size={window_size}, n_regimes={n_regimes}")
+    print(f"Target segment length: ~240 minutes ({len(df)}/{n_regimes} = {len(df)//n_regimes} rows per segment)")
     
     for col in sensor_columns:
         print(f"Processing {col}...")
@@ -193,7 +209,7 @@ if __name__ == "__main__":
                                            window_size=window_size, 
                                            n_regimes=n_regimes)
         segments_dict[col] = segments
-        print(f"  Found {len(segments)} segments: {segments}")
+        print(f"  Found {len(segments)} segments")
     
     # Plot results
     print("\nPlotting segmentation results...")
