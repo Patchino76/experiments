@@ -580,7 +580,8 @@ def create_motif_summary(motif_info_list, correlation_rules, output_path='output
 # Main execution
 if __name__ == "__main__":
     # Configuration
-    SEGMENTATION_FEATURES = ['WaterZumpf', 'DensityHC', 'PulpHC', 'PressureHC']
+    # SEGMENTATION_FEATURES = ['Ore', 'WaterZumpf', 'PulpHC', 'PressureHC']
+    SEGMENTATION_FEATURES = ['Ore', 'WaterMill',  'WaterZumpf', 'MotorAmp']
     WINDOW_SIZE = 60  # Fixed window length in minutes
     MAX_MOTIFS = 20    # Maximum number of motif groups to discover
     MAX_INSTANCES_PER_MOTIF = 1000  # Maximum windows per motif group
@@ -590,7 +591,7 @@ if __name__ == "__main__":
     # Cross-correlation filtering configuration
     APPLY_CORRELATION_FILTER = True  # Set to False to disable filtering
     CORRELATION_RULES = {
-        ('WaterZumpf', 'DensityHC'): 'neg',
+        # ('WaterZumpf', 'DensityHC'): 'neg',
         ('WaterZumpf', 'PulpHC'): 'pos',
         ('WaterZumpf', 'PressureHC'): 'pos',
         # ('Ore', 'DensityHC'): 'pos',  # Uncomment if 'Ore' is in your features
@@ -603,7 +604,7 @@ if __name__ == "__main__":
     
     # Load data
     df = load_data('data_initial.csv')
-    df = df.iloc[:150000,:]
+    df = df.iloc[:60000,:]
     
     print(f"Loaded data: {len(df)} rows")
     print(f"Columns: {df.columns.tolist()}")

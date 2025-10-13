@@ -24,12 +24,12 @@ def main() -> None:
     
     # Base features (available at inference time)
     base_feature_columns = [
-        # "Ore",
-        # "WaterMill",
+        "Ore",
+        "WaterMill",
         "WaterZumpf",
-        # "MotorAmp",
-        "PulpHC",
-        "PressureHC",
+        "MotorAmp",
+        # "PulpHC",
+        # "PressureHC",
     ]
     
     # Check if discontinuity markers exist (pre-computed by motif_mv_search.py)
