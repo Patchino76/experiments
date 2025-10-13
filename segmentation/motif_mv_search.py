@@ -319,10 +319,10 @@ def extract_motif_segments(df, segment_tuples):
 if __name__ == "__main__":
     # Configuration
     SEGMENTATION_FEATURES = ['WaterZumpf', 'DensityHC', 'PulpHC', 'PressureHC']
-    WINDOW_SIZE = 240  # Fixed window length in minutes
-    MAX_MOTIFS = 10    # Maximum number of motif groups to discover
-    MAX_INSTANCES_PER_MOTIF = 8  # Maximum windows per motif group
-    RADIUS = 6    # Distance threshold (lower = more strict matching)
+    WINDOW_SIZE = 180  # Fixed window length in minutes
+    MAX_MOTIFS = 20    # Maximum number of motif groups to discover
+    MAX_INSTANCES_PER_MOTIF = 1000  # Maximum windows per motif group
+    RADIUS = 8    # Distance threshold (lower = more strict matching)
     TOP_MOTIFS_TO_PLOT = 10  # Number of top motifs to plot individually
     
     # Load data
