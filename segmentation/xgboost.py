@@ -15,7 +15,7 @@ from xgboost import XGBRegressor
 
 
 def main() -> None:
-    data_path = Path(__file__).with_name("segmented_motifs.csv")
+    data_path = script_dir / "output" / "segmented_motifs.csv"
     df = pd.read_csv(data_path, parse_dates=["TimeStamp"])
     df = df.sort_values("TimeStamp").reset_index(drop=True)
     timestamps = df["TimeStamp"].copy()

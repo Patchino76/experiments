@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from scipy.stats import pearsonr
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
 # Load data
@@ -313,7 +314,7 @@ def plot_individual_motifs(df, motif_info_list, feature_columns, top_n=10):
         axes[-1].set_xlabel('Time (minutes within motif)', fontsize=11)
         
         plt.tight_layout()
-        plt.savefig(f'motif_{motif_id}_instances.png', dpi=150, bbox_inches='tight')
+        plt.savefig(f'output/motif_{motif_id}_instances.png', dpi=150, bbox_inches='tight')
         plt.close()
 
 # Plot overview of all motifs
@@ -390,7 +391,7 @@ def plot_motif_overview(df, segment_tuples, feature_columns):
     
     plt.suptitle('Multivariate Motif Discovery', fontsize=16, fontweight='bold', x=0.12, y=0.98)
     plt.tight_layout()
-    plt.savefig('motif_overview.png', dpi=150, bbox_inches='tight')
+    plt.savefig('output/motif_overview.png', dpi=150, bbox_inches='tight')
     plt.show()
 
 # Extract motif segments
@@ -418,28 +419,100 @@ def extract_motif_segments(df, segment_tuples):
     # Extract each window
     for seg_idx, ((start, end), motif_ids) in enumerate(sorted(windows.items())):
         segment_data = df.iloc[start:end].copy()
+        
+        # Get timestamp boundaries
+        segment_start_ts = df['TimeStamp'].iloc[start]
+        segment_end_ts = df['TimeStamp'].iloc[end - 1]
+        
+        # Add metadata columns
         segment_data['segment_id'] = seg_idx + 1
         segment_data['motif_id'] = motif_ids[0]  # Primary motif ID
-        segment_data['segment_start'] = start
-        segment_data['segment_end'] = end
-        segment_data['segment_length'] = end - start
-        segment_data['time_in_segment'] = range(len(segment_data))
+        segment_data['segment_start'] = segment_start_ts
+        segment_data['segment_end'] = segment_end_ts
         
         all_segments.append(segment_data)
     
     # Stack all segments
     stacked_df = pd.concat(all_segments, ignore_index=True)
     
+    # Reorder columns: TimeStamp first, then segment_id, motif_id, segment_start, segment_end, then all other columns
+    cols = stacked_df.columns.tolist()
+    
+    # Define the desired order for metadata columns
+    priority_cols = ['TimeStamp', 'segment_id', 'motif_id', 'segment_start', 'segment_end']
+    
+    # Get remaining columns (excluding priority columns)
+    other_cols = [col for col in cols if col not in priority_cols]
+    
+    # Reorder: priority columns first, then the rest
+    new_col_order = priority_cols + other_cols
+    stacked_df = stacked_df[new_col_order]
+    
     return stacked_df
+
+# Create motif summary with correlation analysis
+def create_motif_summary(motif_info_list, correlation_rules, output_path='output/motif_summary.csv'):
+    """
+    Create a summary CSV file with motif statistics and average correlations.
+    
+    Parameters:
+    - motif_info_list: list of motif dictionaries
+    - correlation_rules: dict of correlation rules to analyze
+    - output_path: path to save the summary CSV
+    
+    Returns:
+    - summary_df: DataFrame with motif summary statistics
+    """
+    summary_data = []
+    
+    for motif in motif_info_list:
+        motif_id = motif['motif_id']
+        num_instances = len(motif['instances'])
+        distance = motif['distance']
+        
+        # Compute average correlations across all instances
+        correlation_values = {}
+        for (feat1, feat2) in correlation_rules.keys():
+            corrs = []
+            for instance in motif['instances']:
+                if feat1 in instance['data'] and feat2 in instance['data']:
+                    data1 = instance['data'][feat1]
+                    data2 = instance['data'][feat2]
+                    if len(data1) > 1 and len(data2) > 1:
+                        corr, _ = pearsonr(data1, data2)
+                        corrs.append(corr)
+            
+            if corrs:
+                correlation_values[f'{feat1}_vs_{feat2}'] = np.mean(corrs)
+            else:
+                correlation_values[f'{feat1}_vs_{feat2}'] = np.nan
+        
+        # Build summary row
+        summary_row = {
+            'motif_id': motif_id,
+            'num_instances': num_instances,
+            'avg_distance': distance,
+            **correlation_values
+        }
+        summary_data.append(summary_row)
+    
+    # Create DataFrame
+    summary_df = pd.DataFrame(summary_data)
+    
+    # Save to CSV
+    summary_df.to_csv(output_path, index=False)
+    print(f"\nMotif summary saved to {output_path}")
+    
+    return summary_df
 
 # Main execution
 if __name__ == "__main__":
     # Configuration
     SEGMENTATION_FEATURES = ['WaterZumpf', 'DensityHC', 'PulpHC', 'PressureHC']
-    WINDOW_SIZE = 180  # Fixed window length in minutes
+    WINDOW_SIZE = 60  # Fixed window length in minutes
     MAX_MOTIFS = 20    # Maximum number of motif groups to discover
     MAX_INSTANCES_PER_MOTIF = 1000  # Maximum windows per motif group
-    RADIUS = 8    # Distance threshold (lower = more strict matching)
+    RADIUS = 6    # Distance threshold (lower = more strict matching)
     TOP_MOTIFS_TO_PLOT = 10  # Number of top motifs to plot individually
     
     # Cross-correlation filtering configuration
@@ -450,12 +523,15 @@ if __name__ == "__main__":
         ('WaterZumpf', 'PressureHC'): 'pos',
         # ('Ore', 'DensityHC'): 'pos',  # Uncomment if 'Ore' is in your features
     }
-    MIN_CORRELATION_STRENGTH = 0.3  # Minimum |correlation| to enforce the rule
+    MIN_CORRELATION_STRENGTH = 0.1  # Minimum |correlation| to enforce the rule
     FILTER_LEVEL = 'instance'  # 'instance' or 'motif'
+    
+    # Create output directory if it doesn't exist
+    os.makedirs('output', exist_ok=True)
     
     # Load data
     df = load_data('data_initial.csv')
-    # df = df.iloc[:50000,:]
+    df = df.iloc[:50000,:]
     
     print(f"Loaded data: {len(df)} rows")
     print(f"Columns: {df.columns.tolist()}")
@@ -537,26 +613,34 @@ if __name__ == "__main__":
     print(f"Final output columns: {stacked_df.columns.tolist()}")
     
     # Save to CSV
-    output_file = 'segmented_motifs.csv'
+    output_file = 'output/segmented_motifs.csv'
     stacked_df.to_csv(output_file, index=False)
     print(f"\nSegmented motifs saved to {output_file}")
     print(f"Total segments: {stacked_df['segment_id'].nunique()}")
     print(f"Total rows: {len(stacked_df)}")
+    
+    # Create motif summary with correlation analysis
+    print(f"\n{'='*60}")
+    print(f"CREATING MOTIF SUMMARY")
+    print(f"{'='*60}")
+    motif_summary_df = create_motif_summary(motif_info_list, CORRELATION_RULES)
+    print("\nMotif Summary:")
+    print(motif_summary_df.to_string(index=False))
     
     # Print segment summary
     print(f"\n{'='*60}")
     print(f"SEGMENT SUMMARY")
     print(f"{'='*60}")
     segment_summary = stacked_df.groupby('motif_id').agg({
-        'segment_id': pd.Series.nunique,
-        'segment_length': 'first'
+        'segment_id': pd.Series.nunique
     }).rename(columns={'segment_id': 'num_windows'})
     print(segment_summary)
     
     print(f"\n{'='*60}")
     print(f"COMPLETE!")
     print(f"{'='*60}")
-    print(f"Generated files:")
+    print(f"Generated files in 'output/' folder:")
     print(f"  - motif_overview.png (timeline with all motifs)")
     print(f"  - motif_1_instances.png through motif_{TOP_MOTIFS_TO_PLOT}_instances.png")
-    print(f"  - {output_file} (segmented data for ML training)")
+    print(f"  - segmented_motifs.csv (segmented data for ML training)")
+    print(f"  - motif_summary.csv (motif statistics and correlations)")
