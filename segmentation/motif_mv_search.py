@@ -3,6 +3,7 @@ import numpy as np
 import stumpy
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+from scipy.stats import pearsonr
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -144,6 +145,122 @@ def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motif
         print("  Average distance: N/A")
 
     return motif_info_list, segment_tuples, mps
+
+# Filter motifs based on cross-correlation constraints
+def filter_motifs_by_correlation(motif_info_list, correlation_rules, min_correlation_strength=0.3, filter_level='instance'):
+    """
+    Filter motifs based on cross-correlation constraints between feature pairs.
+    
+    Parameters:
+    - motif_info_list: list of motif dictionaries from discover_multivariate_motifs
+    - correlation_rules: dict mapping feature pairs to expected correlation sign
+      Example: {('WaterZumpf', 'DensityHC'): 'neg', ('WaterZumpf', 'PulpHC'): 'pos'}
+    - min_correlation_strength: minimum absolute correlation value to consider (default 0.3)
+    - filter_level: 'instance' (filter individual instances) or 'motif' (filter entire motif groups)
+    
+    Returns:
+    - filtered_motif_info_list: list of filtered motif dictionaries
+    - filtered_segment_tuples: list of (start, end, motif_id) tuples for valid instances
+    - correlation_stats: dict with correlation statistics for each motif
+    """
+    print(f"\n  Filtering motifs by correlation constraints...")
+    print(f"  Filter level: {filter_level}")
+    print(f"  Min correlation strength: {min_correlation_strength}")
+    print(f"  Rules:")
+    for (feat1, feat2), sign in correlation_rules.items():
+        print(f"    {feat1} vs {feat2}: {sign}")
+    
+    filtered_motif_info_list = []
+    filtered_segment_tuples = []
+    correlation_stats = {}
+    
+    for motif in motif_info_list:
+        motif_id = motif['motif_id']
+        valid_instances = []
+        instance_correlations = []
+        
+        for instance in motif['instances']:
+            # Compute correlations for this instance
+            instance_corrs = {}
+            all_rules_satisfied = True
+            
+            for (feat1, feat2), expected_sign in correlation_rules.items():
+                if feat1 not in instance['data'] or feat2 not in instance['data']:
+                    continue
+                    
+                data1 = instance['data'][feat1]
+                data2 = instance['data'][feat2]
+                
+                # Compute Pearson correlation
+                if len(data1) > 1 and len(data2) > 1:
+                    corr, p_value = pearsonr(data1, data2)
+                    instance_corrs[(feat1, feat2)] = corr
+                    
+                    # Check if correlation meets the constraint
+                    if abs(corr) < min_correlation_strength:
+                        # Correlation too weak, skip this check
+                        continue
+                    
+                    if expected_sign == 'pos' and corr < 0:
+                        all_rules_satisfied = False
+                        break
+                    elif expected_sign == 'neg' and corr > 0:
+                        all_rules_satisfied = False
+                        break
+            
+            instance_correlations.append(instance_corrs)
+            
+            if all_rules_satisfied:
+                valid_instances.append(instance)
+        
+        # Store correlation stats
+        correlation_stats[motif_id] = {
+            'total_instances': len(motif['instances']),
+            'valid_instances': len(valid_instances),
+            'avg_correlations': {}
+        }
+        
+        # Compute average correlations across valid instances
+        if valid_instances:
+            for (feat1, feat2) in correlation_rules.keys():
+                corrs = [ic.get((feat1, feat2), np.nan) for ic in instance_correlations 
+                        if (feat1, feat2) in ic]
+                if corrs:
+                    correlation_stats[motif_id]['avg_correlations'][(feat1, feat2)] = np.mean(corrs)
+        
+        # Apply filter level
+        if filter_level == 'instance':
+            # Keep motif if at least one instance is valid
+            if valid_instances:
+                filtered_motif = {
+                    'motif_id': motif_id,
+                    'instances': valid_instances,
+                    'distance': motif['distance']
+                }
+                filtered_motif_info_list.append(filtered_motif)
+                
+                # Add to segment tuples
+                for instance in valid_instances:
+                    filtered_segment_tuples.append((instance['start'], instance['end'], motif_id))
+        
+        elif filter_level == 'motif':
+            # Keep motif only if ALL instances are valid
+            if len(valid_instances) == len(motif['instances']) and valid_instances:
+                filtered_motif = {
+                    'motif_id': motif_id,
+                    'instances': valid_instances,
+                    'distance': motif['distance']
+                }
+                filtered_motif_info_list.append(filtered_motif)
+                
+                # Add to segment tuples
+                for instance in valid_instances:
+                    filtered_segment_tuples.append((instance['start'], instance['end'], motif_id))
+    
+    print(f"  Filtered: {len(motif_info_list)} motifs -> {len(filtered_motif_info_list)} motifs")
+    print(f"  Total instances: {sum(len(m['instances']) for m in motif_info_list)} -> {len(filtered_segment_tuples)}")
+    
+    return filtered_motif_info_list, filtered_segment_tuples, correlation_stats
 
 # Plot individual motifs with all instances
 def plot_individual_motifs(df, motif_info_list, feature_columns, top_n=10):
@@ -325,6 +442,17 @@ if __name__ == "__main__":
     RADIUS = 8    # Distance threshold (lower = more strict matching)
     TOP_MOTIFS_TO_PLOT = 10  # Number of top motifs to plot individually
     
+    # Cross-correlation filtering configuration
+    APPLY_CORRELATION_FILTER = True  # Set to False to disable filtering
+    CORRELATION_RULES = {
+        ('WaterZumpf', 'DensityHC'): 'neg',
+        ('WaterZumpf', 'PulpHC'): 'pos',
+        ('WaterZumpf', 'PressureHC'): 'pos',
+        # ('Ore', 'DensityHC'): 'pos',  # Uncomment if 'Ore' is in your features
+    }
+    MIN_CORRELATION_STRENGTH = 0.3  # Minimum |correlation| to enforce the rule
+    FILTER_LEVEL = 'instance'  # 'instance' or 'motif'
+    
     # Load data
     df = load_data('data_initial.csv')
     # df = df.iloc[:50000,:]
@@ -351,6 +479,31 @@ if __name__ == "__main__":
         radius=RADIUS,
         max_instances_per_motif=MAX_INSTANCES_PER_MOTIF
     )
+    
+    # Apply correlation filtering if enabled
+    if APPLY_CORRELATION_FILTER:
+        print(f"\n{'='*60}")
+        print(f"CORRELATION FILTERING")
+        print(f"{'='*60}")
+        motif_info_list, segment_tuples, correlation_stats = filter_motifs_by_correlation(
+            motif_info_list,
+            CORRELATION_RULES,
+            min_correlation_strength=MIN_CORRELATION_STRENGTH,
+            filter_level=FILTER_LEVEL
+        )
+        
+        # Print correlation statistics
+        print(f"\n{'='*60}")
+        print(f"CORRELATION STATISTICS")
+        print(f"{'='*60}")
+        for motif_id, stats in correlation_stats.items():
+            if stats['valid_instances'] > 0:
+                print(f"\nMotif {motif_id}:")
+                print(f"  Valid instances: {stats['valid_instances']}/{stats['total_instances']}")
+                if stats['avg_correlations']:
+                    print(f"  Average correlations:")
+                    for (feat1, feat2), corr in stats['avg_correlations'].items():
+                        print(f"    {feat1} vs {feat2}: {corr:+.3f}")
     
     # Show statistics
     print(f"\n{'='*60}")
