@@ -512,7 +512,7 @@ if __name__ == "__main__":
     WINDOW_SIZE = 60  # Fixed window length in minutes
     MAX_MOTIFS = 20    # Maximum number of motif groups to discover
     MAX_INSTANCES_PER_MOTIF = 1000  # Maximum windows per motif group
-    RADIUS = 6    # Distance threshold (lower = more strict matching)
+    RADIUS = 5    # Distance threshold (lower = more strict matching)
     TOP_MOTIFS_TO_PLOT = 10  # Number of top motifs to plot individually
     
     # Cross-correlation filtering configuration
@@ -531,7 +531,7 @@ if __name__ == "__main__":
     
     # Load data
     df = load_data('data_initial.csv')
-    df = df.iloc[:50000,:]
+    df = df.iloc[:150000,:]
     
     print(f"Loaded data: {len(df)} rows")
     print(f"Columns: {df.columns.tolist()}")
