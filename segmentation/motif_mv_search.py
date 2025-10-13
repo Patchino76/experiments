@@ -450,6 +450,78 @@ def extract_motif_segments(df, segment_tuples):
     
     return stacked_df
 
+# Add discontinuity markers for ML training
+def add_discontinuity_markers(df, feature_columns):
+    """
+    Add simple discontinuity markers based on lag differences.
+    Keeps the dataset clean while encoding boundary information.
+    
+    Parameters:
+    - df: DataFrame with time series data
+    - feature_columns: list of feature column names to analyze for discontinuities
+    
+    Returns:
+    - df: DataFrame with added discontinuity markers
+    """
+    print(f"\n  Adding discontinuity markers for ML training...")
+    df = df.copy()
+    
+    # Calculate lag differences for each feature
+    lag_diffs = {}
+    for col in feature_columns:
+        lag1 = df[col].shift(1)
+        diff = df[col] - lag1
+        lag_diffs[col] = diff
+    
+    # Compute normalized discontinuity score
+    # This measures how much the values jump relative to their typical variation
+    discontinuity_scores = []
+    for idx in range(len(df)):
+        if idx == 0:
+            discontinuity_scores.append(0.0)
+            continue
+        
+        # Calculate z-score of the jump for each feature
+        z_scores = []
+        for col in feature_columns:
+            # Get recent history (last 10 points before current)
+            start_idx = max(0, idx - 10)
+            recent_values = df[col].iloc[start_idx:idx]
+            
+            if len(recent_values) > 1:
+                mean_val = recent_values.mean()
+                std_val = recent_values.std()
+                
+                if std_val > 0:
+                    # Z-score of the jump
+                    jump = abs(lag_diffs[col].iloc[idx])
+                    z_score = jump / std_val
+                    z_scores.append(z_score)
+        
+        # Average z-score across all features
+        if z_scores:
+            avg_z_score = np.mean(z_scores)
+            discontinuity_scores.append(avg_z_score)
+        else:
+            discontinuity_scores.append(0.0)
+    
+    df['discontinuity_score'] = discontinuity_scores
+    
+    # Add binary markers for segment boundaries
+    df['is_segment_start'] = (df['segment_id'] != df['segment_id'].shift(1)).astype(int)
+    df['is_segment_end'] = (df['segment_id'] != df['segment_id'].shift(-1)).astype(int)
+    
+    print(f"    ✓ Added 3 discontinuity markers:")
+    print(f"      - discontinuity_score: normalized jump magnitude (0=smooth, high=discontinuous)")
+    print(f"      - is_segment_start: binary flag for segment start")
+    print(f"      - is_segment_end: binary flag for segment end")
+    
+    # Show statistics
+    high_discontinuity = (df['discontinuity_score'] > 2.0).sum()
+    print(f"    ✓ Found {high_discontinuity} rows with high discontinuity (score > 2.0)")
+    
+    return df
+
 # Create motif summary with correlation analysis
 def create_motif_summary(motif_info_list, correlation_rules, output_path='output/motif_summary.csv'):
     """
@@ -610,7 +682,23 @@ if __name__ == "__main__":
     print(f"{'='*60}")
     stacked_df = extract_motif_segments(df, segment_tuples)
     
-    print(f"Final output columns: {stacked_df.columns.tolist()}")
+    print(f"Stacked segments: {len(stacked_df)} rows")
+    
+    # Add discontinuity markers for ML training
+    print(f"\n{'='*60}")
+    print(f"ADDING DISCONTINUITY MARKERS FOR ML")
+    print(f"{'='*60}")
+    
+    # Define ML feature columns (exclude metadata and target)
+    ml_feature_columns = ['Ore', 'WaterMill', 'WaterZumpf', 'PulpHC', 'PressureHC']
+    # Filter to only columns that exist in the dataframe
+    ml_feature_columns = [col for col in ml_feature_columns if col in stacked_df.columns]
+    
+    print(f"  Analyzing features: {ml_feature_columns}")
+    stacked_df = add_discontinuity_markers(stacked_df, ml_feature_columns)
+    
+    print(f"\nFinal output columns: {stacked_df.columns.tolist()}")
+    print(f"Total columns: {len(stacked_df.columns)}")
     
     # Save to CSV
     output_file = 'output/segmented_motifs.csv'

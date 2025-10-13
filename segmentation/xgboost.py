@@ -21,14 +21,36 @@ def main() -> None:
     timestamps = df["TimeStamp"].copy()
     df["TimeStamp"] = (df["TimeStamp"].astype("int64") // 10**9).astype("int64")
     target_column = "DensityHC"
-    feature_columns = [
-        "Ore",
-        "WaterMill",
+    
+    # Base features (available at inference time)
+    base_feature_columns = [
+        # "Ore",
+        # "WaterMill",
         "WaterZumpf",
         # "MotorAmp",
         "PulpHC",
         "PressureHC",
     ]
+    
+    # Check if discontinuity markers exist (pre-computed by motif_mv_search.py)
+    discontinuity_markers_exist = 'discontinuity_score' in df.columns
+    
+    if discontinuity_markers_exist:
+        print("Using pre-computed discontinuity markers from motif_mv_search.py...")
+        # Build feature list: base features + discontinuity markers
+        feature_columns = base_feature_columns.copy()
+        feature_columns.extend(['discontinuity_score'])
+    else:
+        print("WARNING: Discontinuity markers not found. Using base features only.")
+        feature_columns = base_feature_columns.copy()
+    
+    # Filter to only existing columns
+    feature_columns = [col for col in feature_columns if col in df.columns]
+    
+    print(f"Total features: {len(feature_columns)}")
+    print(f"  Base features: {len(base_feature_columns)}")
+    if discontinuity_markers_exist:
+        print(f"  Discontinuity markers: 3")
     required_columns = feature_columns + [target_column]
     missing_columns = [column for column in required_columns if column not in df.columns]
     if missing_columns:
