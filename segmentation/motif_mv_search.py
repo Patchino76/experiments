@@ -434,13 +434,14 @@ def plot_motif_overview(df, segment_tuples, feature_columns):
     plt.show()
 
 # Extract motif segments
-def extract_motif_segments(df, segment_tuples):
+def extract_motif_segments(df, segment_tuples, temporal_order=True):
     """
     Extract motif segments and stack them
     
     Parameters:
     - df: DataFrame with time series data
     - segment_tuples: list of (start, end, motif_id) tuples
+    - temporal_order: bool, whether to keep the original temporal order of segments
     
     Returns:
     - stacked_df: DataFrame with stacked motif segments
@@ -456,7 +457,13 @@ def extract_motif_segments(df, segment_tuples):
         windows[key].append(motif_id)
     
     # Extract each window
-    for seg_idx, ((start, end), motif_ids) in enumerate(sorted(windows.items())):
+    window_items = list(windows.items())
+    if temporal_order:
+        window_items.sort(key=lambda item: item[0])
+    else:
+        np.random.shuffle(window_items)
+
+    for seg_idx, ((start, end), motif_ids) in enumerate(window_items):
         segment_data = df.iloc[start:end].copy()
         
         # Get timestamp boundaries
@@ -649,8 +656,8 @@ if __name__ == "__main__":
         'user': settings.DB_USER,
         'password': settings.DB_PASSWORD,
     }
-    MILL_NUMBERS = [6]
-    START_DATE = os.getenv('MILLS_START_DATE', '2025-09-01 00:00:00')
+    MILL_NUMBERS = [8]
+    START_DATE = os.getenv('MILLS_START_DATE', '2025-06-01 00:00:00')
     END_DATE = os.getenv('MILLS_END_DATE', '2025-10-13 23:59:59')
     RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
     

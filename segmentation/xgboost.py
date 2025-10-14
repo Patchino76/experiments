@@ -15,12 +15,12 @@ from xgboost import XGBRegressor
 
 
 def main() -> None:
-    data_path = script_dir / "output" / "segmented_motifs.csv"
+    data_path = script_dir / "output" / "segmented_motifs8.csv"
     df = pd.read_csv(data_path, parse_dates=["TimeStamp"])
     df = df.sort_values("TimeStamp").reset_index(drop=True)
     timestamps = df["TimeStamp"].copy()
     df["TimeStamp"] = (df["TimeStamp"].astype("int64") // 10**9).astype("int64")
-    target_column = "DensityHC"
+    target_column = "PressureHC"
     
     # Base features (available at inference time)
     base_feature_columns = [
@@ -28,8 +28,11 @@ def main() -> None:
         "WaterMill",
         "WaterZumpf",
         "MotorAmp",
-        # "PulpHC",
-        # "PressureHC",
+        "Daiki",
+        "Shisti",
+        "FE",
+        "Class_15",
+        # "PSI200",
     ]
     
     # Check if discontinuity markers exist (pre-computed by motif_mv_search.py)
