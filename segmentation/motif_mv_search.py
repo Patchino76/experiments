@@ -6,13 +6,45 @@ from matplotlib.patches import Rectangle
 from scipy.stats import pearsonr
 import warnings
 import os
+from datetime import datetime
+
+from db.db_connector import MillsDataConnector
+from db.settings import settings
+
 warnings.filterwarnings('ignore')
 
-# Load data
-def load_data(filepath):
-    """Load CSV data into pandas DataFrame"""
-    df = pd.read_csv(filepath, parse_dates=['TimeStamp'])
-    return df
+
+def load_data(mill_numbers, start_date, end_date, db_config, resample_freq='1min'):
+    """Load data from the database for specific mills and date range."""
+    connector = MillsDataConnector(**db_config)
+    frames = []
+    for mill in mill_numbers:
+        df = connector.get_combined_data(
+            mill_number=mill,
+            start_date=start_date,
+            end_date=end_date,
+            resample_freq=resample_freq,
+            save_to_logs=False,
+            no_interpolation=True,
+        )
+        if df is None or df.empty:
+            continue
+        df = df.copy()
+        if not isinstance(df.index, pd.DatetimeIndex):
+            if 'TimeStamp' in df.columns:
+                df.set_index('TimeStamp', inplace=True)
+            else:
+                raise ValueError("Combined data must include 'TimeStamp'.")
+        df['mill_id'] = mill
+        df = df.reset_index().rename(columns={'index': 'TimeStamp'})
+        frames.append(df)
+    if not frames:
+        raise ValueError("No data retrieved for the specified mills and date range.")
+    combined = pd.concat(frames, ignore_index=True)
+    combined['TimeStamp'] = pd.to_datetime(combined['TimeStamp'])
+    combined.sort_values('TimeStamp', inplace=True)
+    combined.reset_index(drop=True, inplace=True)
+    return combined
 
 # Discover multivariate motifs using STUMPY
 def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motifs=50, radius=3.0, max_instances_per_motif=10):
@@ -305,7 +337,6 @@ def plot_individual_motifs(df, motif_info_list, feature_columns, top_n=10):
             
             ax.set_ylabel(feature, fontsize=11, fontweight='bold')
             ax.grid(True, alpha=0.3)
-            ax.legend(loc='upper right', fontsize=9)
             
             if feat_idx == 0:
                 ax.set_title(f'Motif {motif_id} - Distance: {distance:.3f}', 
@@ -601,9 +632,21 @@ if __name__ == "__main__":
     # Create output directory if it doesn't exist
     os.makedirs('output', exist_ok=True)
     
-    # Load data
-    df = load_data('data_initial.csv')
-    df = df.iloc[:150000,:]
+    # Database configuration (replace with secure configuration management as needed)
+    DB_CONFIG = {
+        'host': settings.DB_HOST,
+        'port': settings.DB_PORT,
+        'dbname': settings.DB_NAME,
+        'user': settings.DB_USER,
+        'password': settings.DB_PASSWORD,
+    }
+    MILL_NUMBERS = [6, 7, 8]
+    START_DATE = os.getenv('MILLS_START_DATE', '2025-06-01 00:00:00')
+    END_DATE = os.getenv('MILLS_END_DATE', '2025-08-31 23:59:59')
+    RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
+    
+    # Load data from database
+    df = load_data(MILL_NUMBERS, START_DATE, END_DATE, DB_CONFIG, resample_freq=RESAMPLE_FREQ)
     
     print(f"Loaded data: {len(df)} rows")
     print(f"Columns: {df.columns.tolist()}")
