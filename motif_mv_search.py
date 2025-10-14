@@ -650,7 +650,7 @@ if __name__ == "__main__":
         'password': settings.DB_PASSWORD,
     }
     MILL_NUMBERS = [6]
-    START_DATE = os.getenv('MILLS_START_DATE', '2025-09-01 00:00:00')
+    START_DATE = os.getenv('MILLS_START_DATE', '2025-08-01 00:00:00')
     END_DATE = os.getenv('MILLS_END_DATE', '2025-10-13 23:59:59')
     RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
     
