@@ -15,12 +15,12 @@ from xgboost import XGBRegressor
 
 
 def main() -> None:
-    data_path = script_dir / "output" / "segmented_motifs8.csv"
+    data_path = script_dir / "output" / "segmented_motifs.csv"
     df = pd.read_csv(data_path, parse_dates=["TimeStamp"])
     df = df.sort_values("TimeStamp").reset_index(drop=True)
     timestamps = df["TimeStamp"].copy()
     df["TimeStamp"] = (df["TimeStamp"].astype("int64") // 10**9).astype("int64")
-    target_column = "PressureHC"
+    target_column = "DensityHC"
     
     # Base features (available at inference time)
     base_feature_columns = [

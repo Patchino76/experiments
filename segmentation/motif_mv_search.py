@@ -656,8 +656,8 @@ if __name__ == "__main__":
         'user': settings.DB_USER,
         'password': settings.DB_PASSWORD,
     }
-    MILL_NUMBERS = [8]
-    START_DATE = os.getenv('MILLS_START_DATE', '2025-06-01 00:00:00')
+    MILL_NUMBERS = [6]
+    START_DATE = os.getenv('MILLS_START_DATE', '2025-09-01 00:00:00')
     END_DATE = os.getenv('MILLS_END_DATE', '2025-10-13 23:59:59')
     RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
     
@@ -739,7 +739,7 @@ if __name__ == "__main__":
     print(f"\n{'='*60}")
     print(f"EXTRACTING SEGMENTS")
     print(f"{'='*60}")
-    stacked_df = extract_motif_segments(df, segment_tuples)
+    stacked_df = extract_motif_segments(df, segment_tuples, temporal_order=False)
     
     print(f"Stacked segments: {len(stacked_df)} rows")
     
