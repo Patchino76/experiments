@@ -52,9 +52,23 @@ def load_data(mill_numbers, start_date, end_date, db_config, resample_freq='1min
     combined['TimeStamp'] = pd.to_datetime(combined['TimeStamp'])
     combined.sort_values('TimeStamp', inplace=True)
     combined.reset_index(drop=True, inplace=True)
+    combined = filter_data(combined)
     os.makedirs('output', exist_ok=True)
     combined.to_csv('output/initial_data.csv', index=False)
     return combined
+
+
+def filter_data(df):
+    return df[
+        (df['Ore'] > 100) &
+        (df['Ore'] < 220) &
+        (df['PulpHC'] > 400) &
+        (df['PulpHC'] < 600) &
+        (df['DensityHC'] > 1600) &
+        (df['DensityHC'] < 1800) &
+        (df['PSI200'] > 16) &
+        (df['PSI200'] < 30)
+    ]
 
 # Discover multivariate motifs using STUMPY
 def discover_multivariate_motifs(df, feature_columns, window_size=240, max_motifs=50, radius=3.0, max_instances_per_motif=10):
@@ -659,7 +673,7 @@ if __name__ == "__main__":
         'password': settings.DB_PASSWORD,
     }
     MILL_NUMBERS = [6]
-    START_DATE = os.getenv('MILLS_START_DATE', '2025-01-01 00:00:00')
+    START_DATE = os.getenv('MILLS_START_DATE', '2025-08-01 00:00:00')
     END_DATE = os.getenv('MILLS_END_DATE', '2025-10-13 23:59:59')
     RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
     
