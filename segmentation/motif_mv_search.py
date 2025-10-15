@@ -52,6 +52,8 @@ def load_data(mill_numbers, start_date, end_date, db_config, resample_freq='1min
     combined['TimeStamp'] = pd.to_datetime(combined['TimeStamp'])
     combined.sort_values('TimeStamp', inplace=True)
     combined.reset_index(drop=True, inplace=True)
+    os.makedirs('output', exist_ok=True)
+    combined.to_csv('output/initial_data.csv', index=False)
     return combined
 
 # Discover multivariate motifs using STUMPY
@@ -657,7 +659,7 @@ if __name__ == "__main__":
         'password': settings.DB_PASSWORD,
     }
     MILL_NUMBERS = [6]
-    START_DATE = os.getenv('MILLS_START_DATE', '2025-09-01 00:00:00')
+    START_DATE = os.getenv('MILLS_START_DATE', '2025-01-01 00:00:00')
     END_DATE = os.getenv('MILLS_END_DATE', '2025-10-13 23:59:59')
     RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
     
