@@ -17,9 +17,6 @@ from xgboost import XGBRegressor
 def main() -> None:
     data_path = script_dir / "output" / "segmented_motifs.csv"
     df = pd.read_csv(data_path, parse_dates=["TimeStamp"])
-    df = df.sort_values("TimeStamp").reset_index(drop=True)
-    timestamps = df["TimeStamp"].copy()
-    df["TimeStamp"] = (df["TimeStamp"].astype("int64") // 10**9).astype("int64")
     target_column = "DensityHC"
     
     # Base features (available at inference time)
@@ -34,6 +31,16 @@ def main() -> None:
         "Class_15",
         # "PSI200",
     ]
+    # base_feature_columns = [
+    #     "PulpHC",
+    #     "DensityHC",
+    #     "PressureHC",
+    #     # "Daiki",
+    #     # "Shisti",
+    #     # "FE",
+    #     # "Class_15",
+    #     # "PSI200",
+    # ]
     
     # Check if discontinuity markers exist (pre-computed by motif_mv_search.py)
     discontinuity_markers_exist = 'discontinuity_score' in df.columns
@@ -62,19 +69,10 @@ def main() -> None:
     y = df[target_column]
     total_samples = len(X)
     if total_samples < 5:
-        raise ValueError("Not enough samples for TimeSeriesSplit.")
+        raise ValueError("Not enough samples for train/test split.")
     train_cutoff = max(int(total_samples * 0.8), 1)
-    tscv = TimeSeriesSplit(n_splits=5, max_train_size=train_cutoff)
-    splits = list(tscv.split(X))
-    if not splits:
-        raise ValueError("TimeSeriesSplit did not produce any splits.")
-    train_indices, test_indices = splits[-1]
-    train_indices = np.arange(train_cutoff)
-    test_indices = np.arange(train_cutoff, total_samples)
-    X_train, X_test = X.iloc[train_indices], X.iloc[test_indices]
-    y_train, y_test = y.iloc[train_indices], y.iloc[test_indices]
-    ts_train = timestamps.iloc[train_indices]
-    ts_test = timestamps.iloc[test_indices]
+    X_train, X_test = X.iloc[:train_cutoff], X.iloc[train_cutoff:]
+    y_train, y_test = y.iloc[:train_cutoff], y.iloc[train_cutoff:]
     model = XGBRegressor(
         objective="reg:squarederror",
         n_estimators=300,
@@ -88,13 +86,13 @@ def main() -> None:
     search = None
     if isinstance(model, XGBRegressor):
         param_grid = {
-            "n_estimators": [200, 400],
-            "learning_rate": [0.03, 0.05, 0.1],
-            "max_depth": [4, 6],
-            "subsample": [0.7, 0.9],
-            "colsample_bytree": [0.7, 0.9],
+            "n_estimators": [150, 400],
+            "learning_rate": [0.01, 0.09, 0.1],
+            "max_depth": [1, 8],
+            "subsample": [0.1, 0.9],
+            "colsample_bytree": [0.2, 1],
         }
-        inner_cv = TimeSeriesSplit(n_splits=3, max_train_size=train_cutoff)
+        inner_cv = TimeSeriesSplit(n_splits=6, max_train_size=train_cutoff)
         search = GridSearchCV(
             estimator=model,
             param_grid=param_grid,
@@ -144,13 +142,13 @@ def main() -> None:
     plt.ylabel("Importance Score")
     plt.tight_layout()
     fig, axes = plt.subplots(2, 1, figsize=(14, 8), sharey=True)
-    axes[0].plot(ts_train, y_train, label="Actual")
-    axes[0].plot(ts_train, train_predictions, label="Predicted")
+    axes[0].plot(y_train.index, y_train, label="Actual")
+    axes[0].plot(y_train.index, train_predictions, label="Predicted")
     axes[0].set_title("Train Set Predictions")
     axes[0].set_ylabel(target_column)
     axes[0].legend()
-    axes[1].plot(ts_test, y_test, label="Actual")
-    axes[1].plot(ts_test, test_predictions, label="Predicted")
+    axes[1].plot(y_test.index, y_test, label="Actual")
+    axes[1].plot(y_test.index, test_predictions, label="Predicted")
     axes[1].set_title("Test Set Predictions")
     axes[1].set_xlabel("Time")
     axes[1].set_ylabel(target_column)

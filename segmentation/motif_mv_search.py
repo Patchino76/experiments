@@ -497,18 +497,24 @@ def extract_motif_segments(df, segment_tuples, temporal_order=True):
     # Stack all segments
     stacked_df = pd.concat(all_segments, ignore_index=True)
     
-    # Reorder columns: TimeStamp first, then segment_id, motif_id, segment_start, segment_end, then all other columns
+    # Drop unwanted columns from the output
+    drop_columns = [
+        'segment_start',
+        'segment_end',
+        'id',
+        'Date',
+        'Shift',
+        'Original_Sheet',
+        'is_segment_start',
+        'is_segment_end',
+    ]
+    stacked_df = stacked_df.drop(columns=[col for col in drop_columns if col in stacked_df.columns])
+
+    # Reorder columns: TimeStamp first, then segment_id, motif_id, then all other columns
     cols = stacked_df.columns.tolist()
-    
-    # Define the desired order for metadata columns
-    priority_cols = ['TimeStamp', 'segment_id', 'motif_id', 'segment_start', 'segment_end']
-    
-    # Get remaining columns (excluding priority columns)
+    priority_cols = ['TimeStamp', 'segment_id', 'motif_id']
     other_cols = [col for col in cols if col not in priority_cols]
-    
-    # Reorder: priority columns first, then the rest
-    new_col_order = priority_cols + other_cols
-    stacked_df = stacked_df[new_col_order]
+    stacked_df = stacked_df[priority_cols + other_cols]
     
     return stacked_df
 
@@ -642,19 +648,19 @@ def create_motif_summary(motif_info_list, correlation_rules, output_path='output
 # Main execution
 if __name__ == "__main__":
     # Configuration
-    # SEGMENTATION_FEATURES = ['Ore', 'WaterZumpf', 'PulpHC', 'PressureHC']
     SEGMENTATION_FEATURES = ['Ore', 'WaterMill',  'WaterZumpf', 'MotorAmp']
+    # SEGMENTATION_FEATURES = ['DensityHC', 'PulpHC', 'PressureHC']
     WINDOW_SIZE = 60  # Fixed window length in minutes
     MAX_MOTIFS = 20    # Maximum number of motif groups to discover
     MAX_INSTANCES_PER_MOTIF = 1000  # Maximum windows per motif group
-    RADIUS = 5    # Distance threshold (lower = more strict matching)
+    RADIUS = 4.5    # Distance threshold (lower = more strict matching)
     TOP_MOTIFS_TO_PLOT = 10  # Number of top motifs to plot individually
     
     # Cross-correlation filtering configuration
     APPLY_CORRELATION_FILTER = True  # Set to False to disable filtering
     CORRELATION_RULES = {
         # ('WaterZumpf', 'DensityHC'): 'neg',
-        ('WaterZumpf', 'PulpHC'): 'pos',
+        ('PressureHC', 'PulpHC'): 'pos',
         ('WaterZumpf', 'PressureHC'): 'pos',
         # ('Ore', 'DensityHC'): 'pos',  # Uncomment if 'Ore' is in your features
     }
@@ -673,7 +679,7 @@ if __name__ == "__main__":
         'password': settings.DB_PASSWORD,
     }
     MILL_NUMBERS = [6]
-    START_DATE = os.getenv('MILLS_START_DATE', '2025-08-01 00:00:00')
+    START_DATE = os.getenv('MILLS_START_DATE', '2025-01-01 00:00:00')
     END_DATE = os.getenv('MILLS_END_DATE', '2025-10-13 23:59:59')
     RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
     
