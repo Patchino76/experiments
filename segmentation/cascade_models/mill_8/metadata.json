@@ -1,0 +1,126 @@
+{
+  "mill_number": 8,
+  "created_at": "2025-10-08T11:05:35.943251",
+  "model_version": "1.0.0",
+  "training_config": {
+    "test_size": 0.2,
+    "data_shape": [
+      24229,
+      20
+    ],
+    "training_timestamp": "2025-10-08T11:05:46.258052",
+    "configured_features": {
+      "mv_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf",
+        "MotorAmp"
+      ],
+      "cv_features": [
+        "PulpHC",
+        "DensityHC",
+        "PressureHC"
+      ],
+      "dv_features": [],
+      "target_variable": "PSI200",
+      "using_custom_features": true
+    }
+  },
+  "model_performance": {
+    "process_model_PulpHC": {
+      "r2_score": 0.8938015329433495,
+      "rmse": 24.249693367479768,
+      "feature_importance": {
+        "Ore": 0.24793630838394165,
+        "WaterMill": 0.30136168003082275,
+        "WaterZumpf": 0.2027948647737503,
+        "MotorAmp": 0.2479071468114853
+      },
+      "input_vars": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf",
+        "MotorAmp"
+      ],
+      "output_var": "PulpHC"
+    },
+    "process_model_DensityHC": {
+      "r2_score": 0.912591354973163,
+      "rmse": 14.287184637339735,
+      "feature_importance": {
+        "Ore": 0.24095970392227173,
+        "WaterMill": 0.29150819778442383,
+        "WaterZumpf": 0.1965782791376114,
+        "MotorAmp": 0.27095386385917664
+      },
+      "input_vars": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf",
+        "MotorAmp"
+      ],
+      "output_var": "DensityHC"
+    },
+    "process_model_PressureHC": {
+      "r2_score": 0.9505475146385883,
+      "rmse": 0.00722078724075217,
+      "feature_importance": {
+        "Ore": 0.13663238286972046,
+        "WaterMill": 0.6008126735687256,
+        "WaterZumpf": 0.11117307096719742,
+        "MotorAmp": 0.15138188004493713
+      },
+      "input_vars": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf",
+        "MotorAmp"
+      ],
+      "output_var": "PressureHC"
+    },
+    "quality_model": {
+      "r2_score": -6.470919575074593,
+      "rmse": 2.990852913626817,
+      "feature_importance": {
+        "PulpHC": 0.41992661356925964,
+        "DensityHC": 0.26548975706100464,
+        "PressureHC": 0.3145836889743805
+      },
+      "input_vars": [
+        "PulpHC",
+        "DensityHC",
+        "PressureHC"
+      ],
+      "output_var": "PSI200",
+      "cv_vars": [
+        "PulpHC",
+        "DensityHC",
+        "PressureHC"
+      ],
+      "dv_vars": []
+    },
+    "chain_validation": {
+      "r2_score": -37456.232754627876,
+      "rmse": 363.8405442087508,
+      "mae": 137.16506911487244,
+      "n_samples": 200,
+      "n_requested": 200,
+      "validation_error": null
+    }
+  },
+  "data_info": {
+    "original_shape": [
+      24229,
+      22
+    ],
+    "cleaned_shape": [
+      24229,
+      20
+    ],
+    "rows_removed": 0,
+    "data_reduction": "0.0%"
+  },
+  "steady_state_processing": {
+    "enabled": false
+  }
+}
