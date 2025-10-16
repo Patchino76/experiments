@@ -22,40 +22,49 @@ from db.settings import settings
 warnings.filterwarnings('ignore')
 
 
-def load_data(mill_numbers, start_date, end_date, db_config, resample_freq='1min'):
-    """Load data from the database for specific mills and date range."""
-    connector = MillsDataConnector(**db_config)
-    frames = []
-    for mill in mill_numbers:
-        df = connector.get_combined_data(
-            mill_number=mill,
-            start_date=start_date,
-            end_date=end_date,
-            resample_freq=resample_freq,
-            save_to_logs=False,
-            no_interpolation=True,
-        )
-        if df is None or df.empty:
-            continue
-        df = df.copy()
-        if not isinstance(df.index, pd.DatetimeIndex):
-            if 'TimeStamp' in df.columns:
-                df.set_index('TimeStamp', inplace=True)
-            else:
-                raise ValueError("Combined data must include 'TimeStamp'.")
-        df['mill_id'] = mill
-        df = df.reset_index().rename(columns={'index': 'TimeStamp'})
-        frames.append(df)
-    if not frames:
-        raise ValueError("No data retrieved for the specified mills and date range.")
-    combined = pd.concat(frames, ignore_index=True)
-    combined['TimeStamp'] = pd.to_datetime(combined['TimeStamp'])
-    combined.sort_values('TimeStamp', inplace=True)
-    combined.reset_index(drop=True, inplace=True)
-    combined = filter_data(combined)
-    os.makedirs('output', exist_ok=True)
-    combined.to_csv('output/initial_data.csv', index=False)
-    return combined
+def load_data(mill_numbers, start_date, end_date, db_config, resample_freq='1min', db=True):
+    """Load data either from the database or from a cached CSV file."""
+    if db:
+        connector = MillsDataConnector(**db_config)
+        frames = []
+        for mill in mill_numbers:
+            df = connector.get_combined_data(
+                mill_number=mill,
+                start_date=start_date,
+                end_date=end_date,
+                resample_freq=resample_freq,
+                save_to_logs=False,
+                no_interpolation=True,
+            )
+            if df is None or df.empty:
+                continue
+            df = df.copy()
+            if not isinstance(df.index, pd.DatetimeIndex):
+                if 'TimeStamp' in df.columns:
+                    df.set_index('TimeStamp', inplace=True)
+                else:
+                    raise ValueError("Combined data must include 'TimeStamp'.")
+            df['mill_id'] = mill
+            df = df.reset_index().rename(columns={'index': 'TimeStamp'})
+            frames.append(df)
+        if not frames:
+            raise ValueError("No data retrieved for the specified mills and date range.")
+        combined = pd.concat(frames, ignore_index=True)
+        combined['TimeStamp'] = pd.to_datetime(combined['TimeStamp'])
+        combined.sort_values('TimeStamp', inplace=True)
+        combined.reset_index(drop=True, inplace=True)
+        combined = filter_data(combined)
+        os.makedirs('output', exist_ok=True)
+        combined.to_csv('output/initial_data.csv', index=False)
+        return combined
+
+    csv_path = script_dir / 'output' / 'initial_data.csv'
+    if not csv_path.exists():
+        raise FileNotFoundError(f"Cached data file not found at {csv_path}")
+    df = pd.read_csv(csv_path, parse_dates=['TimeStamp'])
+    df.sort_values('TimeStamp', inplace=True)
+    df.reset_index(drop=True, inplace=True)
+    return df
 
 
 def filter_data(df):
@@ -65,9 +74,9 @@ def filter_data(df):
         (df['PulpHC'] > 400) &
         (df['PulpHC'] < 600) &
         (df['DensityHC'] > 1600) &
-        (df['DensityHC'] < 1800) &
-        (df['PSI200'] > 16) &
-        (df['PSI200'] < 30)
+        (df['DensityHC'] < 1800) #&
+        # (df['PSI200'] > 16) &
+        # (df['PSI200'] < 30)
     ]
 
 # Discover multivariate motifs using STUMPY
@@ -684,7 +693,7 @@ if __name__ == "__main__":
     RESAMPLE_FREQ = settings.RESAMPLE_FREQUENCY
     
     # Load data from database
-    df = load_data(MILL_NUMBERS, START_DATE, END_DATE, DB_CONFIG, resample_freq=RESAMPLE_FREQ)
+    df = load_data(MILL_NUMBERS, START_DATE, END_DATE, DB_CONFIG, resample_freq=RESAMPLE_FREQ, db=True)
     
     print(f"Loaded data: {len(df)} rows")
     print(f"Columns: {df.columns.tolist()}")

@@ -17,7 +17,7 @@ from xgboost import XGBRegressor
 def main() -> None:
     data_path = script_dir / "output" / "segmented_motifs.csv"
     df = pd.read_csv(data_path, parse_dates=["TimeStamp"])
-    target_column = "DensityHC"
+    target_column = "PressureHC"
     
     # Base features (available at inference time)
     base_feature_columns = [
@@ -30,6 +30,7 @@ def main() -> None:
         "FE",
         "Class_15",
         # "PSI200",
+        # "DensityHC",
     ]
     # base_feature_columns = [
     #     "PulpHC",
