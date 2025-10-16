@@ -20,8 +20,9 @@ sns.set_style('whitegrid')
 DATA_FILE = 'output/initial_data.csv'
 WINDOW_SIZE = 60  # minutes
 MAX_MOTIFS = 15
-RADIUS = 3.5
-OUTPUT_DIR = Path('output')
+RADIUS = 4.5
+OUTPUT_DIR = Path('output2')
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def load_data(filepath):
     """Load the initial data CSV file."""
