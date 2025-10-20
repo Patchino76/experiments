@@ -1,0 +1,102 @@
+{
+  "1": {
+    "total_instances": 3,
+    "valid_instances": 3,
+    "avg_correlations": {}
+  },
+  "2": {
+    "total_instances": 8,
+    "valid_instances": 8,
+    "avg_correlations": {}
+  },
+  "3": {
+    "total_instances": 4,
+    "valid_instances": 4,
+    "avg_correlations": {}
+  },
+  "4": {
+    "total_instances": 11,
+    "valid_instances": 11,
+    "avg_correlations": {}
+  },
+  "5": {
+    "total_instances": 9,
+    "valid_instances": 9,
+    "avg_correlations": {}
+  },
+  "6": {
+    "total_instances": 2,
+    "valid_instances": 2,
+    "avg_correlations": {}
+  },
+  "7": {
+    "total_instances": 7,
+    "valid_instances": 7,
+    "avg_correlations": {}
+  },
+  "8": {
+    "total_instances": 1,
+    "valid_instances": 1,
+    "avg_correlations": {}
+  },
+  "9": {
+    "total_instances": 3,
+    "valid_instances": 3,
+    "avg_correlations": {}
+  },
+  "10": {
+    "total_instances": 1,
+    "valid_instances": 1,
+    "avg_correlations": {}
+  },
+  "11": {
+    "total_instances": 2,
+    "valid_instances": 2,
+    "avg_correlations": {}
+  },
+  "12": {
+    "total_instances": 3,
+    "valid_instances": 3,
+    "avg_correlations": {}
+  },
+  "13": {
+    "total_instances": 1,
+    "valid_instances": 1,
+    "avg_correlations": {}
+  },
+  "14": {
+    "total_instances": 1,
+    "valid_instances": 1,
+    "avg_correlations": {}
+  },
+  "15": {
+    "total_instances": 2,
+    "valid_instances": 2,
+    "avg_correlations": {}
+  },
+  "16": {
+    "total_instances": 3,
+    "valid_instances": 3,
+    "avg_correlations": {}
+  },
+  "17": {
+    "total_instances": 1,
+    "valid_instances": 1,
+    "avg_correlations": {}
+  },
+  "18": {
+    "total_instances": 3,
+    "valid_instances": 3,
+    "avg_correlations": {}
+  },
+  "19": {
+    "total_instances": 1,
+    "valid_instances": 1,
+    "avg_correlations": {}
+  },
+  "20": {
+    "total_instances": 2,
+    "valid_instances": 2,
+    "avg_correlations": {}
+  }
+}
