@@ -1,0 +1,184 @@
+================================================================================
+MOTIF DISCOVERY SUMMARY REPORT
+================================================================================
+
+Total Motifs Discovered: 27
+Total Instances: 96
+Average Distance: 1.875
+
+--------------------------------------------------------------------------------
+MOTIF DETAILS
+--------------------------------------------------------------------------------
+
+Motif 1:
+  Instances: 3
+  Avg Distance: 0.000
+
+Motif 2:
+  Instances: 8
+  Avg Distance: 3.080
+
+Motif 3:
+  Instances: 4
+  Avg Distance: 2.637
+
+Motif 4:
+  Instances: 11
+  Avg Distance: 3.244
+
+Motif 5:
+  Instances: 9
+  Avg Distance: 3.528
+
+Motif 6:
+  Instances: 2
+  Avg Distance: 1.217
+
+Motif 7:
+  Instances: 7
+  Avg Distance: 3.240
+
+Motif 8:
+  Instances: 1
+  Avg Distance: 0.000
+
+Motif 9:
+  Instances: 3
+  Avg Distance: 2.415
+
+Motif 10:
+  Instances: 1
+  Avg Distance: 0.000
+
+Motif 11:
+  Instances: 2
+  Avg Distance: 2.114
+
+Motif 12:
+  Instances: 3
+  Avg Distance: 2.853
+
+Motif 13:
+  Instances: 1
+  Avg Distance: 0.000
+
+Motif 14:
+  Instances: 1
+  Avg Distance: 0.000
+
+Motif 15:
+  Instances: 2
+  Avg Distance: 1.948
+
+Motif 16:
+  Instances: 3
+  Avg Distance: 2.570
+
+Motif 17:
+  Instances: 1
+  Avg Distance: 0.000
+
+Motif 18:
+  Instances: 3
+  Avg Distance: 2.638
+
+Motif 19:
+  Instances: 1
+  Avg Distance: 0.000
+
+Motif 20:
+  Instances: 2
+  Avg Distance: 2.192
+
+Motif 21:
+  Instances: 10
+  Avg Distance: 2.386
+
+Motif 22:
+  Instances: 3
+  Avg Distance: 2.267
+
+Motif 23:
+  Instances: 4
+  Avg Distance: 2.554
+
+Motif 24:
+  Instances: 4
+  Avg Distance: 2.987
+
+Motif 25:
+  Instances: 2
+  Avg Distance: 1.817
+
+Motif 26:
+  Instances: 3
+  Avg Distance: 2.976
+
+Motif 27:
+  Instances: 2
+  Avg Distance: 1.953
+
+
+--------------------------------------------------------------------------------
+DENSITY ANALYSIS RESULTS
+--------------------------------------------------------------------------------
+
+Motif 1:
+  Instances: 10
+  Avg Density Change: +1.07
+  Ore-Density Corr: -0.115
+  WaterMill-Density Corr: -0.131
+  Ore Lag: 0 min
+  WaterMill Lag: 0 min
+
+Motif 2:
+  Instances: 3
+  Avg Density Change: -7.09
+  Ore-Density Corr: +0.260
+  WaterMill-Density Corr: +0.253
+  Ore Lag: -6 min
+  WaterMill Lag: -4 min
+
+Motif 3:
+  Instances: 4
+  Avg Density Change: +6.55
+  Ore-Density Corr: -0.030
+  WaterMill-Density Corr: -0.020
+  Ore Lag: 0 min
+  WaterMill Lag: 0 min
+
+Motif 4:
+  Instances: 4
+  Avg Density Change: +10.07
+  Ore-Density Corr: +0.807
+  WaterMill-Density Corr: +0.794
+  Ore Lag: 0 min
+  WaterMill Lag: -0 min
+
+Motif 5:
+  Instances: 2
+  Avg Density Change: +2.69
+  Ore-Density Corr: -0.260
+  WaterMill-Density Corr: -0.322
+  Ore Lag: 10 min
+  WaterMill Lag: 8 min
+
+Motif 6:
+  Instances: 3
+  Avg Density Change: +5.19
+  Ore-Density Corr: +0.724
+  WaterMill-Density Corr: +0.694
+  Ore Lag: 4 min
+  WaterMill Lag: 6 min
+
+Motif 7:
+  Instances: 2
+  Avg Density Change: +12.84
+  Ore-Density Corr: +0.808
+  WaterMill-Density Corr: +0.975
+  Ore Lag: 0 min
+  WaterMill Lag: 0 min
+
+================================================================================
+END OF REPORT
+================================================================================
