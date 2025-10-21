@@ -62,6 +62,7 @@ class CascadeModelTrainer:
         # Feature configuration
         self.mv_features = config.data.mv_features
         self.cv_features = config.data.cv_features
+        self.dv_features = config.data.dv_features
         self.dv_target = config.data.target
         
         # Storage
@@ -110,7 +111,8 @@ class CascadeModelTrainer:
         logger.info("STEP 1: LOADING DATA")
         logger.info("-" * 80)
         
-        data_path = self.config.paths.output_dir / 'segmented_motifsMV.csv'
+        # data_path = self.config.paths.output_dir / 'segmented_motifsMV.csv'
+        data_path = self.config.paths.output_dir / 'segmented_motifs_all.csv'
         
         if not data_path.exists():
             raise FileNotFoundError(
@@ -122,7 +124,7 @@ class CascadeModelTrainer:
         self.df = pd.read_csv(data_path, parse_dates=['TimeStamp'])
         
         # Validate required columns
-        required_cols = self.mv_features + self.cv_features + [self.dv_target]
+        required_cols = self.mv_features + self.cv_features + self.dv_features + [self.dv_target]
         missing_cols = [col for col in required_cols if col not in self.df.columns]
         if missing_cols:
             raise ValueError(f"Missing required columns: {missing_cols}")
@@ -167,7 +169,7 @@ class CascadeModelTrainer:
                 "configured_features": {
                     "mv_features": self.mv_features,
                     "cv_features": self.cv_features,
-                    "dv_features": [],
+                    "dv_features": self.dv_features,
                     "target_variable": self.dv_target,
                     "using_custom_features": True
                 }
@@ -202,16 +204,18 @@ class CascadeModelTrainer:
             self.metadata["model_performance"][f"process_model_{cv_var}"] = result
     
     def train_quality_model(self, train_df: pd.DataFrame, test_df: pd.DataFrame):
-        """Train quality model (CV → DV)."""
+        """Train quality model (CV + DV → Target)."""
         logger.info("\n" + "-" * 80)
-        logger.info("STEP 4: TRAINING QUALITY MODEL (CV → DV)")
+        logger.info("STEP 4: TRAINING QUALITY MODEL (CV + DV → Target)")
         logger.info("-" * 80)
         
-        logger.info(f"\nTraining model: CV → {self.dv_target}")
+        # Combine CV and DV features as inputs
+        input_features = self.cv_features + self.dv_features
+        logger.info(f"\nTraining model: {input_features} → {self.dv_target}")
         
-        X_train = train_df[self.cv_features]
+        X_train = train_df[input_features]
         y_train = train_df[self.dv_target]
-        X_test = test_df[self.cv_features]
+        X_test = test_df[input_features]
         y_test = test_df[self.dv_target]
         
         result = self._train_single_model(
@@ -223,8 +227,8 @@ class CascadeModelTrainer:
         
         # Add additional metadata for quality model
         result["model_type"] = "quality_model"
-        result["cv_vars"] = list(X_train.columns)
-        result["dv_vars"] = []
+        result["cv_vars"] = self.cv_features
+        result["dv_vars"] = self.dv_features
         
         self.metadata["model_performance"]["quality_model"] = result
     
@@ -314,7 +318,7 @@ class CascadeModelTrainer:
         }
     
     def validate_cascade(self):
-        """Validate the full cascade: MV → CV → DV."""
+        """Validate the full cascade: MV → CV, then CV + DV → Target."""
         logger.info("\n" + "-" * 80)
         logger.info("STEP 5: VALIDATING CASCADE")
         logger.info("-" * 80)
@@ -346,11 +350,17 @@ class CascadeModelTrainer:
         # Create CV dataframe
         X_cv = pd.DataFrame(cv_predictions)
         
-        # Predict DV
+        # Get actual DV features from sample
+        X_dv = sample_df[self.dv_features]
+        
+        # Combine CV predictions with actual DV features
+        X_quality = pd.concat([X_cv, X_dv.reset_index(drop=True)], axis=1)
+        
+        # Predict target using quality model
         quality_model = self.models["quality_model"]
         quality_scaler = self.scalers["scaler_quality_model"]
-        X_cv_scaled = quality_scaler.transform(X_cv)
-        dv_predictions = quality_model.predict(X_cv_scaled)
+        X_quality_scaled = quality_scaler.transform(X_quality)
+        dv_predictions = quality_model.predict(X_quality_scaled)
         
         # Get actual values
         y_actual = sample_df[self.dv_target].values
@@ -399,7 +409,7 @@ class CascadeModelTrainer:
             "feature_configuration": {
                 "mv_features": self.mv_features,
                 "cv_features": self.cv_features,
-                "dv_features": [],
+                "dv_features": self.dv_features,
                 "target_variable": self.dv_target,
                 "using_custom_features": 1
             }
@@ -426,9 +436,9 @@ class CascadeModelTrainer:
 def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
-    mill_number = 6
-    start_date = "2024-01-01"
-    end_date = "2024-12-31"
+    mill_number = 8
+    start_date = "2025-08-20"
+    end_date = "2025-10-19"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)

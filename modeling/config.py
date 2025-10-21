@@ -22,7 +22,7 @@ class DataConfig:
     # Feature definitions
     mv_features: List[str] = field(default_factory=lambda: ['Ore', 'WaterMill', 'WaterZumpf', 'MotorAmp'])
     cv_features: List[str] = field(default_factory=lambda: ['DensityHC', 'PulpHC', 'PressureHC'])
-    dv_features: List[str] = field(default_factory=list)  # Optional: ['Class_15', 'Shisti', 'Daiki', 'FE']
+    dv_features: List[str] = field(default_factory=lambda: ['Class_15', 'Daiki', 'FE'])  
     target: str = 'PSI200'
     
     # Data filtering thresholds

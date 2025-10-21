@@ -270,7 +270,17 @@ class DataPreparationPipeline:
         if 'TimeStamp' in self.df.columns:
             additional_columns.append('TimeStamp')
         
-        # Create segmented dataset
+        # Create segmented dataset from MV motifs only (for training)
+        logger.info(f"  Creating MV motifs dataset ({len(self.mv_motifs)} motifs)...")
+        segmented_mv_df = create_segmented_dataset(
+            self.df,
+            self.mv_motifs,
+            feature_columns,
+            additional_columns
+        )
+        
+        # Create segmented dataset from all motifs (MV + density)
+        logger.info(f"  Creating complete dataset ({len(self.all_motifs)} motifs)...")
         self.segmented_df = create_segmented_dataset(
             self.df,
             self.all_motifs,
@@ -279,16 +289,17 @@ class DataPreparationPipeline:
         )
         
         # Save segmented data
-        if not self.segmented_df.empty:
-            # Save for MV modeling
+        if not segmented_mv_df.empty:
+            # Save MV motifs only (for model training)
             mv_path = self.config.paths.output_dir / 'segmented_motifsMV.csv'
-            self.segmented_df.to_csv(mv_path, index=False)
-            logger.info(f"  ✓ Segmented data saved to {mv_path.name}")
-            
-            # Also save with all features for reference
+            segmented_mv_df.to_csv(mv_path, index=False)
+            logger.info(f"  ✓ MV motifs data saved to {mv_path.name} ({len(segmented_mv_df)} rows)")
+        
+        if not self.segmented_df.empty:
+            # Save all motifs (MV + density for comprehensive analysis)
             all_path = self.config.paths.output_dir / 'segmented_motifs_all.csv'
             self.segmented_df.to_csv(all_path, index=False)
-            logger.info(f"  ✓ Complete segmented data saved to {all_path.name}")
+            logger.info(f"  ✓ Complete data saved to {all_path.name} ({len(self.segmented_df)} rows)")
     
     def generate_outputs(self):
         """Generate analysis output files."""
@@ -366,8 +377,8 @@ class DataPreparationPipeline:
 def main():
     """Main entry point."""
     # Configuration
-    mill_number = 6
-    start_date = "2025-09-19"
+    mill_number = 8
+    start_date = "2025-08-20"
     end_date = "2025-10-19"
     
     # Create configuration
