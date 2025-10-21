@@ -38,6 +38,7 @@ from visualization import (
     plot_feature_distributions,
     save_summary_report
 )
+from circulative_load import calculate_circulative_load, validate_circulative_load
 
 # Setup logging with UTF-8 encoding
 logging.basicConfig(
@@ -132,11 +133,31 @@ class DataPreparationPipeline:
             cache_path=cache_path if self.config.use_database else cache_path
         )
         
-        # Validate columns
-        validate_required_columns(self.df, self.config.data.get_all_columns())
+        # Validate columns (excluding CirculativeLoad which is calculated)
+        required_cols = [col for col in self.config.data.get_all_columns() if col != 'CirculativeLoad']
+        validate_required_columns(self.df, required_cols)
         
         # Filter data
         self.df = filter_data(self.df, self.config.data.filter_thresholds)
+        
+        # Calculate circulative load
+        try:
+            self.df = calculate_circulative_load(self.df, rho_solid=2900)
+            validate_circulative_load(self.df)
+            logger.info("  ✓ Circulative load calculation complete")
+            
+            # Validate that CirculativeLoad was added
+            if 'CirculativeLoad' not in self.df.columns:
+                logger.warning("  ⚠ CirculativeLoad column not found after calculation")
+        except Exception as e:
+            logger.warning(f"  ⚠ Circulative load calculation failed: {e}")
+            logger.warning("  Continuing without circulative load column")
+        
+        # Save updated data with circulative load to cache
+        if self.config.use_database:
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            self.df.to_csv(cache_path, index=False)
+            logger.info(f"  ✓ Updated data with circulative load saved to {cache_path.name}")
         
         logger.info(f"✓ Data loaded and filtered: {len(self.df)} rows")
     
@@ -377,8 +398,8 @@ class DataPreparationPipeline:
 def main():
     """Main entry point."""
     # Configuration
-    mill_number = 8
-    start_date = "2025-08-20"
+    mill_number = 6
+    start_date = "2025-01-1"
     end_date = "2025-10-19"
     
     # Create configuration
