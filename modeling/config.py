@@ -20,8 +20,9 @@ class DataConfig:
     resample_freq: str = '1min'
     
     # Feature definitions
-    mv_features: List[str] = field(default_factory=lambda: ['Ore', 'WaterMill', 'WaterZumpf', 'MotorAmp'])
-    cv_features: List[str] = field(default_factory=lambda: ['DensityHC', 'PulpHC', 'PressureHC'])
+    # mv_features: List[str] = field(default_factory=lambda: ['Ore', 'WaterMill', 'WaterZumpf', 'MotorAmp'])
+    mv_features: List[str] = field(default_factory=lambda: ['Ore', 'WaterMill', 'WaterZumpf'])
+    cv_features: List[str] = field(default_factory=lambda: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad'])
     dv_features: List[str] = field(default_factory=lambda: ['Class_15', 'Daiki', 'FE'])  
     target: str = 'PSI200'
     
