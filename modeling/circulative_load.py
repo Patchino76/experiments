@@ -1,153 +1,116 @@
 """
-Circulative Load Calculation for Ball Mills
+Circulative Load Calculation Module
 
-Calculates circulative load based on mill operation parameters.
+This module calculates the circulative load for ball mill operations in a closed-circuit
+grinding system with hydrocyclone classification.
+
 Formula: CL = (M_solid_to_cyclone - Fresh_Feed) / Fresh_Feed
 
-Typical values: Circulative load typically ranges from 1.5 to 3.0 (150-300%)
-for closed-circuit grinding with hydrocyclone.
+Typical values: 1.5 to 3.0 (150-300%) for closed-circuit grinding with hydrocyclone.
 """
 
 import pandas as pd
 import numpy as np
-import logging
-
-logger = logging.getLogger(__name__)
 
 
-def calculate_circulative_load(df: pd.DataFrame, rho_solid: float = 2900) -> pd.DataFrame:
+def calculate_circulative_load(df, rho_solid=2900):
     """
-    Calculate circulative load for ball mill operations.
+    Calculate circulative load based on mill operation parameters.
     
-    The circulative load represents the ratio of material recirculated back to the mill
-    from the cyclone compared to the fresh feed entering the system.
-    
-    Calculation steps:
-        1. Calculate volumetric concentration (C_v) from pulp density
-        2. Calculate mass concentration (C_m) from C_v
-        3. Calculate mass flow of solids to cyclone (M_solid_to_cyclone) in t/h
-        4. Calculate circulative load ratio: CL = (M_solid_to_cyclone - Fresh_Feed) / Fresh_Feed
-    
-    Args:
-        df: DataFrame containing mill operation data
-        rho_solid: Density of solid particles in kg/m³ (default: 2900 for copper ore)
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame containing mill operation data
+    rho_solid : float, optional
+        Density of solid ore in kg/m³ (default: 2900 for copper ore)
     
     Required columns:
-        - Ore: Fresh feed ore flow rate (t/h)
-        - PulpHC: Pulp flow to hydrocyclone (m³/h)
-        - DensityHC: Pulp density at hydrocyclone (kg/m³)
+    -----------------
+    - Ore: Fresh feed rate (t/h)
+    - PulpHC: Pulp flow rate to hydrocyclone (m³/h)
+    - DensityHC: Pulp density to hydrocyclone (kg/m³)
     
     Returns:
+    --------
+    pd.DataFrame
         DataFrame with added columns:
-            - C_v: Volumetric concentration (fraction)
-            - C_m: Mass concentration (fraction)
-            - M_solid_to_cyclone: Mass flow of solids to cyclone (t/h)
-            - CirculativeLoad: Circulative load ratio (dimensionless)
+        - C_v: Volumetric concentration
+        - C_m: Mass concentration
+        - M_solid_to_cyclone: Mass flow of solids to cyclone (t/h)
+        - CirculativeLoad: Circulative load ratio
     
-    Raises:
-        ValueError: If required columns are missing
+    Calculation Steps:
+    ------------------
+    1. Calculate volumetric concentration (C_v) from pulp density:
+       C_v = (rho_pulp - rho_water) / (rho_solid - rho_water)
+       
+    2. Calculate mass concentration (C_m):
+       C_m = C_v * rho_solid / rho_pulp
+       
+    3. Calculate mass flow of solids to cyclone (t/h):
+       M_solid = PulpHC * DensityHC * C_m / 1000
+       
+    4. Calculate circulative load ratio:
+       CL = (M_solid_to_cyclone - Fresh_Feed) / Fresh_Feed
     """
-    # Validate required columns
-    required_cols = ['Ore', 'PulpHC', 'DensityHC']
-    missing_cols = [col for col in required_cols if col not in df.columns]
-    if missing_cols:
-        raise ValueError(f"Missing required columns for circulative load calculation: {missing_cols}")
-    
-    logger.info("Calculating circulative load...")
-    logger.info(f"  Using rho_solid = {rho_solid} kg/m³")
-    
-    # Create a copy to avoid modifying the original
+    # Make a copy to avoid modifying the original
     df = df.copy()
     
     # Constants
     rho_water = 1000  # kg/m³
     
-    # Step 1: Calculate volumetric concentration (C_v) from pulp density
-    # Formula: C_v = (rho_pulp - rho_water) / (rho_solid - rho_water)
+    # Step 1: Calculate volumetric concentration (C_v)
     df['C_v'] = (df['DensityHC'] - rho_water) / (rho_solid - rho_water)
     
-    # Clip C_v to valid range [0, 1]
-    df['C_v'] = df['C_v'].clip(lower=0, upper=1)
-    
     # Step 2: Calculate mass concentration (C_m)
-    # Formula: C_m = (C_v * rho_solid) / (C_v * rho_solid + (1 - C_v) * rho_water)
-    numerator = df['C_v'] * rho_solid
-    denominator = df['C_v'] * rho_solid + (1 - df['C_v']) * rho_water
-    df['C_m'] = numerator / denominator
+    df['C_m'] = df['C_v'] * rho_solid / df['DensityHC']
     
     # Step 3: Calculate mass flow of solids to cyclone (t/h)
-    # Formula: M_solid = PulpHC * DensityHC * C_m / 1000
-    # PulpHC is in m³/h, DensityHC in kg/m³, divide by 1000 to get t/h
-    df['M_solid_to_cyclone'] = (df['PulpHC'] * df['DensityHC'] * df['C_m']) / 1000
+    df['M_solid_to_cyclone'] = df['PulpHC'] * df['DensityHC'] * df['C_m'] / 1000
     
     # Step 4: Calculate circulative load ratio
-    # Formula: CL = (M_solid_to_cyclone - Fresh_Feed) / Fresh_Feed
-    # Avoid division by zero
-    df['CirculativeLoad'] = np.where(
-        df['Ore'] > 0,
-        (df['M_solid_to_cyclone'] - df['Ore']) / df['Ore'],
-        np.nan
-    )
-    
-    # Log statistics
-    valid_cl = df['CirculativeLoad'].dropna()
-    if len(valid_cl) > 0:
-        logger.info(f"  ✓ Circulative load calculated for {len(valid_cl)} rows")
-        logger.info(f"    Mean: {valid_cl.mean():.3f}")
-        logger.info(f"    Median: {valid_cl.median():.3f}")
-        logger.info(f"    Std: {valid_cl.std():.3f}")
-        logger.info(f"    Min: {valid_cl.min():.3f}")
-        logger.info(f"    Max: {valid_cl.max():.3f}")
-        
-        # Check if values are in typical range
-        in_range = ((valid_cl >= 1.5) & (valid_cl <= 3.0)).sum()
-        pct_in_range = (in_range / len(valid_cl)) * 100
-        logger.info(f"    Values in typical range [1.5, 3.0]: {in_range}/{len(valid_cl)} ({pct_in_range:.1f}%)")
-        
-        # Warn if many values are outside typical range
-        if pct_in_range < 50:
-            logger.warning(
-                f"  ⚠ Only {pct_in_range:.1f}% of circulative load values are in the typical range [1.5, 3.0]. "
-                "This may indicate unusual operating conditions or data quality issues."
-            )
-    else:
-        logger.warning("  ⚠ No valid circulative load values calculated")
+    df['CirculativeLoad'] = (df['M_solid_to_cyclone'] - df['Ore']) / df['Ore']
     
     return df
 
 
-def validate_circulative_load(df: pd.DataFrame, 
-                              min_valid: float = 0.5, 
-                              max_valid: float = 5.0) -> pd.DataFrame:
+def validate_circulative_load(df, min_cl=0.5, max_cl=5.0):
     """
-    Validate and optionally filter circulative load values.
+    Validate circulative load values and identify potential issues.
     
-    Args:
-        df: DataFrame with CirculativeLoad column
-        min_valid: Minimum valid circulative load value
-        max_valid: Maximum valid circulative load value
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame with CirculativeLoad column
+    min_cl : float, optional
+        Minimum acceptable circulative load (default: 0.5)
+    max_cl : float, optional
+        Maximum acceptable circulative load (default: 5.0)
     
     Returns:
-        DataFrame with validation info logged
+    --------
+    dict
+        Dictionary containing validation statistics:
+        - mean: Mean circulative load
+        - median: Median circulative load
+        - std: Standard deviation
+        - min: Minimum value
+        - max: Maximum value
+        - out_of_range_count: Number of values outside acceptable range
+        - out_of_range_pct: Percentage of values outside acceptable range
     """
-    if 'CirculativeLoad' not in df.columns:
-        logger.warning("CirculativeLoad column not found in DataFrame")
-        return df
+    cl_values = df['CirculativeLoad'].dropna()
     
-    logger.info("Validating circulative load values...")
+    out_of_range = ((cl_values < min_cl) | (cl_values > max_cl)).sum()
     
-    total = len(df)
-    valid = df['CirculativeLoad'].notna().sum()
-    invalid = total - valid
+    stats = {
+        'mean': cl_values.mean(),
+        'median': cl_values.median(),
+        'std': cl_values.std(),
+        'min': cl_values.min(),
+        'max': cl_values.max(),
+        'out_of_range_count': out_of_range,
+        'out_of_range_pct': (out_of_range / len(cl_values)) * 100 if len(cl_values) > 0 else 0
+    }
     
-    logger.info(f"  Total rows: {total}")
-    logger.info(f"  Valid values: {valid} ({valid/total*100:.1f}%)")
-    logger.info(f"  Invalid/NaN values: {invalid} ({invalid/total*100:.1f}%)")
-    
-    # Check range
-    if valid > 0:
-        out_of_range = ((df['CirculativeLoad'] < min_valid) | 
-                       (df['CirculativeLoad'] > max_valid)).sum()
-        logger.info(f"  Out of range [{min_valid}, {max_valid}]: {out_of_range} ({out_of_range/total*100:.1f}%)")
-    
-    return df
+    return stats
