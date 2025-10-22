@@ -2192,3 +2192,62 @@ TimeStamp                                           ...
 2025-10-21 15:40:38,598 - db.db_connector - INFO - DEBUG: Final date range: 2025-08-20 06:00:00 to 2025-10-18 22:00:00
 2025-10-21 15:40:38,624 - database - INFO -   ✓ Loaded 85921 rows, 24 columns
 2025-10-21 15:40:39,694 - database - INFO -   ✓ Cached to C:\Projects\experiments\modeling\output\initial_data.csv
+2025-10-21 16:15:18,532 - __main__ - INFO - 
+================================================================================
+2025-10-21 16:15:18,532 - __main__ - INFO - STARTING DATA PREPARATION PIPELINE
+2025-10-21 16:15:18,532 - __main__ - INFO - ================================================================================
+2025-10-21 16:15:18,532 - __main__ - INFO - ============================================================
+PIPELINE CONFIGURATION SUMMARY
+============================================================
+
+Mill Number: 6
+Date Range: 2025-01-1 to 2025-10-19
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE']
+  Target: PSI200
+
+Motif Discovery:
+  Window Size: 60 min
+  Max Motifs: 20
+  Radius: 4.5
+  Correlation Filter: True
+
+Model Training:
+  Test Size: 0.2
+  CV Splits: 5
+
+Output Paths:
+  Output: C:\Projects\experiments\modeling\output
+  Models: C:\Projects\experiments\modeling\models
+  Analysis: C:\Projects\experiments\modeling\output\analysis
+  Plots: C:\Projects\experiments\modeling\output\plots
+============================================================
+2025-10-21 16:15:18,533 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-21 16:15:18,533 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-21 16:15:18,533 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-21 16:15:18,533 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2025-10-21 16:15:18,669 - db.db_connector - INFO - ✅ Database connection test successful
+2025-10-21 16:15:18,669 - database - INFO - ✅ Database connector initialized
+2025-10-21 16:15:18,669 - database - INFO - Loading data from database for Mill 6...
+2025-10-21 16:15:18,670 - database - INFO -   Date range: 2025-01-1 to 2025-10-19
+2025-10-21 16:15:18,670 - database - INFO -   Resample frequency: 1min
+2025-10-21 16:15:18,670 - db.db_connector - INFO - === STARTING get_combined_data for Mill 6 ===
+2025-10-21 16:15:18,670 - db.db_connector - INFO - DEBUG: Request parameters - mill_number=6, start_date=2025-01-1, end_date=2025-10-19
+2025-10-21 16:15:18,671 - db.db_connector - INFO - DEBUG: Additional parameters - resample_freq=1min, save_to_logs=False, no_interpolation=True
+2025-10-21 16:15:18,671 - db.db_connector - INFO - Retrieving mill data for mill 6 from 2025-01-1 to 2025-10-19
+2025-10-21 16:15:18,671 - db.db_connector - INFO - DEBUG: get_mill_data called with mill_number=6, start_date=2025-01-1, end_date=2025-10-19
+2025-10-21 16:15:18,671 - db.db_connector - INFO - DEBUG: Current time: 2025-10-21 16:15:18.671755
+2025-10-21 16:15:18,672 - db.db_connector - INFO - DEBUG: Parsed start_date: 2025-01-01 00:00:00 (timezone: None)
+2025-10-21 16:15:18,673 - db.db_connector - INFO - DEBUG: Parsed end_date: 2025-10-19 00:00:00 (timezone: None)
+2025-10-21 16:15:18,673 - db.db_connector - INFO - DEBUG: Days from now to end_date: -3
+2025-10-21 16:15:18,674 - db.db_connector - INFO - DEBUG: Converted start_date 2025-01-1 -> 2025-01-01 00:00:00
+2025-10-21 16:15:18,674 - db.db_connector - INFO - DEBUG: Converted end_date 2025-10-19 -> 2025-10-19 00:00:00
+2025-10-21 16:15:18,674 - db.db_connector - INFO - DEBUG: Executing query: SELECT * FROM mills."MILL_06" WHERE "TimeStamp" >= '2025-01-01 00:00:00' AND "TimeStamp" <= '2025-10-19 00:00:00'
+2025-10-21 16:15:18,674 - db.db_connector - INFO - DEBUG: Query will search table: mills."MILL_06"
+2025-10-21 16:15:18,705 - db.db_connector - INFO - DEBUG: Table MILL_06 has 419351 total records
+2025-10-21 16:15:18,707 - db.db_connector - INFO - DEBUG: Table MILL_06 date range: 2025-01-01 02:07:00 to 2025-10-19 08:19:00
+2025-10-21 16:15:18,721 - db.db_connector - INFO - DEBUG: Table MILL_06 has 97633 records after 2025-08-12 12:54:00
