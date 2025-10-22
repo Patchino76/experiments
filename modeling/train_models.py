@@ -209,14 +209,24 @@ class CascadeModelTrainer:
         logger.info("STEP 4: TRAINING QUALITY MODEL (CV + DV → Target)")
         logger.info("-" * 80)
         
+        # Filter data based on target range (16 < target < 30)
+        train_mask = (train_df[self.dv_target] > 16) & (train_df[self.dv_target] < 30)
+        test_mask = (test_df[self.dv_target] > 16) & (test_df[self.dv_target] < 30)
+        
+        train_df_filtered = train_df[train_mask]
+        test_df_filtered = test_df[test_mask]
+        
+        logger.info(f"  Filtered training data: {len(train_df)} → {len(train_df_filtered)} samples")
+        logger.info(f"  Filtered test data: {len(test_df)} → {len(test_df_filtered)} samples")
+        
         # Combine CV and DV features as inputs
         input_features = self.cv_features + self.dv_features
         logger.info(f"\nTraining model: {input_features} → {self.dv_target}")
         
-        X_train = train_df[input_features]
-        y_train = train_df[self.dv_target]
-        X_test = test_df[input_features]
-        y_test = test_df[self.dv_target]
+        X_train = train_df_filtered[input_features]
+        y_train = train_df_filtered[self.dv_target]
+        X_test = test_df_filtered[input_features]
+        y_test = test_df_filtered[self.dv_target]
         
         result = self._train_single_model(
             X_train, y_train, X_test, y_test,
@@ -437,7 +447,7 @@ def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
     mill_number = 6
-    start_date = "2025-08-20"
+    start_date = "2025-01-1"
     end_date = "2025-10-19"
     
     # Create configuration
