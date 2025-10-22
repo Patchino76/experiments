@@ -75,6 +75,7 @@ class DataPreparationPipeline:
         self.all_motifs = []
         self.density_analysis = None
         self.segmented_df = None
+        self.data_loader = None
     
     def run(self):
         """Execute the complete data preparation pipeline."""
@@ -100,10 +101,14 @@ class DataPreparationPipeline:
         # Step 5: Create segmented dataset
         self.create_segments()
         
-        # Step 6: Generate analysis outputs
+        # Step 6: Save segmented data to database
+        if self.config.use_database:
+            self.save_to_database()
+        
+        # Step 7: Generate analysis outputs
         self.generate_outputs()
         
-        # Step 7: Create visualizations
+        # Step 8: Create visualizations
         self.create_visualizations()
         
         logger.info("\n" + "=" * 80)
@@ -120,7 +125,8 @@ class DataPreparationPipeline:
         logger.info("-" * 80)
         
         # Initialize data loader
-        loader = DataLoader(use_database=self.config.use_database)
+        self.data_loader = DataLoader(use_database=self.config.use_database)
+        loader = self.data_loader
         
         # Load data
         cache_path = self.config.paths.output_dir / 'initial_data.csv'
@@ -309,18 +315,67 @@ class DataPreparationPipeline:
             additional_columns
         )
         
+        # Define columns to exclude from final output
+        columns_to_exclude = [
+            'id', 'Date', 'Shift', 'Original_Sheet', 'mill_id',
+            'C_v', 'C_m', 'segment_start', 'segment_end', 'motif_distance'
+        ]
+        
         # Save segmented data
         if not segmented_mv_df.empty:
+            # Filter out unwanted columns
+            segmented_mv_filtered = segmented_mv_df.drop(
+                columns=[col for col in columns_to_exclude if col in segmented_mv_df.columns],
+                errors='ignore'
+            )
             # Save MV motifs only (for model training)
-            mv_path = self.config.paths.output_dir / 'segmented_motifsMV.csv'
-            segmented_mv_df.to_csv(mv_path, index=False)
-            logger.info(f"  ✓ MV motifs data saved to {mv_path.name} ({len(segmented_mv_df)} rows)")
+            mv_path = self.config.paths.output_dir / f'segmented_motifsMV_{self.config.data.mill_number:02d}.csv'
+            segmented_mv_filtered.to_csv(mv_path, index=False)
+            logger.info(f"  ✓ MV motifs data saved to {mv_path.name} ({len(segmented_mv_filtered)} rows, {len(segmented_mv_filtered.columns)} columns)")
         
         if not self.segmented_df.empty:
+            # Filter out unwanted columns
+            segmented_all_filtered = self.segmented_df.drop(
+                columns=[col for col in columns_to_exclude if col in self.segmented_df.columns],
+                errors='ignore'
+            )
             # Save all motifs (MV + density for comprehensive analysis)
-            all_path = self.config.paths.output_dir / 'segmented_motifs_all.csv'
-            self.segmented_df.to_csv(all_path, index=False)
-            logger.info(f"  ✓ Complete data saved to {all_path.name} ({len(self.segmented_df)} rows)")
+            all_path = self.config.paths.output_dir / f'segmented_motifs_all_{self.config.data.mill_number:02d}.csv'
+            segmented_all_filtered.to_csv(all_path, index=False)
+            logger.info(f"  ✓ Complete data saved to {all_path.name} ({len(segmented_all_filtered)} rows, {len(segmented_all_filtered.columns)} columns)")
+            
+            # Update self.segmented_df to the filtered version for database save
+            self.segmented_df = segmented_all_filtered
+    
+    def save_to_database(self):
+        """Save segmented motifs data to database."""
+        logger.info("\n" + "-" * 80)
+        logger.info("STEP 6: SAVING SEGMENTED DATA TO DATABASE")
+        logger.info("-" * 80)
+        
+        if self.data_loader is None:
+            logger.warning("  ⚠ Data loader not initialized, skipping database save")
+            return
+        
+        if self.segmented_df is None or self.segmented_df.empty:
+            logger.warning("  ⚠ No segmented data to save")
+            return
+        
+        # Save segmented_motifs_all to database (filtered version without excluded columns)
+        # Note: self.segmented_df is already filtered in create_segments()
+        logger.info(f"  Saving segmented motifs data for Mill {self.config.data.mill_number}...")
+        logger.info(f"  Table will be recreated (if_exists='replace')")
+        success = self.data_loader.save_motifs_to_database(
+            df=self.segmented_df,
+            mill_number=self.config.data.mill_number,
+            table_suffix='MOTIFS',
+            if_exists='replace'  # Always recreate the table
+        )
+        
+        if success:
+            logger.info(f"✓ Segmented data saved to database table: MOTIFS_{self.config.data.mill_number:02d}")
+        else:
+            logger.warning(f"  ⚠ Failed to save segmented data to database")
     
     def generate_outputs(self):
         """Generate analysis output files."""
@@ -399,7 +454,7 @@ def main():
     """Main entry point."""
     # Configuration
     mill_number = 6
-    start_date = "2025-01-1"
+    start_date = "2025-10-1"
     end_date = "2025-10-19"
     
     # Create configuration
