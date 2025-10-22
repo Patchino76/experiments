@@ -544,3 +544,78 @@ class MillsDataConnector:
             import traceback
             logger.error(f"Full traceback: {traceback.format_exc()}")
             return None
+    
+    def save_motifs_to_database(self, df, mill_number, table_suffix='MOTIF', if_exists='replace'):
+        """
+        Save segmented motifs data to database table.
+        
+        Creates a table named MOTIF_XX where XX is the mill number (e.g., MOTIF_06, MOTIF_08).
+        The table is created in the 'mills' schema.
+        
+        Args:
+            df: DataFrame containing segmented motifs data
+            mill_number: Mill number (6, 7, or 8)
+            table_suffix: Prefix for the table name (default: 'MOTIF')
+            if_exists: How to behave if table exists: 'fail', 'replace', or 'append' (default: 'replace')
+            
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        try:
+            if df is None or df.empty:
+                logger.warning("Cannot save empty DataFrame to database")
+                return False
+            
+            # Format table name
+            table_name = f"{table_suffix}_{mill_number:02d}"
+            
+            logger.info(f"Saving motifs data to database table: mills.{table_name}")
+            logger.info(f"DataFrame shape: {df.shape}")
+            logger.info(f"DataFrame columns: {list(df.columns)}")
+            
+            # Prepare DataFrame for database insertion
+            df_to_save = df.copy()
+            
+            # Ensure TimeStamp column exists and is properly formatted
+            if 'TimeStamp' in df_to_save.columns:
+                df_to_save['TimeStamp'] = pd.to_datetime(df_to_save['TimeStamp'])
+            elif df_to_save.index.name == 'TimeStamp' or isinstance(df_to_save.index, pd.DatetimeIndex):
+                # Reset index to make TimeStamp a column
+                df_to_save = df_to_save.reset_index()
+                if 'index' in df_to_save.columns:
+                    df_to_save.rename(columns={'index': 'TimeStamp'}, inplace=True)
+                df_to_save['TimeStamp'] = pd.to_datetime(df_to_save['TimeStamp'])
+            
+            # Save to database using pandas to_sql
+            # Schema is 'mills', table name is formatted as MOTIF_XX
+            with self.engine.connect() as conn:
+                df_to_save.to_sql(
+                    name=table_name,
+                    con=conn,
+                    schema='mills',
+                    if_exists=if_exists,
+                    index=False,
+                    method='multi',
+                    chunksize=1000
+                )
+                conn.commit()
+            
+            logger.info(f"✅ Successfully saved {len(df_to_save)} rows to mills.{table_name}")
+            logger.info(f"   Action: {if_exists}")
+            
+            # Verify the save by checking row count
+            try:
+                with self.engine.connect() as conn:
+                    result = conn.execute(text(f'SELECT COUNT(*) FROM mills."{table_name}"'))
+                    row_count = result.scalar()
+                    logger.info(f"   Verification: Table mills.{table_name} now contains {row_count} rows")
+            except Exception as e:
+                logger.warning(f"   Could not verify row count: {e}")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Error saving motifs to database: {e}")
+            import traceback
+            logger.error(f"Full traceback: {traceback.format_exc()}")
+            return False
