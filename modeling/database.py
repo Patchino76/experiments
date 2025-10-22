@@ -187,6 +187,40 @@ class DataLoader:
             logger.info(f"  ✓ Cached combined data to {cache_path}")
         
         return combined
+    
+    def save_motifs_to_database(
+        self,
+        df: pd.DataFrame,
+        mill_number: int,
+        table_suffix: str = 'MOTIF',
+        if_exists: str = 'replace'
+    ) -> bool:
+        """
+        Save segmented motifs data to database.
+        
+        Args:
+            df: DataFrame containing segmented motifs data
+            mill_number: Mill number (6, 7, or 8)
+            table_suffix: Prefix for the table name (default: 'MOTIF')
+            if_exists: How to behave if table exists: 'fail', 'replace', or 'append'
+            
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        if not self.use_database:
+            logger.warning("Database not enabled, cannot save motifs to database")
+            return False
+        
+        if self.connector is None:
+            logger.error("Database connector not initialized")
+            return False
+        
+        return self.connector.save_motifs_to_database(
+            df=df,
+            mill_number=mill_number,
+            table_suffix=table_suffix,
+            if_exists=if_exists
+        )
 
 
 def filter_data(df: pd.DataFrame, filter_thresholds: dict) -> pd.DataFrame:
