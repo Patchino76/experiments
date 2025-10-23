@@ -446,8 +446,8 @@ class CascadeModelTrainer:
 def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
-    mill_number = 6
-    start_date = "2025-01-1"
+    mill_number = 8
+    start_date = "2025-01-01"
     end_date = "2025-10-19"
     
     # Create configuration

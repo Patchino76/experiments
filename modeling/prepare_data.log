@@ -494,3 +494,186 @@ TimeStamp                                               ...
 2025-10-22 16:11:26,552 - motif_discovery - INFO -   Max motifs: 20
 2025-10-22 16:11:26,552 - motif_discovery - INFO -   Radius: 4.5
 2025-10-22 16:11:26,564 - motif_discovery - INFO -   Computing multivariate matrix profile...
+2025-10-22 17:06:17,645 - motif_discovery - INFO -   Discovering motif groups...
+2025-10-22 17:06:24,971 - motif_discovery - INFO -   ✓ Found 20 motif groups
+2025-10-22 17:06:24,972 - motif_discovery - INFO -   ✓ Total instances: 1052
+2025-10-22 17:06:24,972 - motif_discovery - INFO -   ✓ Average distance: 3.047
+2025-10-22 17:06:24,974 - __main__ - INFO - 
+Applying correlation filter...
+2025-10-22 17:06:24,975 - motif_discovery - INFO - Filtering motifs by correlation constraints...
+2025-10-22 17:06:24,975 - motif_discovery - INFO -   Filter level: instance
+2025-10-22 17:06:24,975 - motif_discovery - INFO -   Min correlation strength: 0.1
+2025-10-22 17:06:24,975 - motif_discovery - INFO -   Rules:
+2025-10-22 17:06:24,975 - motif_discovery - INFO -     PressureHC vs PulpHC: pos
+2025-10-22 17:06:24,975 - motif_discovery - INFO -     WaterZumpf vs PressureHC: pos
+2025-10-22 17:06:24,987 - motif_discovery - INFO -   ✓ Filtered: 20 motifs kept
+2025-10-22 17:06:24,988 - __main__ - INFO -   ✓ Correlation stats saved to correlation_stats.json
+2025-10-22 17:06:24,989 - __main__ - INFO - ✓ MV motif discovery complete: 20 motifs
+2025-10-22 17:06:24,989 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 17:06:24,989 - __main__ - INFO - STEP 3: DISCOVERING DENSITY MOTIFS
+2025-10-22 17:06:24,989 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 17:06:24,990 - density_analysis - INFO - Discovering density motifs with variability constraints...
+2025-10-22 17:06:24,990 - density_analysis - INFO -   Constraint: WaterZumpf stable, Ore & WaterMill variable
+2025-10-22 17:06:24,990 - density_analysis - INFO -   Window size: 60 minutes
+2025-10-22 17:06:24,990 - density_analysis - INFO -   Max motifs: 15
+2025-10-22 17:06:24,990 - density_analysis - INFO -   Radius: 4.5
+2025-10-22 17:06:25,000 - density_analysis - INFO -   Computing multivariate matrix profile...
+2025-10-22 18:00:38,810 - density_analysis - INFO -   Discovering motifs with variability filtering...
+2025-10-22 18:06:59,031 - density_analysis - INFO -   ✓ Found 12 motif groups
+2025-10-22 18:06:59,031 - density_analysis - INFO -   ✓ Total instances: 131
+2025-10-22 18:06:59,034 - __main__ - INFO - ✓ Density motif discovery complete: 12 motifs
+2025-10-22 18:06:59,034 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 18:06:59,034 - __main__ - INFO - STEP 4: ANALYZING DENSITY BEHAVIOR
+2025-10-22 18:06:59,034 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 18:06:59,034 - density_analysis - INFO - Analyzing density behavior in motifs...
+2025-10-22 18:06:59,034 - density_analysis - INFO - 
+Motif 1 (10 instances):
+2025-10-22 18:06:59,053 - density_analysis - INFO -   Avg DensityHC change: -0.50
+2025-10-22 18:06:59,053 - density_analysis - INFO -   Ore-Density correlation: -0.288 (lag: 0 min)
+2025-10-22 18:06:59,053 - density_analysis - INFO -   WaterMill-Density correlation: -0.243 (lag: 0 min)
+2025-10-22 18:06:59,053 - density_analysis - INFO - 
+Motif 2 (20 instances):
+2025-10-22 18:06:59,091 - density_analysis - INFO -   Avg DensityHC change: -0.06
+2025-10-22 18:06:59,092 - density_analysis - INFO -   Ore-Density correlation: +0.257 (lag: -0 min)
+2025-10-22 18:06:59,092 - density_analysis - INFO -   WaterMill-Density correlation: -0.239 (lag: 0 min)
+2025-10-22 18:06:59,092 - density_analysis - INFO - 
+Motif 3 (4 instances):
+2025-10-22 18:06:59,099 - density_analysis - INFO -   Avg DensityHC change: +22.52
+2025-10-22 18:06:59,099 - density_analysis - INFO -   Ore-Density correlation: -0.670 (lag: 2 min)
+2025-10-22 18:06:59,100 - density_analysis - INFO -   WaterMill-Density correlation: -0.597 (lag: 4 min)
+2025-10-22 18:06:59,100 - density_analysis - INFO - 
+Motif 4 (2 instances):
+2025-10-22 18:06:59,104 - density_analysis - INFO -   Avg DensityHC change: +15.83
+2025-10-22 18:06:59,104 - density_analysis - INFO -   Ore-Density correlation: -0.900 (lag: 0 min)
+2025-10-22 18:06:59,105 - density_analysis - INFO -   WaterMill-Density correlation: -0.843 (lag: 0 min)
+2025-10-22 18:06:59,105 - density_analysis - INFO - 
+Motif 5 (6 instances):
+2025-10-22 18:06:59,116 - density_analysis - INFO -   Avg DensityHC change: -0.32
+2025-10-22 18:06:59,116 - density_analysis - INFO -   Ore-Density correlation: +0.474 (lag: 0 min)
+2025-10-22 18:06:59,117 - density_analysis - INFO -   WaterMill-Density correlation: +0.478 (lag: 0 min)
+2025-10-22 18:06:59,117 - density_analysis - INFO - 
+Motif 6 (8 instances):
+2025-10-22 18:06:59,131 - density_analysis - INFO -   Avg DensityHC change: -8.30
+2025-10-22 18:06:59,132 - density_analysis - INFO -   Ore-Density correlation: +0.326 (lag: -10 min)
+2025-10-22 18:06:59,132 - density_analysis - INFO -   WaterMill-Density correlation: -0.193 (lag: 0 min)
+2025-10-22 18:06:59,132 - density_analysis - INFO - 
+Motif 7 (14 instances):
+2025-10-22 18:06:59,160 - density_analysis - INFO -   Avg DensityHC change: +3.18
+2025-10-22 18:06:59,160 - density_analysis - INFO -   Ore-Density correlation: +0.232 (lag: -3 min)
+2025-10-22 18:06:59,160 - density_analysis - INFO -   WaterMill-Density correlation: +0.221 (lag: 0 min)
+2025-10-22 18:06:59,160 - density_analysis - INFO - 
+Motif 8 (20 instances):
+2025-10-22 18:06:59,196 - density_analysis - INFO -   Avg DensityHC change: -6.41
+2025-10-22 18:06:59,196 - density_analysis - INFO -   Ore-Density correlation: -0.272 (lag: 0 min)
+2025-10-22 18:06:59,197 - density_analysis - INFO -   WaterMill-Density correlation: -0.323 (lag: 0 min)
+2025-10-22 18:06:59,197 - density_analysis - INFO - 
+Motif 9 (7 instances):
+2025-10-22 18:06:59,209 - density_analysis - INFO -   Avg DensityHC change: +2.55
+2025-10-22 18:06:59,209 - density_analysis - INFO -   Ore-Density correlation: -0.191 (lag: 0 min)
+2025-10-22 18:06:59,210 - density_analysis - INFO -   WaterMill-Density correlation: -0.127 (lag: 0 min)
+2025-10-22 18:06:59,210 - density_analysis - INFO - 
+Motif 10 (7 instances):
+2025-10-22 18:06:59,222 - density_analysis - INFO -   Avg DensityHC change: +12.30
+2025-10-22 18:06:59,222 - density_analysis - INFO -   Ore-Density correlation: -0.119 (lag: 0 min)
+2025-10-22 18:06:59,223 - density_analysis - INFO -   WaterMill-Density correlation: -0.144 (lag: 0 min)
+2025-10-22 18:06:59,223 - density_analysis - INFO - 
+Motif 11 (13 instances):
+2025-10-22 18:06:59,249 - density_analysis - INFO -   Avg DensityHC change: +2.87
+2025-10-22 18:06:59,249 - density_analysis - INFO -   Ore-Density correlation: +0.243 (lag: 0 min)
+2025-10-22 18:06:59,249 - density_analysis - INFO -   WaterMill-Density correlation: +0.159 (lag: 0 min)
+2025-10-22 18:06:59,249 - density_analysis - INFO - 
+Motif 12 (20 instances):
+2025-10-22 18:06:59,286 - density_analysis - INFO -   Avg DensityHC change: -1.10
+2025-10-22 18:06:59,286 - density_analysis - INFO -   Ore-Density correlation: +0.147 (lag: 0 min)
+2025-10-22 18:06:59,286 - density_analysis - INFO -   WaterMill-Density correlation: +0.177 (lag: 0 min)
+2025-10-22 18:06:59,288 - __main__ - INFO -   ✓ Density analysis saved to density_analysis.csv
+2025-10-22 18:06:59,288 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 18:06:59,288 - __main__ - INFO - STEP 5: MERGING MOTIF COLLECTIONS
+2025-10-22 18:06:59,289 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 18:06:59,289 - segmentation - INFO - Merging motif collections...
+2025-10-22 18:06:59,289 - segmentation - INFO -   Primary motifs: 20
+2025-10-22 18:06:59,289 - segmentation - INFO -   Secondary motifs: 12
+2025-10-22 18:06:59,289 - segmentation - INFO -   ✓ Merged: 32 total motifs
+2025-10-22 18:06:59,289 - __main__ - INFO - ✓ Total motifs: 32
+2025-10-22 18:06:59,289 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 18:06:59,290 - __main__ - INFO - STEP 6: CREATING SEGMENTED DATASET
+2025-10-22 18:06:59,290 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 18:06:59,290 - __main__ - INFO -   Creating MV motifs dataset (20 motifs)...
+2025-10-22 18:06:59,291 - segmentation - INFO - Creating segmented dataset from motifs...
+2025-10-22 18:07:00,008 - segmentation - INFO -   ✓ Created segmented dataset:
+2025-10-22 18:07:00,008 - segmentation - INFO -     - Total segments: 1052
+2025-10-22 18:07:00,008 - segmentation - INFO -     - Total rows: 63120
+2025-10-22 18:07:00,010 - segmentation - INFO -     - Unique motifs: 20
+2025-10-22 18:07:00,023 - __main__ - INFO -   Creating complete dataset (32 motifs)...
+2025-10-22 18:07:00,023 - segmentation - INFO - Creating segmented dataset from motifs...
+2025-10-22 18:07:00,837 - segmentation - INFO -   ✓ Created segmented dataset:
+2025-10-22 18:07:00,837 - segmentation - INFO -     - Total segments: 1183
+2025-10-22 18:07:00,838 - segmentation - INFO -     - Total rows: 70980
+2025-10-22 18:07:00,841 - segmentation - INFO -     - Unique motifs: 32
+2025-10-22 18:07:02,031 - __main__ - INFO -   ✓ MV motifs data saved to segmented_motifsMV_08.csv (63120 rows, 22 columns)
+2025-10-22 18:07:03,355 - __main__ - INFO -   ✓ Complete data saved to segmented_motifs_all_08.csv (70980 rows, 22 columns)
+2025-10-22 18:07:03,361 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 18:07:03,362 - __main__ - INFO - STEP 6: SAVING SEGMENTED DATA TO DATABASE
+2025-10-22 18:07:03,362 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 18:07:03,363 - __main__ - INFO -   Saving segmented motifs data for Mill 8...
+2025-10-22 18:07:03,363 - __main__ - INFO -   Table will be recreated (if_exists='replace')
+2025-10-22 18:07:03,363 - db.db_connector - INFO - Saving motifs data to database table: mills.MOTIFS_08
+2025-10-22 18:07:03,363 - db.db_connector - INFO - DataFrame shape: (70980, 22)
+2025-10-22 18:07:03,363 - db.db_connector - INFO - DataFrame columns: ['TimeStamp', 'Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'M_solid_to_cyclone', 'CirculativeLoad', 'motif_id']
+2025-10-22 18:07:23,541 - db.db_connector - INFO - ✅ Successfully saved 70980 rows to mills.MOTIFS_08
+2025-10-22 18:07:23,541 - db.db_connector - INFO -    Action: replace
+2025-10-22 18:07:23,557 - db.db_connector - INFO -    Verification: Table mills.MOTIFS_08 now contains 70980 rows
+2025-10-22 18:07:23,558 - __main__ - INFO - ✓ Segmented data saved to database table: MOTIFS_08
+2025-10-22 18:07:23,559 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 18:07:23,561 - __main__ - INFO - STEP 7: GENERATING ANALYSIS OUTPUTS
+2025-10-22 18:07:23,561 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 18:07:23,561 - segmentation - INFO - Extracting motif summaries...
+2025-10-22 18:07:23,603 - segmentation - INFO -   ✓ Created summary for 32 motifs
+2025-10-22 18:07:23,605 - __main__ - INFO -   ✓ Motif summary saved to motif_summary.csv
+2025-10-22 18:07:23,605 - segmentation - INFO - Creating instance catalog...
+2025-10-22 18:07:23,613 - segmentation - INFO -   ✓ Cataloged 1183 instances
+2025-10-22 18:07:23,620 - __main__ - INFO -   ✓ Instance catalog saved to instance_catalog.csv
+2025-10-22 18:07:23,620 - segmentation - INFO - Calculating segment statistics...
+2025-10-22 18:07:23,664 - segmentation - INFO -   ✓ Calculated statistics for 32 motifs
+2025-10-22 18:07:23,670 - __main__ - INFO -   ✓ Segment statistics saved to segment_statistics.csv
+2025-10-22 18:07:23,671 - visualization - INFO - Creating summary report...
+2025-10-22 18:07:23,673 - visualization - INFO -   ✓ Saved summary report to summary_report.txt
+2025-10-22 18:07:23,673 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 18:07:23,674 - __main__ - INFO - STEP 8: CREATING VISUALIZATIONS
+2025-10-22 18:07:23,674 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 18:07:23,675 - visualization - INFO - Plotting top 10 motifs...
+2025-10-22 18:07:24,258 - visualization - INFO -   ✓ Saved motif 1 plot to motif_01.png
+2025-10-22 18:07:24,693 - visualization - INFO -   ✓ Saved motif 2 plot to motif_02.png
+2025-10-22 18:07:25,126 - visualization - INFO -   ✓ Saved motif 3 plot to motif_03.png
+2025-10-22 18:07:25,551 - visualization - INFO -   ✓ Saved motif 4 plot to motif_04.png
+2025-10-22 18:07:25,987 - visualization - INFO -   ✓ Saved motif 5 plot to motif_05.png
+2025-10-22 18:07:26,422 - visualization - INFO -   ✓ Saved motif 6 plot to motif_06.png
+2025-10-22 18:07:26,967 - visualization - INFO -   ✓ Saved motif 7 plot to motif_07.png
+2025-10-22 18:07:27,390 - visualization - INFO -   ✓ Saved motif 8 plot to motif_08.png
+2025-10-22 18:07:27,800 - visualization - INFO -   ✓ Saved motif 9 plot to motif_09.png
+2025-10-22 18:07:28,211 - visualization - INFO -   ✓ Saved motif 10 plot to motif_10.png
+2025-10-22 18:07:28,211 - visualization - INFO - Creating motif overview plot...
+2025-10-22 18:07:28,618 - visualization - INFO -   ✓ Saved overview plot to motif_overview.png
+2025-10-22 18:07:28,618 - visualization - INFO - Creating density analysis plot...
+2025-10-22 18:07:29,190 - visualization - INFO -   ✓ Saved density analysis plot to density_analysis.png
+2025-10-22 18:07:29,190 - visualization - INFO - Creating correlation heatmap...
+2025-10-22 18:07:29,504 - visualization - INFO -   ✓ Saved correlation heatmap to correlation_heatmap.png
+2025-10-22 18:07:29,505 - visualization - INFO - Creating feature distribution plots...
+2025-10-22 18:07:30,908 - visualization - INFO -   ✓ Saved feature distributions to feature_distributions.png
+2025-10-22 18:07:30,908 - __main__ - INFO - ✓ Visualizations saved to C:\Projects\experiments\modeling\output\plots\mill_8
+2025-10-22 18:07:30,908 - __main__ - INFO - 
+================================================================================
+2025-10-22 18:07:30,908 - __main__ - INFO - DATA PREPARATION COMPLETE
+2025-10-22 18:07:30,908 - __main__ - INFO - ================================================================================
+2025-10-22 18:07:30,908 - __main__ - INFO - Segmented data saved to: C:\Projects\experiments\modeling\output
+2025-10-22 18:07:30,908 - __main__ - INFO - Analysis files saved to: C:\Projects\experiments\modeling\output\analysis
+2025-10-22 18:07:30,908 - __main__ - INFO - Plots saved to: C:\Projects\experiments\modeling\output\plots
+2025-10-22 18:07:30,908 - __main__ - INFO - 
+✓ Data preparation pipeline completed successfully!
