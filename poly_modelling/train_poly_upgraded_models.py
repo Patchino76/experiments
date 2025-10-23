@@ -33,12 +33,16 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
 
-# Add parent to path
-project_root = Path(__file__).resolve().parent.parent
-if str(project_root) not in sys.path:
-    sys.path.append(str(project_root))
+POLY_BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = POLY_BASE_DIR.parent
+MODELING_DIR = PROJECT_ROOT / "modeling"
 
-from config import PipelineConfig
+# Ensure local and root modules are importable
+for path_candidate in (POLY_BASE_DIR, PROJECT_ROOT, MODELING_DIR):
+    if str(path_candidate) not in sys.path:
+        sys.path.append(str(path_candidate))
+
+from modeling.config import PipelineConfig
 from model_improvements import (
     diagnose_data_quality,
     compute_target_weights,
@@ -66,12 +70,30 @@ if sys.platform == 'win32':
 logger = logging.getLogger(__name__)
 
 
+def rebase_paths_to_poly(config: PipelineConfig) -> PipelineConfig:
+    """Ensure config paths point to the poly_modelling directory."""
+    output_dir = POLY_BASE_DIR / "output"
+    models_dir = POLY_BASE_DIR / "models"
+    analysis_dir = output_dir / "analysis"
+    plots_dir = output_dir / "plots"
+
+    for path in [output_dir, models_dir, analysis_dir, plots_dir]:
+        path.mkdir(parents=True, exist_ok=True)
+
+    config.paths.output_dir = output_dir
+    config.paths.models_dir = models_dir
+    config.paths.analysis_dir = analysis_dir
+    config.paths.plots_dir = plots_dir
+
+    return config
+
+
 class ImprovedPolynomialCascadeTrainer:
     """Trains improved polynomial regression cascade models for mill optimization."""
 
     def __init__(self, config: PipelineConfig):
         """Initialize trainer."""
-        self.config = config
+        self.config = rebase_paths_to_poly(config)
         self.mill_number = config.data.mill_number
         self.model_dir = config.paths.output_dir / f"mill_poly_upgraded_{self.mill_number:02d}"
         self.model_dir.mkdir(parents=True, exist_ok=True)
@@ -122,9 +144,12 @@ class ImprovedPolynomialCascadeTrainer:
         logger.info("STEP 1: LOADING DATA")
         logger.info("-" * 80)
 
-        # Try multiple possible filenames
+        # Try multiple possible filenames across both poly and modeling outputs
+        modeling_output_dir = PROJECT_ROOT / "modeling" / "output"
         possible_files = [
             self.config.paths.output_dir / f'segmented_motifs_all_{self.mill_number:02d}.csv',
+            modeling_output_dir / f'segmented_motifs_all_{self.mill_number:02d}.csv',
+            modeling_output_dir / "segmented_motifs_all.csv",
         ]
         
         data_path = None
@@ -140,7 +165,11 @@ class ImprovedPolynomialCascadeTrainer:
             )
 
         logger.info(f"Loading data from {data_path}...")
-        self.df = pd.read_csv(data_path, parse_dates=['TimeStamp'] if 'TimeStamp' in pd.read_csv(data_path, nrows=0).columns else None)
+        parse_dates = None
+        preview = pd.read_csv(data_path, nrows=0)
+        if 'TimeStamp' in preview.columns:
+            parse_dates = ['TimeStamp']
+        self.df = pd.read_csv(data_path, parse_dates=parse_dates)
 
         required_cols = self.mv_features + self.cv_features + self.dv_features + [self.dv_target]
         missing_cols = [col for col in required_cols if col not in self.df.columns]

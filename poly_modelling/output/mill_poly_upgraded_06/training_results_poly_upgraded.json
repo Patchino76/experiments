@@ -602,12 +602,12 @@
     ],
     "validation_error": null
   },
-  "training_timestamp": "2025-10-23T13:52:31.332047",
+  "training_timestamp": "2025-10-23T18:53:36.274776",
   "data_shape": [
     6540,
     22
   ],
-  "model_save_path": "C:\\Projects\\experiments\\modeling\\output\\mill_poly_upgraded_06",
+  "model_save_path": "C:\\Projects\\experiments\\poly_modelling\\output\\mill_poly_upgraded_06",
   "mill_number": 6,
   "feature_configuration": {
     "mv_features": [
