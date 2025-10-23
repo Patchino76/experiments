@@ -1146,3 +1146,2267 @@ Training model: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad', 'Class_
 2025-10-23 12:08:12,733 - __main__ - INFO - Plots saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_08\plots
 2025-10-23 12:08:12,733 - __main__ - INFO - 
 ✓ Improved polynomial model training pipeline completed successfully!
+2025-10-23 12:27:19,110 - __main__ - INFO - 
+================================================================================
+2025-10-23 12:27:19,111 - __main__ - INFO - STARTING IMPROVED POLYNOMIAL CASCADE TRAINING - MILL 6
+2025-10-23 12:27:19,111 - __main__ - INFO - ================================================================================
+2025-10-23 12:27:19,112 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:27:19,112 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-23 12:27:19,112 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:27:19,112 - __main__ - INFO - Loading data from C:\Projects\experiments\modeling\output\segmented_motifs_all_06.csv...
+2025-10-23 12:27:19,140 - __main__ - INFO -   Data shape: (6540, 22)
+2025-10-23 12:27:19,140 - __main__ - INFO -   Rows removed (NaN): 0 (0.00%)
+2025-10-23 12:27:19,141 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:27:19,141 - __main__ - INFO - STEP 2: DATA QUALITY DIAGNOSTICS
+2025-10-23 12:27:19,141 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:27:19,141 - model_improvements - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:27:19,141 - model_improvements - INFO - DATA QUALITY DIAGNOSTICS
+2025-10-23 12:27:19,141 - model_improvements - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:27:19,143 - model_improvements - INFO - 
+Ore:
+2025-10-23 12:27:19,143 - model_improvements - INFO -   Range: [116.250, 185.354]
+2025-10-23 12:27:19,143 - model_improvements - INFO -   Mean±Std: 176.443 ± 4.511
+2025-10-23 12:27:19,143 - model_improvements - INFO -   Coefficient of Variation: 2.6%
+2025-10-23 12:27:19,143 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 12:27:19,143 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,144 - model_improvements - INFO - 
+WaterMill:
+2025-10-23 12:27:19,144 - model_improvements - INFO -   Range: [13.218, 17.217]
+2025-10-23 12:27:19,144 - model_improvements - INFO -   Mean±Std: 15.857 ± 0.955
+2025-10-23 12:27:19,144 - model_improvements - INFO -   Coefficient of Variation: 6.0%
+2025-10-23 12:27:19,144 - model_improvements - INFO -   Outliers (>3 IQR): 780 (11.93%)
+2025-10-23 12:27:19,145 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,145 - model_improvements - WARNING -   ⚠ High outlier percentage
+2025-10-23 12:27:19,147 - model_improvements - INFO - 
+WaterZumpf:
+2025-10-23 12:27:19,147 - model_improvements - INFO -   Range: [127.760, 241.569]
+2025-10-23 12:27:19,147 - model_improvements - INFO -   Mean±Std: 213.018 ± 23.990
+2025-10-23 12:27:19,148 - model_improvements - INFO -   Coefficient of Variation: 11.3%
+2025-10-23 12:27:19,148 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:27:19,148 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,149 - model_improvements - INFO - 
+DensityHC:
+2025-10-23 12:27:19,149 - model_improvements - INFO -   Range: [1603.609, 1764.417]
+2025-10-23 12:27:19,149 - model_improvements - INFO -   Mean±Std: 1678.511 ± 29.012
+2025-10-23 12:27:19,149 - model_improvements - INFO -   Coefficient of Variation: 1.7%
+2025-10-23 12:27:19,149 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:27:19,149 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,150 - model_improvements - INFO - 
+PulpHC:
+2025-10-23 12:27:19,151 - model_improvements - INFO -   Range: [491.651, 599.983]
+2025-10-23 12:27:19,151 - model_improvements - INFO -   Mean±Std: 564.022 ± 19.841
+2025-10-23 12:27:19,151 - model_improvements - INFO -   Coefficient of Variation: 3.5%
+2025-10-23 12:27:19,151 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:27:19,151 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,152 - model_improvements - INFO - 
+PressureHC:
+2025-10-23 12:27:19,152 - model_improvements - INFO -   Range: [0.338, 0.465]
+2025-10-23 12:27:19,152 - model_improvements - INFO -   Mean±Std: 0.414 ± 0.030
+2025-10-23 12:27:19,153 - model_improvements - INFO -   Coefficient of Variation: 7.2%
+2025-10-23 12:27:19,153 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:27:19,153 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,154 - model_improvements - INFO - 
+CirculativeLoad:
+2025-10-23 12:27:19,154 - model_improvements - INFO -   Range: [1.859, 3.626]
+2025-10-23 12:27:19,154 - model_improvements - INFO -   Mean±Std: 2.311 ± 0.180
+2025-10-23 12:27:19,154 - model_improvements - INFO -   Coefficient of Variation: 7.8%
+2025-10-23 12:27:19,154 - model_improvements - INFO -   Outliers (>3 IQR): 12 (0.18%)
+2025-10-23 12:27:19,154 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,155 - model_improvements - INFO - 
+Class_15:
+2025-10-23 12:27:19,155 - model_improvements - INFO -   Range: [0.400, 2.100]
+2025-10-23 12:27:19,155 - model_improvements - INFO -   Mean±Std: 1.018 ± 0.403
+2025-10-23 12:27:19,155 - model_improvements - INFO -   Coefficient of Variation: 39.6%
+2025-10-23 12:27:19,157 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:27:19,157 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,158 - model_improvements - INFO - 
+Daiki:
+2025-10-23 12:27:19,158 - model_improvements - INFO -   Range: [0.202, 0.438]
+2025-10-23 12:27:19,159 - model_improvements - INFO -   Mean±Std: 0.327 ± 0.055
+2025-10-23 12:27:19,159 - model_improvements - INFO -   Coefficient of Variation: 16.7%
+2025-10-23 12:27:19,159 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:27:19,159 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,159 - model_improvements - INFO - 
+FE:
+2025-10-23 12:27:19,160 - model_improvements - INFO -   Range: [-5997.868, 3.995]
+2025-10-23 12:27:19,160 - model_improvements - INFO -   Mean±Std: -1.099 ± 139.132
+2025-10-23 12:27:19,160 - model_improvements - INFO -   Coefficient of Variation: -12657.3%
+2025-10-23 12:27:19,160 - model_improvements - INFO -   Outliers (>3 IQR): 9 (0.14%)
+2025-10-23 12:27:19,160 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,160 - model_improvements - WARNING -   ⚠ Very low variance - may not be informative
+2025-10-23 12:27:19,162 - model_improvements - INFO - 
+PSI200:
+2025-10-23 12:27:19,162 - model_improvements - INFO -   Range: [17.054, 31.143]
+2025-10-23 12:27:19,162 - model_improvements - INFO -   Mean±Std: 23.041 ± 1.845
+2025-10-23 12:27:19,162 - model_improvements - INFO -   Coefficient of Variation: 8.0%
+2025-10-23 12:27:19,162 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 12:27:19,162 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:27:19,162 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:27:19,162 - __main__ - INFO - STEP 3: SPLITTING DATA
+2025-10-23 12:27:19,162 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:27:19,162 - __main__ - INFO -   Train size: 5232
+2025-10-23 12:27:19,163 - __main__ - INFO -   Test size: 1308
+2025-10-23 12:27:19,163 - __main__ - INFO -   Test ratio: 20.0%
+2025-10-23 12:27:19,163 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:27:19,163 - __main__ - INFO - STEP 4: TRAINING PROCESS MODELS (MV → CV)
+2025-10-23 12:27:19,164 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:27:19,164 - __main__ - INFO - 
+============================================================
+2025-10-23 12:27:19,164 - __main__ - INFO - Training model: MV → DensityHC
+2025-10-23 12:27:19,164 - __main__ - INFO - ============================================================
+2025-10-23 12:27:19,165 - __main__ - INFO - 
+  Testing multiple regularization methods...
+2025-10-23 12:27:19,165 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:27:21,378 - __main__ - INFO -       Best CV score: 0.1666
+2025-10-23 12:27:21,378 - __main__ - INFO -       Test R²: 0.4012
+2025-10-23 12:27:21,379 - __main__ - INFO -       Best params: {'model__alpha': 100.0, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:27:21,379 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:27:23,109 - __main__ - INFO -       Best CV score: 0.1725
+2025-10-23 12:27:23,109 - __main__ - INFO -       Test R²: 0.3399
+2025-10-23 12:27:23,109 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.99, 'poly__degree': 3, 'poly__interaction_only': True}
+2025-10-23 12:27:23,109 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:27:23,791 - __main__ - INFO -       Best CV score: 0.1754
+2025-10-23 12:27:23,792 - __main__ - INFO -       Test R²: 0.3497
+2025-10-23 12:27:23,792 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'poly__degree': 3, 'poly__interaction_only': True}
+2025-10-23 12:27:23,793 - __main__ - INFO - 
+  ✓ Best model type: LASSO
+2025-10-23 12:27:23,793 - __main__ - INFO -   Best parameters:
+2025-10-23 12:27:23,793 - __main__ - INFO -     model__alpha: 1.0
+2025-10-23 12:27:23,793 - __main__ - INFO -     poly__degree: 3
+2025-10-23 12:27:23,793 - __main__ - INFO -     poly__interaction_only: True
+2025-10-23 12:27:23,793 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:27:23,793 - model_improvements - INFO -   Total parameter combinations tested: 36
+2025-10-23 12:27:23,794 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:27:23,794 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:27:23,794 - model_improvements - INFO -       Mean CV Score: 0.1754 (±0.2759)
+2025-10-23 12:27:23,794 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 3, 'poly__interaction_only': True}
+2025-10-23 12:27:23,794 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:27:23,794 - model_improvements - INFO -       Mean CV Score: 0.1754 (±0.2759)
+2025-10-23 12:27:23,795 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:27:23,795 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:27:23,795 - model_improvements - INFO -       Mean CV Score: 0.0238 (±0.2850)
+2025-10-23 12:27:23,795 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 1, 'poly__interaction_only': True}
+2025-10-23 12:27:23,795 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:27:23,795 - model_improvements - INFO -       Mean CV Score: 0.0238 (±0.2850)
+2025-10-23 12:27:23,795 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:27:23,795 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:27:23,795 - model_improvements - INFO -       Mean CV Score: -0.0033 (±0.0919)
+2025-10-23 12:27:23,795 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0, 'poly__degree': 2, 'poly__interaction_only': False}
+2025-10-23 12:27:23,797 - model_improvements - INFO - 
+  Polynomial Feature Complexity:
+2025-10-23 12:27:23,797 - model_improvements - INFO -     Total features: 7
+2025-10-23 12:27:23,797 - model_improvements - INFO -     Linear: 3
+2025-10-23 12:27:23,797 - model_improvements - INFO -     Interactions: 4
+2025-10-23 12:27:23,797 - model_improvements - INFO -     Powers: 0
+2025-10-23 12:27:23,800 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:27:23,800 - __main__ - INFO -     R²: 0.2484, RMSE: 24.5684, MAE: 18.4717
+2025-10-23 12:27:23,800 - __main__ - INFO -   Test Performance:
+2025-10-23 12:27:23,800 - __main__ - INFO -     R²: 0.3497, RMSE: 24.9538, MAE: 16.8417
+2025-10-23 12:27:23,800 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 12:27:23,800 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:27:23,800 - __main__ - INFO -     WaterMill WaterZumpf: 14.121143
+2025-10-23 12:27:23,800 - __main__ - INFO -     Ore: 8.908898
+2025-10-23 12:27:23,800 - __main__ - INFO -     WaterMill: -7.332742
+2025-10-23 12:27:23,800 - __main__ - INFO -     Ore WaterZumpf: -7.216173
+2025-10-23 12:27:23,800 - __main__ - INFO -     WaterZumpf: -1.864827
+2025-10-23 12:27:23,800 - __main__ - INFO -     Ore WaterMill: -0.041876
+2025-10-23 12:27:23,800 - __main__ - INFO -     Ore WaterMill WaterZumpf: 0.000000
+2025-10-23 12:27:23,800 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:27:23,800 - __main__ - INFO -     Total features: 7
+2025-10-23 12:27:23,802 - __main__ - INFO -     Non-zero coefficients: 6
+2025-10-23 12:27:23,802 - __main__ - INFO -     Sparsity: 14.3%
+2025-10-23 12:27:23,802 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:27:24,323 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_residuals.png
+2025-10-23 12:27:24,605 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_cv_results.png
+2025-10-23 12:27:24,605 - __main__ - INFO -   ✓ Model saved to process_model_DensityHC.pkl
+2025-10-23 12:27:24,605 - __main__ - INFO - 
+============================================================
+2025-10-23 12:27:24,607 - __main__ - INFO - Training model: MV → PulpHC
+2025-10-23 12:27:24,607 - __main__ - INFO - ============================================================
+2025-10-23 12:27:24,607 - __main__ - INFO - 
+  Testing multiple regularization methods...
+2025-10-23 12:27:24,607 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:27:24,771 - __main__ - INFO -       Best CV score: 0.1821
+2025-10-23 12:27:24,771 - __main__ - INFO -       Test R²: 0.2653
+2025-10-23 12:27:24,771 - __main__ - INFO -       Best params: {'model__alpha': 10.0, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:27:24,771 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:27:26,626 - __main__ - INFO -       Best CV score: 0.2400
+2025-10-23 12:27:26,626 - __main__ - INFO -       Test R²: 0.3367
+2025-10-23 12:27:26,627 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.99, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:26,627 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:27:27,360 - __main__ - INFO -       Best CV score: 0.2435
+2025-10-23 12:27:27,361 - __main__ - INFO -       Test R²: 0.3408
+2025-10-23 12:27:27,361 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:27,362 - __main__ - INFO - 
+  ✓ Best model type: LASSO
+2025-10-23 12:27:27,362 - __main__ - INFO -   Best parameters:
+2025-10-23 12:27:27,362 - __main__ - INFO -     model__alpha: 1.0
+2025-10-23 12:27:27,362 - __main__ - INFO -     poly__degree: 3
+2025-10-23 12:27:27,363 - __main__ - INFO -     poly__interaction_only: False
+2025-10-23 12:27:27,364 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:27:27,364 - model_improvements - INFO -   Total parameter combinations tested: 36
+2025-10-23 12:27:27,364 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:27:27,365 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:27:27,365 - model_improvements - INFO -       Mean CV Score: 0.2435 (±0.2572)
+2025-10-23 12:27:27,365 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:27,365 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:27:27,365 - model_improvements - INFO -       Mean CV Score: 0.1584 (±0.3663)
+2025-10-23 12:27:27,365 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:27:27,365 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:27:27,365 - model_improvements - INFO -       Mean CV Score: 0.1465 (±0.2604)
+2025-10-23 12:27:27,367 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:27:27,367 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 12:27:27,367 - model_improvements - INFO -       Mean CV Score: 0.1312 (±0.2507)
+2025-10-23 12:27:27,367 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 3, 'poly__interaction_only': True}
+2025-10-23 12:27:27,367 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:27:27,367 - model_improvements - INFO -       Mean CV Score: 0.1180 (±0.1972)
+2025-10-23 12:27:27,368 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:27:27,368 - model_improvements - INFO - 
+  Polynomial Feature Complexity:
+2025-10-23 12:27:27,368 - model_improvements - INFO -     Total features: 19
+2025-10-23 12:27:27,368 - model_improvements - INFO -     Linear: 3
+2025-10-23 12:27:27,368 - model_improvements - INFO -     Interactions: 4
+2025-10-23 12:27:27,368 - model_improvements - INFO -     Powers: 12
+2025-10-23 12:27:27,372 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:27:27,373 - __main__ - INFO -     R²: 0.4154, RMSE: 14.6397, MAE: 10.7426
+2025-10-23 12:27:27,373 - __main__ - INFO -   Test Performance:
+2025-10-23 12:27:27,373 - __main__ - INFO -     R²: 0.3408, RMSE: 17.7655, MAE: 13.0346
+2025-10-23 12:27:27,373 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0746)
+2025-10-23 12:27:27,373 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:27:27,373 - __main__ - INFO -     WaterZumpf^2: 9.037944
+2025-10-23 12:27:27,373 - __main__ - INFO -     Ore: 4.635239
+2025-10-23 12:27:27,373 - __main__ - INFO -     WaterZumpf: -4.565086
+2025-10-23 12:27:27,373 - __main__ - INFO -     WaterZumpf^3: 3.481805
+2025-10-23 12:27:27,373 - __main__ - INFO -     WaterMill WaterZumpf: -1.267505
+2025-10-23 12:27:27,374 - __main__ - INFO -     WaterMill^3: 1.012147
+2025-10-23 12:27:27,374 - __main__ - INFO -     Ore WaterMill^2: -0.946985
+2025-10-23 12:27:27,374 - __main__ - INFO -     Ore WaterMill: 0.445962
+2025-10-23 12:27:27,374 - __main__ - INFO -     Ore^2 WaterMill: 0.271486
+2025-10-23 12:27:27,374 - __main__ - INFO -     Ore^3: -0.025049
+2025-10-23 12:27:27,374 - __main__ - INFO -     WaterMill: 0.000000
+2025-10-23 12:27:27,374 - __main__ - INFO -     Ore^2: -0.000000
+2025-10-23 12:27:27,374 - __main__ - INFO -     Ore WaterZumpf: 0.000000
+2025-10-23 12:27:27,375 - __main__ - INFO -     WaterMill^2: 0.000000
+2025-10-23 12:27:27,375 - __main__ - INFO -     Ore^2 WaterZumpf: -0.000000
+2025-10-23 12:27:27,375 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:27:27,375 - __main__ - INFO -     Total features: 19
+2025-10-23 12:27:27,375 - __main__ - INFO -     Non-zero coefficients: 10
+2025-10-23 12:27:27,375 - __main__ - INFO -     Sparsity: 47.4%
+2025-10-23 12:27:27,375 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:27:27,844 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_residuals.png
+2025-10-23 12:27:28,090 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_cv_results.png
+2025-10-23 12:27:28,091 - __main__ - INFO -   ✓ Model saved to process_model_PulpHC.pkl
+2025-10-23 12:27:28,091 - __main__ - INFO - 
+============================================================
+2025-10-23 12:27:28,092 - __main__ - INFO - Training model: MV → PressureHC
+2025-10-23 12:27:28,092 - __main__ - INFO - ============================================================
+2025-10-23 12:27:28,093 - __main__ - INFO - 
+  Testing multiple regularization methods...
+2025-10-23 12:27:28,093 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:27:28,256 - __main__ - INFO -       Best CV score: 0.4411
+2025-10-23 12:27:28,256 - __main__ - INFO -       Test R²: 0.6121
+2025-10-23 12:27:28,256 - __main__ - INFO -       Best params: {'model__alpha': 100.0, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:27:28,256 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:27:28,917 - __main__ - INFO -       Best CV score: 0.5513
+2025-10-23 12:27:28,917 - __main__ - INFO -       Test R²: 0.7763
+2025-10-23 12:27:28,917 - __main__ - INFO -       Best params: {'model__alpha': 0.01, 'model__l1_ratio': 0.1, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:28,917 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:27:29,083 - __main__ - INFO -       Best CV score: 0.5525
+2025-10-23 12:27:29,083 - __main__ - INFO -       Test R²: 0.7817
+2025-10-23 12:27:29,083 - __main__ - INFO -       Best params: {'model__alpha': 0.001, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:29,083 - __main__ - INFO - 
+  ✓ Best model type: LASSO
+2025-10-23 12:27:29,083 - __main__ - INFO -   Best parameters:
+2025-10-23 12:27:29,084 - __main__ - INFO -     model__alpha: 0.001
+2025-10-23 12:27:29,084 - __main__ - INFO -     poly__degree: 3
+2025-10-23 12:27:29,084 - __main__ - INFO -     poly__interaction_only: False
+2025-10-23 12:27:29,084 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:27:29,084 - model_improvements - INFO -   Total parameter combinations tested: 36
+2025-10-23 12:27:29,084 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:27:29,084 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:27:29,084 - model_improvements - INFO -       Mean CV Score: 0.5525 (±0.1878)
+2025-10-23 12:27:29,085 - model_improvements - INFO -       Parameters: {'model__alpha': 0.001, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:29,085 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:27:29,085 - model_improvements - INFO -       Mean CV Score: 0.4601 (±0.1913)
+2025-10-23 12:27:29,085 - model_improvements - INFO -       Parameters: {'model__alpha': 0.001, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:27:29,085 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:27:29,085 - model_improvements - INFO -       Mean CV Score: 0.4571 (±0.1979)
+2025-10-23 12:27:29,085 - model_improvements - INFO -       Parameters: {'model__alpha': 0.001, 'poly__degree': 3, 'poly__interaction_only': True}
+2025-10-23 12:27:29,085 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 12:27:29,085 - model_improvements - INFO -       Mean CV Score: 0.3720 (±0.1103)
+2025-10-23 12:27:29,086 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:29,086 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:27:29,087 - model_improvements - INFO -       Mean CV Score: 0.2765 (±0.0590)
+2025-10-23 12:27:29,087 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01, 'poly__degree': 2, 'poly__interaction_only': False}
+2025-10-23 12:27:29,087 - model_improvements - INFO - 
+  Polynomial Feature Complexity:
+2025-10-23 12:27:29,087 - model_improvements - INFO -     Total features: 19
+2025-10-23 12:27:29,087 - model_improvements - INFO -     Linear: 3
+2025-10-23 12:27:29,087 - model_improvements - INFO -     Interactions: 4
+2025-10-23 12:27:29,087 - model_improvements - INFO -     Powers: 12
+2025-10-23 12:27:29,090 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:27:29,090 - __main__ - INFO -     R²: 0.7402, RMSE: 0.0148, MAE: 0.0112
+2025-10-23 12:27:29,091 - __main__ - INFO -   Test Performance:
+2025-10-23 12:27:29,091 - __main__ - INFO -     R²: 0.7817, RMSE: 0.0138, MAE: 0.0101
+2025-10-23 12:27:29,092 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 12:27:29,092 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:27:29,092 - __main__ - INFO -     WaterZumpf^2: 0.022480
+2025-10-23 12:27:29,092 - __main__ - INFO -     WaterMill WaterZumpf: -0.014289
+2025-10-23 12:27:29,092 - __main__ - INFO -     WaterZumpf^3: 0.007068
+2025-10-23 12:27:29,092 - __main__ - INFO -     Ore WaterZumpf: 0.005743
+2025-10-23 12:27:29,092 - __main__ - INFO -     WaterZumpf: -0.004360
+2025-10-23 12:27:29,092 - __main__ - INFO -     WaterMill^3: 0.001947
+2025-10-23 12:27:29,092 - __main__ - INFO -     Ore WaterMill: 0.001733
+2025-10-23 12:27:29,093 - __main__ - INFO -     Ore: 0.001617
+2025-10-23 12:27:29,093 - __main__ - INFO -     Ore WaterMill^2: -0.000378
+2025-10-23 12:27:29,093 - __main__ - INFO -     Ore^2 WaterMill: 0.000051
+2025-10-23 12:27:29,093 - __main__ - INFO -     Ore^3: 0.000009
+2025-10-23 12:27:29,093 - __main__ - INFO -     WaterMill: 0.000000
+2025-10-23 12:27:29,093 - __main__ - INFO -     Ore^2: 0.000000
+2025-10-23 12:27:29,093 - __main__ - INFO -     WaterMill^2: 0.000000
+2025-10-23 12:27:29,093 - __main__ - INFO -     Ore^2 WaterZumpf: -0.000000
+2025-10-23 12:27:29,093 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:27:29,093 - __main__ - INFO -     Total features: 19
+2025-10-23 12:27:29,093 - __main__ - INFO -     Non-zero coefficients: 11
+2025-10-23 12:27:29,093 - __main__ - INFO -     Sparsity: 42.1%
+2025-10-23 12:27:29,093 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:27:29,567 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_residuals.png
+2025-10-23 12:27:29,821 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_cv_results.png
+2025-10-23 12:27:29,822 - __main__ - INFO -   ✓ Model saved to process_model_PressureHC.pkl
+2025-10-23 12:27:29,823 - __main__ - INFO - 
+============================================================
+2025-10-23 12:27:29,823 - __main__ - INFO - Training model: MV → CirculativeLoad
+2025-10-23 12:27:29,823 - __main__ - INFO - ============================================================
+2025-10-23 12:27:29,826 - __main__ - INFO - 
+  Testing multiple regularization methods...
+2025-10-23 12:27:29,826 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:27:30,052 - __main__ - INFO -       Best CV score: -0.0892
+2025-10-23 12:27:30,052 - __main__ - INFO -       Test R²: -0.0186
+2025-10-23 12:27:30,052 - __main__ - INFO -       Best params: {'model__alpha': 1000.0, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:27:30,052 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:27:30,856 - __main__ - INFO -       Best CV score: -0.0593
+2025-10-23 12:27:30,856 - __main__ - INFO -       Test R²: -0.0008
+2025-10-23 12:27:30,856 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.5, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:30,856 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:27:31,237 - __main__ - INFO -       Best CV score: -0.0594
+2025-10-23 12:27:31,237 - __main__ - INFO -       Test R²: -0.0006
+2025-10-23 12:27:31,238 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:31,238 - __main__ - INFO - 
+  ✓ Best model type: ELASTICNET
+2025-10-23 12:27:31,238 - __main__ - INFO -   Best parameters:
+2025-10-23 12:27:31,238 - __main__ - INFO -     model__alpha: 1.0
+2025-10-23 12:27:31,239 - __main__ - INFO -     model__l1_ratio: 0.5
+2025-10-23 12:27:31,239 - __main__ - INFO -     poly__degree: 3
+2025-10-23 12:27:31,239 - __main__ - INFO -     poly__interaction_only: False
+2025-10-23 12:27:31,240 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:27:31,240 - model_improvements - INFO -   Total parameter combinations tested: 216
+2025-10-23 12:27:31,241 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:27:31,241 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:27:31,242 - model_improvements - INFO -       Mean CV Score: -0.0593 (±0.0696)
+2025-10-23 12:27:31,242 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.5, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:31,242 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:27:31,242 - model_improvements - INFO -       Mean CV Score: -0.0593 (±0.0695)
+2025-10-23 12:27:31,242 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.7, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:31,242 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:27:31,244 - model_improvements - INFO -       Mean CV Score: -0.0594 (±0.0695)
+2025-10-23 12:27:31,244 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.9, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:31,244 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 12:27:31,244 - model_improvements - INFO -       Mean CV Score: -0.0594 (±0.0695)
+2025-10-23 12:27:31,244 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.95, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:31,245 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:27:31,245 - model_improvements - INFO -       Mean CV Score: -0.0594 (±0.0695)
+2025-10-23 12:27:31,245 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.99, 'poly__degree': 3, 'poly__interaction_only': False}
+2025-10-23 12:27:31,245 - model_improvements - INFO - 
+  Polynomial Feature Complexity:
+2025-10-23 12:27:31,246 - model_improvements - INFO -     Total features: 19
+2025-10-23 12:27:31,246 - model_improvements - INFO -     Linear: 3
+2025-10-23 12:27:31,246 - model_improvements - INFO -     Interactions: 4
+2025-10-23 12:27:31,246 - model_improvements - INFO -     Powers: 12
+2025-10-23 12:27:31,251 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:27:31,251 - __main__ - INFO -     R²: 0.0664, RMSE: 0.1692, MAE: 0.1257
+2025-10-23 12:27:31,251 - __main__ - INFO -   Test Performance:
+2025-10-23 12:27:31,251 - __main__ - INFO -     R²: -0.0008, RMSE: 0.1989, MAE: 0.1310
+2025-10-23 12:27:31,251 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0672)
+2025-10-23 12:27:31,252 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore^3: -0.000470
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore: -0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     WaterMill: -0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     WaterZumpf: -0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore^2: 0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore WaterMill: 0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore WaterZumpf: 0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     WaterMill^2: 0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     WaterMill WaterZumpf: 0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     WaterZumpf^2: -0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore^2 WaterMill: -0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore^2 WaterZumpf: 0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore WaterMill^2: -0.000000
+2025-10-23 12:27:31,252 - __main__ - INFO -     Ore WaterMill WaterZumpf: -0.000000
+2025-10-23 12:27:31,253 - __main__ - INFO -     Ore WaterZumpf^2: -0.000000
+2025-10-23 12:27:31,253 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:27:31,253 - __main__ - INFO -     Total features: 19
+2025-10-23 12:27:31,253 - __main__ - INFO -     Non-zero coefficients: 1
+2025-10-23 12:27:31,253 - __main__ - INFO -     Sparsity: 94.7%
+2025-10-23 12:27:31,253 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:27:31,726 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_residuals.png
+2025-10-23 12:27:31,976 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_cv_results.png
+2025-10-23 12:27:31,977 - __main__ - INFO -   ✓ Model saved to process_model_CirculativeLoad.pkl
+2025-10-23 12:27:31,977 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:27:31,978 - __main__ - INFO - STEP 5: TRAINING QUALITY MODEL (CV + DV → Target)
+2025-10-23 12:27:31,978 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:27:31,979 - __main__ - INFO -   Filtered training data: 5232 → 5232 samples
+2025-10-23 12:27:31,981 - __main__ - INFO -   Filtered test data: 1308 → 1308 samples
+2025-10-23 12:27:31,981 - __main__ - INFO - 
+Training model: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad', 'Class_15', 'Daiki', 'FE'] → PSI200
+2025-10-23 12:27:31,982 - model_improvements - INFO -   Sample weighting:
+2025-10-23 12:27:31,983 - model_improvements - INFO -     In-range [16, 30]: 5228 samples (weight=2.0)
+2025-10-23 12:27:31,983 - model_improvements - INFO -     Out-of-range: 4 samples (weight=1.0)
+2025-10-23 12:27:31,983 - __main__ - INFO - 
+  Testing multiple regularization methods...
+2025-10-23 12:27:31,983 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:27:32,345 - __main__ - INFO -       Best CV score: -2594.6048
+2025-10-23 12:27:32,345 - __main__ - INFO -       Test R²: 0.5261
+2025-10-23 12:27:32,346 - __main__ - INFO -       Best params: {'model__alpha': 1000.0, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:27:32,346 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:28:03,350 - __main__ - INFO -       Best CV score: 0.0791
+2025-10-23 12:28:03,350 - __main__ - INFO -       Test R²: 0.2504
+2025-10-23 12:28:03,352 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.5, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:28:03,352 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:28:09,188 - __main__ - INFO -       Best CV score: 0.2383
+2025-10-23 12:28:09,188 - __main__ - INFO -       Test R²: 0.5317
+2025-10-23 12:28:09,188 - __main__ - INFO -       Best params: {'model__alpha': 0.1, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:28:09,189 - __main__ - INFO - 
+  ✓ Best model type: LASSO
+2025-10-23 12:28:09,191 - __main__ - INFO -   Best parameters:
+2025-10-23 12:28:09,191 - __main__ - INFO -     model__alpha: 0.1
+2025-10-23 12:28:09,191 - __main__ - INFO -     poly__degree: 1
+2025-10-23 12:28:09,191 - __main__ - INFO -     poly__interaction_only: False
+2025-10-23 12:28:09,192 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:28:09,193 - model_improvements - INFO -   Total parameter combinations tested: 36
+2025-10-23 12:28:09,193 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:28:09,194 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:28:09,194 - model_improvements - INFO -       Mean CV Score: 0.2383 (±0.2810)
+2025-10-23 12:28:09,194 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'poly__degree': 1, 'poly__interaction_only': True}
+2025-10-23 12:28:09,194 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:28:09,194 - model_improvements - INFO -       Mean CV Score: 0.2383 (±0.2810)
+2025-10-23 12:28:09,194 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:28:09,194 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:28:09,195 - model_improvements - INFO -       Mean CV Score: -0.0518 (±0.1266)
+2025-10-23 12:28:09,195 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 1, 'poly__interaction_only': False}
+2025-10-23 12:28:09,195 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:28:09,195 - model_improvements - INFO -       Mean CV Score: -0.0518 (±0.1266)
+2025-10-23 12:28:09,195 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 1, 'poly__interaction_only': True}
+2025-10-23 12:28:09,195 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:28:09,196 - model_improvements - INFO -       Mean CV Score: -0.0518 (±0.1266)
+2025-10-23 12:28:09,196 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'poly__degree': 2, 'poly__interaction_only': True}
+2025-10-23 12:28:09,197 - model_improvements - INFO - 
+  Polynomial Feature Complexity:
+2025-10-23 12:28:09,197 - model_improvements - INFO -     Total features: 7
+2025-10-23 12:28:09,197 - model_improvements - INFO -     Linear: 7
+2025-10-23 12:28:09,197 - model_improvements - INFO -     Interactions: 0
+2025-10-23 12:28:09,197 - model_improvements - INFO -     Powers: 0
+2025-10-23 12:28:09,200 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:28:09,202 - __main__ - INFO -     R²: 0.4671, RMSE: 1.3650, MAE: 1.0420
+2025-10-23 12:28:09,202 - __main__ - INFO -   Test Performance:
+2025-10-23 12:28:09,202 - __main__ - INFO -     R²: 0.5317, RMSE: 1.1836, MAE: 0.8496
+2025-10-23 12:28:09,202 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 12:28:09,202 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:28:09,202 - __main__ - INFO -     DensityHC: 1.547553
+2025-10-23 12:28:09,202 - __main__ - INFO -     PressureHC: 0.587678
+2025-10-23 12:28:09,203 - __main__ - INFO -     CirculativeLoad: -0.355856
+2025-10-23 12:28:09,203 - __main__ - INFO -     Daiki: 0.068868
+2025-10-23 12:28:09,203 - __main__ - INFO -     PulpHC: 0.000000
+2025-10-23 12:28:09,203 - __main__ - INFO -     Class_15: -0.000000
+2025-10-23 12:28:09,203 - __main__ - INFO -     FE: 0.000000
+2025-10-23 12:28:09,203 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:28:09,203 - __main__ - INFO -     Total features: 7
+2025-10-23 12:28:09,203 - __main__ - INFO -     Non-zero coefficients: 4
+2025-10-23 12:28:09,203 - __main__ - INFO -     Sparsity: 42.9%
+2025-10-23 12:28:09,203 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:28:09,683 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_residuals.png
+2025-10-23 12:28:09,933 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_cv_results.png
+2025-10-23 12:28:09,934 - __main__ - INFO -   ✓ Model saved to quality_model.pkl
+2025-10-23 12:28:09,935 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:28:09,935 - __main__ - INFO - STEP 6: VALIDATING CASCADE
+2025-10-23 12:28:09,935 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:28:09,936 - __main__ - INFO -   Validating with 200 samples...
+2025-10-23 12:28:09,941 - __main__ - INFO -   Cascade Validation Results:
+2025-10-23 12:28:09,941 - __main__ - INFO -     R²: 0.2334
+2025-10-23 12:28:09,941 - __main__ - INFO -     RMSE: 1.6202
+2025-10-23 12:28:09,941 - __main__ - INFO -     MAE: 1.0278
+2025-10-23 12:28:10,450 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\cascade_validation.png
+2025-10-23 12:28:10,452 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:28:10,452 - __main__ - INFO - STEP 7: SAVING RESULTS
+2025-10-23 12:28:10,452 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:28:10,456 - __main__ - INFO -   ✓ Metadata saved to metadata_poly_upgraded.json
+2025-10-23 12:28:10,459 - __main__ - INFO -   ✓ Training results saved to training_results_poly_upgraded.json
+2025-10-23 12:28:10,459 - __main__ - INFO - 
+  Files created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06:
+2025-10-23 12:28:10,459 - __main__ - INFO -     - metadata_poly_upgraded.json
+2025-10-23 12:28:10,460 - __main__ - INFO -     - process_model_CirculativeLoad.pkl
+2025-10-23 12:28:10,460 - __main__ - INFO -     - process_model_DensityHC.pkl
+2025-10-23 12:28:10,460 - __main__ - INFO -     - process_model_PressureHC.pkl
+2025-10-23 12:28:10,461 - __main__ - INFO -     - process_model_PulpHC.pkl
+2025-10-23 12:28:10,461 - __main__ - INFO -     - quality_model.pkl
+2025-10-23 12:28:10,461 - __main__ - INFO -     - training_results_poly_upgraded.json
+2025-10-23 12:28:10,462 - __main__ - INFO - 
+  Plots created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots:
+2025-10-23 12:28:10,462 - __main__ - INFO -     - cascade_validation.png
+2025-10-23 12:28:10,462 - __main__ - INFO -     - process_model_CirculativeLoad_cv_results.png
+2025-10-23 12:28:10,462 - __main__ - INFO -     - process_model_CirculativeLoad_residuals.png
+2025-10-23 12:28:10,462 - __main__ - INFO -     - process_model_DensityHC_cv_results.png
+2025-10-23 12:28:10,463 - __main__ - INFO -     - process_model_DensityHC_residuals.png
+2025-10-23 12:28:10,463 - __main__ - INFO -     - process_model_PressureHC_cv_results.png
+2025-10-23 12:28:10,463 - __main__ - INFO -     - process_model_PressureHC_residuals.png
+2025-10-23 12:28:10,463 - __main__ - INFO -     - process_model_PulpHC_cv_results.png
+2025-10-23 12:28:10,463 - __main__ - INFO -     - process_model_PulpHC_residuals.png
+2025-10-23 12:28:10,463 - __main__ - INFO -     - quality_model_cv_results.png
+2025-10-23 12:28:10,464 - __main__ - INFO -     - quality_model_residuals.png
+2025-10-23 12:28:10,464 - __main__ - INFO - 
+================================================================================
+2025-10-23 12:28:10,464 - __main__ - INFO - IMPROVED POLYNOMIAL MODEL TRAINING COMPLETE
+2025-10-23 12:28:10,464 - __main__ - INFO - ================================================================================
+2025-10-23 12:28:10,464 - __main__ - INFO - Models saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06
+2025-10-23 12:28:10,464 - __main__ - INFO - Plots saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots
+2025-10-23 12:28:10,464 - __main__ - INFO - 
+✓ Improved polynomial model training pipeline completed successfully!
+2025-10-23 12:41:15,177 - __main__ - INFO - 
+================================================================================
+2025-10-23 12:41:15,178 - __main__ - INFO - STARTING IMPROVED POLYNOMIAL CASCADE TRAINING - MILL 6
+2025-10-23 12:41:15,178 - __main__ - INFO - ================================================================================
+2025-10-23 12:41:15,178 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:41:15,178 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-23 12:41:15,179 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:41:15,179 - __main__ - INFO - Loading data from C:\Projects\experiments\modeling\output\segmented_motifs_all_06.csv...
+2025-10-23 12:41:15,206 - __main__ - INFO -   Data shape: (6540, 22)
+2025-10-23 12:41:15,207 - __main__ - INFO -   Rows removed (NaN): 0 (0.00%)
+2025-10-23 12:41:15,207 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:41:15,207 - __main__ - INFO - STEP 2: DATA QUALITY DIAGNOSTICS
+2025-10-23 12:41:15,207 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:41:15,207 - model_improvements - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:41:15,208 - model_improvements - INFO - DATA QUALITY DIAGNOSTICS
+2025-10-23 12:41:15,208 - model_improvements - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:41:15,209 - model_improvements - INFO - 
+Ore:
+2025-10-23 12:41:15,209 - model_improvements - INFO -   Range: [116.250, 185.354]
+2025-10-23 12:41:15,209 - model_improvements - INFO -   Mean±Std: 176.443 ± 4.511
+2025-10-23 12:41:15,210 - model_improvements - INFO -   Coefficient of Variation: 2.6%
+2025-10-23 12:41:15,210 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 12:41:15,210 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,211 - model_improvements - INFO - 
+WaterMill:
+2025-10-23 12:41:15,211 - model_improvements - INFO -   Range: [13.218, 17.217]
+2025-10-23 12:41:15,213 - model_improvements - INFO -   Mean±Std: 15.857 ± 0.955
+2025-10-23 12:41:15,213 - model_improvements - INFO -   Coefficient of Variation: 6.0%
+2025-10-23 12:41:15,213 - model_improvements - INFO -   Outliers (>3 IQR): 780 (11.93%)
+2025-10-23 12:41:15,213 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,213 - model_improvements - WARNING -   ⚠ High outlier percentage
+2025-10-23 12:41:15,215 - model_improvements - INFO - 
+WaterZumpf:
+2025-10-23 12:41:15,215 - model_improvements - INFO -   Range: [127.760, 241.569]
+2025-10-23 12:41:15,215 - model_improvements - INFO -   Mean±Std: 213.018 ± 23.990
+2025-10-23 12:41:15,215 - model_improvements - INFO -   Coefficient of Variation: 11.3%
+2025-10-23 12:41:15,215 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:41:15,215 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,217 - model_improvements - INFO - 
+DensityHC:
+2025-10-23 12:41:15,217 - model_improvements - INFO -   Range: [1603.609, 1764.417]
+2025-10-23 12:41:15,217 - model_improvements - INFO -   Mean±Std: 1678.511 ± 29.012
+2025-10-23 12:41:15,217 - model_improvements - INFO -   Coefficient of Variation: 1.7%
+2025-10-23 12:41:15,217 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:41:15,217 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,219 - model_improvements - INFO - 
+PulpHC:
+2025-10-23 12:41:15,219 - model_improvements - INFO -   Range: [491.651, 599.983]
+2025-10-23 12:41:15,219 - model_improvements - INFO -   Mean±Std: 564.022 ± 19.841
+2025-10-23 12:41:15,219 - model_improvements - INFO -   Coefficient of Variation: 3.5%
+2025-10-23 12:41:15,219 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:41:15,219 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,220 - model_improvements - INFO - 
+PressureHC:
+2025-10-23 12:41:15,221 - model_improvements - INFO -   Range: [0.338, 0.465]
+2025-10-23 12:41:15,221 - model_improvements - INFO -   Mean±Std: 0.414 ± 0.030
+2025-10-23 12:41:15,221 - model_improvements - INFO -   Coefficient of Variation: 7.2%
+2025-10-23 12:41:15,221 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:41:15,222 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,223 - model_improvements - INFO - 
+CirculativeLoad:
+2025-10-23 12:41:15,223 - model_improvements - INFO -   Range: [1.859, 3.626]
+2025-10-23 12:41:15,223 - model_improvements - INFO -   Mean±Std: 2.311 ± 0.180
+2025-10-23 12:41:15,223 - model_improvements - INFO -   Coefficient of Variation: 7.8%
+2025-10-23 12:41:15,223 - model_improvements - INFO -   Outliers (>3 IQR): 12 (0.18%)
+2025-10-23 12:41:15,223 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,225 - model_improvements - INFO - 
+Class_15:
+2025-10-23 12:41:15,225 - model_improvements - INFO -   Range: [0.400, 2.100]
+2025-10-23 12:41:15,225 - model_improvements - INFO -   Mean±Std: 1.018 ± 0.403
+2025-10-23 12:41:15,225 - model_improvements - INFO -   Coefficient of Variation: 39.6%
+2025-10-23 12:41:15,225 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:41:15,225 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,226 - model_improvements - INFO - 
+Daiki:
+2025-10-23 12:41:15,226 - model_improvements - INFO -   Range: [0.202, 0.438]
+2025-10-23 12:41:15,226 - model_improvements - INFO -   Mean±Std: 0.327 ± 0.055
+2025-10-23 12:41:15,226 - model_improvements - INFO -   Coefficient of Variation: 16.7%
+2025-10-23 12:41:15,227 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:41:15,227 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,227 - model_improvements - INFO - 
+FE:
+2025-10-23 12:41:15,227 - model_improvements - INFO -   Range: [-5997.868, 3.995]
+2025-10-23 12:41:15,227 - model_improvements - INFO -   Mean±Std: -1.099 ± 139.132
+2025-10-23 12:41:15,228 - model_improvements - INFO -   Coefficient of Variation: -12657.3%
+2025-10-23 12:41:15,228 - model_improvements - INFO -   Outliers (>3 IQR): 9 (0.14%)
+2025-10-23 12:41:15,228 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,228 - model_improvements - WARNING -   ⚠ Very low variance - may not be informative
+2025-10-23 12:41:15,230 - model_improvements - INFO - 
+PSI200:
+2025-10-23 12:41:15,230 - model_improvements - INFO -   Range: [17.054, 31.143]
+2025-10-23 12:41:15,230 - model_improvements - INFO -   Mean±Std: 23.041 ± 1.845
+2025-10-23 12:41:15,230 - model_improvements - INFO -   Coefficient of Variation: 8.0%
+2025-10-23 12:41:15,230 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 12:41:15,230 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:41:15,230 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:41:15,230 - __main__ - INFO - STEP 3: SPLITTING DATA
+2025-10-23 12:41:15,231 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:41:15,231 - __main__ - INFO -   Train size: 5232
+2025-10-23 12:41:15,231 - __main__ - INFO -   Test size: 1308
+2025-10-23 12:41:15,231 - __main__ - INFO -   Test ratio: 20.0%
+2025-10-23 12:41:15,231 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:41:15,231 - __main__ - INFO - STEP 4: TRAINING PROCESS MODELS (MV → CV)
+2025-10-23 12:41:15,231 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:41:15,231 - __main__ - INFO - 
+============================================================
+2025-10-23 12:41:15,231 - __main__ - INFO - Training model: MV → DensityHC
+2025-10-23 12:41:15,231 - __main__ - INFO - ============================================================
+2025-10-23 12:52:13,753 - __main__ - INFO - 
+================================================================================
+2025-10-23 12:52:13,754 - __main__ - INFO - STARTING IMPROVED POLYNOMIAL CASCADE TRAINING - MILL 6
+2025-10-23 12:52:13,754 - __main__ - INFO - ================================================================================
+2025-10-23 12:52:13,754 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:13,755 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-23 12:52:13,756 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:13,757 - __main__ - INFO - Loading data from C:\Projects\experiments\modeling\output\segmented_motifs_all_06.csv...
+2025-10-23 12:52:13,787 - __main__ - INFO -   Data shape: (6540, 22)
+2025-10-23 12:52:13,787 - __main__ - INFO -   Rows removed (NaN): 0 (0.00%)
+2025-10-23 12:52:13,788 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:13,790 - __main__ - INFO - STEP 2: DATA QUALITY DIAGNOSTICS
+2025-10-23 12:52:13,790 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:13,791 - model_improvements - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:13,791 - model_improvements - INFO - DATA QUALITY DIAGNOSTICS
+2025-10-23 12:52:13,792 - model_improvements - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:13,793 - model_improvements - INFO - 
+Ore:
+2025-10-23 12:52:13,793 - model_improvements - INFO -   Range: [116.250, 185.354]
+2025-10-23 12:52:13,793 - model_improvements - INFO -   Mean±Std: 176.443 ± 4.511
+2025-10-23 12:52:13,794 - model_improvements - INFO -   Coefficient of Variation: 2.6%
+2025-10-23 12:52:13,794 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 12:52:13,794 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,795 - model_improvements - INFO - 
+WaterMill:
+2025-10-23 12:52:13,795 - model_improvements - INFO -   Range: [13.218, 17.217]
+2025-10-23 12:52:13,795 - model_improvements - INFO -   Mean±Std: 15.857 ± 0.955
+2025-10-23 12:52:13,795 - model_improvements - INFO -   Coefficient of Variation: 6.0%
+2025-10-23 12:52:13,795 - model_improvements - INFO -   Outliers (>3 IQR): 780 (11.93%)
+2025-10-23 12:52:13,795 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,795 - model_improvements - WARNING -   ⚠ High outlier percentage
+2025-10-23 12:52:13,797 - model_improvements - INFO - 
+WaterZumpf:
+2025-10-23 12:52:13,797 - model_improvements - INFO -   Range: [127.760, 241.569]
+2025-10-23 12:52:13,797 - model_improvements - INFO -   Mean±Std: 213.018 ± 23.990
+2025-10-23 12:52:13,797 - model_improvements - INFO -   Coefficient of Variation: 11.3%
+2025-10-23 12:52:13,797 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:52:13,797 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,800 - model_improvements - INFO - 
+DensityHC:
+2025-10-23 12:52:13,800 - model_improvements - INFO -   Range: [1603.609, 1764.417]
+2025-10-23 12:52:13,800 - model_improvements - INFO -   Mean±Std: 1678.511 ± 29.012
+2025-10-23 12:52:13,800 - model_improvements - INFO -   Coefficient of Variation: 1.7%
+2025-10-23 12:52:13,800 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:52:13,800 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,802 - model_improvements - INFO - 
+PulpHC:
+2025-10-23 12:52:13,802 - model_improvements - INFO -   Range: [491.651, 599.983]
+2025-10-23 12:52:13,802 - model_improvements - INFO -   Mean±Std: 564.022 ± 19.841
+2025-10-23 12:52:13,802 - model_improvements - INFO -   Coefficient of Variation: 3.5%
+2025-10-23 12:52:13,802 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:52:13,802 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,803 - model_improvements - INFO - 
+PressureHC:
+2025-10-23 12:52:13,804 - model_improvements - INFO -   Range: [0.338, 0.465]
+2025-10-23 12:52:13,804 - model_improvements - INFO -   Mean±Std: 0.414 ± 0.030
+2025-10-23 12:52:13,805 - model_improvements - INFO -   Coefficient of Variation: 7.2%
+2025-10-23 12:52:13,805 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:52:13,805 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,806 - model_improvements - INFO - 
+CirculativeLoad:
+2025-10-23 12:52:13,806 - model_improvements - INFO -   Range: [1.859, 3.626]
+2025-10-23 12:52:13,806 - model_improvements - INFO -   Mean±Std: 2.311 ± 0.180
+2025-10-23 12:52:13,806 - model_improvements - INFO -   Coefficient of Variation: 7.8%
+2025-10-23 12:52:13,807 - model_improvements - INFO -   Outliers (>3 IQR): 12 (0.18%)
+2025-10-23 12:52:13,807 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,808 - model_improvements - INFO - 
+Class_15:
+2025-10-23 12:52:13,808 - model_improvements - INFO -   Range: [0.400, 2.100]
+2025-10-23 12:52:13,808 - model_improvements - INFO -   Mean±Std: 1.018 ± 0.403
+2025-10-23 12:52:13,808 - model_improvements - INFO -   Coefficient of Variation: 39.6%
+2025-10-23 12:52:13,808 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:52:13,808 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,809 - model_improvements - INFO - 
+Daiki:
+2025-10-23 12:52:13,809 - model_improvements - INFO -   Range: [0.202, 0.438]
+2025-10-23 12:52:13,810 - model_improvements - INFO -   Mean±Std: 0.327 ± 0.055
+2025-10-23 12:52:13,810 - model_improvements - INFO -   Coefficient of Variation: 16.7%
+2025-10-23 12:52:13,810 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 12:52:13,810 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,811 - model_improvements - INFO - 
+FE:
+2025-10-23 12:52:13,811 - model_improvements - INFO -   Range: [-5997.868, 3.995]
+2025-10-23 12:52:13,811 - model_improvements - INFO -   Mean±Std: -1.099 ± 139.132
+2025-10-23 12:52:13,811 - model_improvements - INFO -   Coefficient of Variation: -12657.3%
+2025-10-23 12:52:13,811 - model_improvements - INFO -   Outliers (>3 IQR): 9 (0.14%)
+2025-10-23 12:52:13,811 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,811 - model_improvements - WARNING -   ⚠ Very low variance - may not be informative
+2025-10-23 12:52:13,812 - model_improvements - INFO - 
+PSI200:
+2025-10-23 12:52:13,812 - model_improvements - INFO -   Range: [17.054, 31.143]
+2025-10-23 12:52:13,812 - model_improvements - INFO -   Mean±Std: 23.041 ± 1.845
+2025-10-23 12:52:13,812 - model_improvements - INFO -   Coefficient of Variation: 8.0%
+2025-10-23 12:52:13,812 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 12:52:13,813 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 12:52:13,813 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:13,813 - __main__ - INFO - STEP 3: SPLITTING DATA
+2025-10-23 12:52:13,813 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:13,814 - __main__ - INFO -   Train size: 5232
+2025-10-23 12:52:13,814 - __main__ - INFO -   Test size: 1308
+2025-10-23 12:52:13,814 - __main__ - INFO -   Test ratio: 20.0%
+2025-10-23 12:52:13,814 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:13,814 - __main__ - INFO - STEP 4: TRAINING PROCESS MODELS (MV → CV)
+2025-10-23 12:52:13,814 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:13,814 - __main__ - INFO - 
+============================================================
+2025-10-23 12:52:13,815 - __main__ - INFO - Training model: MV → DensityHC
+2025-10-23 12:52:13,815 - __main__ - INFO - ============================================================
+2025-10-23 12:52:13,815 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:52:15,824 - __main__ - INFO -       Best CV score: 0.0304
+2025-10-23 12:52:15,825 - __main__ - INFO -       Test R²: 0.2243
+2025-10-23 12:52:15,825 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 12:52:15,825 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:52:15,980 - __main__ - INFO -       Best CV score: 0.0529
+2025-10-23 12:52:15,980 - __main__ - INFO -       Test R²: 0.1807
+2025-10-23 12:52:15,980 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 12:52:15,980 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:52:16,020 - __main__ - INFO -       Best CV score: 0.0238
+2025-10-23 12:52:16,020 - __main__ - INFO -       Test R²: 0.2454
+2025-10-23 12:52:16,020 - __main__ - INFO -       Best params: {'model__alpha': 1.0}
+2025-10-23 12:52:16,020 - __main__ - INFO - 
+  ✓ Best model type: ELASTICNET
+2025-10-23 12:52:16,020 - __main__ - INFO -   Best parameters:
+2025-10-23 12:52:16,020 - __main__ - INFO -     model__alpha: 1.0
+2025-10-23 12:52:16,021 - __main__ - INFO -     model__l1_ratio: 0.7
+2025-10-23 12:52:16,022 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:52:16,022 - model_improvements - INFO -   Total parameter combinations tested: 49
+2025-10-23 12:52:16,022 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:52:16,023 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:52:16,023 - model_improvements - INFO -       Mean CV Score: 0.0529 (±0.1771)
+2025-10-23 12:52:16,023 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 12:52:16,023 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:16,023 - model_improvements - INFO -       Mean CV Score: 0.0512 (±0.1491)
+2025-10-23 12:52:16,023 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.5}
+2025-10-23 12:52:16,023 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:52:16,023 - model_improvements - INFO -       Mean CV Score: 0.0466 (±0.1333)
+2025-10-23 12:52:16,024 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.3}
+2025-10-23 12:52:16,024 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 12:52:16,024 - model_improvements - INFO -       Mean CV Score: 0.0415 (±0.1233)
+2025-10-23 12:52:16,024 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.1}
+2025-10-23 12:52:16,024 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:52:16,024 - model_improvements - INFO -       Mean CV Score: 0.0408 (±0.2353)
+2025-10-23 12:52:16,024 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.9}
+2025-10-23 12:52:16,028 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:52:16,028 - __main__ - INFO -     R²: 0.1312, RMSE: 26.4147, MAE: 20.6130
+2025-10-23 12:52:16,028 - __main__ - INFO -   Test Performance:
+2025-10-23 12:52:16,028 - __main__ - INFO -     R²: 0.1807, RMSE: 28.0106, MAE: 19.9753
+2025-10-23 12:52:16,028 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 12:52:16,028 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:52:16,028 - __main__ - INFO -     Ore: 6.374043
+2025-10-23 12:52:16,028 - __main__ - INFO -     WaterMill: -5.403721
+2025-10-23 12:52:16,028 - __main__ - INFO -     WaterZumpf: 0.681098
+2025-10-23 12:52:16,029 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:52:16,029 - __main__ - INFO -     Total features: 3
+2025-10-23 12:52:16,029 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 12:52:16,029 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 12:52:16,029 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:52:16,543 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_residuals.png
+2025-10-23 12:52:16,790 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_cv_results.png
+2025-10-23 12:52:16,791 - __main__ - INFO -   ✓ Model saved to process_model_DensityHC.pkl
+2025-10-23 12:52:16,791 - __main__ - INFO - 
+============================================================
+2025-10-23 12:52:16,791 - __main__ - INFO - Training model: MV → PulpHC
+2025-10-23 12:52:16,792 - __main__ - INFO - ============================================================
+2025-10-23 12:52:16,792 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:52:16,837 - __main__ - INFO -       Best CV score: 0.1272
+2025-10-23 12:52:16,837 - __main__ - INFO -       Test R²: 0.1710
+2025-10-23 12:52:16,837 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 12:52:16,838 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:52:16,993 - __main__ - INFO -       Best CV score: 0.1255
+2025-10-23 12:52:16,993 - __main__ - INFO -       Test R²: 0.1533
+2025-10-23 12:52:16,993 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 12:52:16,994 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:52:17,035 - __main__ - INFO -       Best CV score: 0.1180
+2025-10-23 12:52:17,035 - __main__ - INFO -       Test R²: 0.1755
+2025-10-23 12:52:17,035 - __main__ - INFO -       Best params: {'model__alpha': 1.0}
+2025-10-23 12:52:17,035 - __main__ - INFO - 
+  ✓ Best model type: RIDGE
+2025-10-23 12:52:17,035 - __main__ - INFO -   Best parameters:
+2025-10-23 12:52:17,035 - __main__ - INFO -     model__alpha: 1000.0
+2025-10-23 12:52:17,037 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:52:17,037 - model_improvements - INFO -   Total parameter combinations tested: 8
+2025-10-23 12:52:17,037 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:52:17,037 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:52:17,037 - model_improvements - INFO -       Mean CV Score: 0.1272 (±0.1830)
+2025-10-23 12:52:17,037 - model_improvements - INFO -       Parameters: {'model__alpha': 1000.0}
+2025-10-23 12:52:17,037 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Mean CV Score: 0.1185 (±0.2334)
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Parameters: {'model__alpha': 100.0}
+2025-10-23 12:52:17,038 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Mean CV Score: 0.1104 (±0.2446)
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 12:52:17,038 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Mean CV Score: 0.1093 (±0.2460)
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 12:52:17,038 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Mean CV Score: 0.1091 (±0.2461)
+2025-10-23 12:52:17,038 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 12:52:17,041 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:52:17,042 - __main__ - INFO -     R²: 0.2393, RMSE: 16.6998, MAE: 12.3921
+2025-10-23 12:52:17,042 - __main__ - INFO -   Test Performance:
+2025-10-23 12:52:17,042 - __main__ - INFO -     R²: 0.1710, RMSE: 19.9223, MAE: 15.2983
+2025-10-23 12:52:17,042 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0682)
+2025-10-23 12:52:17,042 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:52:17,043 - __main__ - INFO -     WaterMill: 5.509466
+2025-10-23 12:52:17,043 - __main__ - INFO -     Ore: 3.692157
+2025-10-23 12:52:17,043 - __main__ - INFO -     WaterZumpf: -2.583796
+2025-10-23 12:52:17,044 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:52:17,044 - __main__ - INFO -     Total features: 3
+2025-10-23 12:52:17,044 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 12:52:17,044 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 12:52:17,044 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:52:17,553 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_residuals.png
+2025-10-23 12:52:17,812 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_cv_results.png
+2025-10-23 12:52:17,813 - __main__ - INFO -   ✓ Model saved to process_model_PulpHC.pkl
+2025-10-23 12:52:17,813 - __main__ - INFO - 
+============================================================
+2025-10-23 12:52:17,814 - __main__ - INFO - Training model: MV → PressureHC
+2025-10-23 12:52:17,814 - __main__ - INFO - ============================================================
+2025-10-23 12:52:17,815 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:52:17,866 - __main__ - INFO -       Best CV score: 0.1935
+2025-10-23 12:52:17,866 - __main__ - INFO -       Test R²: 0.3398
+2025-10-23 12:52:17,866 - __main__ - INFO -       Best params: {'model__alpha': 100.0}
+2025-10-23 12:52:17,866 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:52:18,024 - __main__ - INFO -       Best CV score: 0.1906
+2025-10-23 12:52:18,024 - __main__ - INFO -       Test R²: 0.3404
+2025-10-23 12:52:18,024 - __main__ - INFO -       Best params: {'model__alpha': 0.001, 'model__l1_ratio': 0.3}
+2025-10-23 12:52:18,024 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:52:18,066 - __main__ - INFO -       Best CV score: 0.1901
+2025-10-23 12:52:18,067 - __main__ - INFO -       Test R²: 0.3427
+2025-10-23 12:52:18,067 - __main__ - INFO -       Best params: {'model__alpha': 0.0001}
+2025-10-23 12:52:18,067 - __main__ - INFO - 
+  ✓ Best model type: RIDGE
+2025-10-23 12:52:18,067 - __main__ - INFO -   Best parameters:
+2025-10-23 12:52:18,067 - __main__ - INFO -     model__alpha: 100.0
+2025-10-23 12:52:18,069 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:52:18,069 - model_improvements - INFO -   Total parameter combinations tested: 8
+2025-10-23 12:52:18,069 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:52:18,069 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:52:18,069 - model_improvements - INFO -       Mean CV Score: 0.1935 (±0.2610)
+2025-10-23 12:52:18,069 - model_improvements - INFO -       Parameters: {'model__alpha': 100.0}
+2025-10-23 12:52:18,069 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:18,069 - model_improvements - INFO -       Mean CV Score: 0.1890 (±0.2739)
+2025-10-23 12:52:18,069 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 12:52:18,070 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:52:18,070 - model_improvements - INFO -       Mean CV Score: 0.1884 (±0.2755)
+2025-10-23 12:52:18,070 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 12:52:18,070 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 12:52:18,071 - model_improvements - INFO -       Mean CV Score: 0.1883 (±0.2756)
+2025-10-23 12:52:18,071 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 12:52:18,071 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:52:18,071 - model_improvements - INFO -       Mean CV Score: 0.1883 (±0.2757)
+2025-10-23 12:52:18,071 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01}
+2025-10-23 12:52:18,074 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:52:18,074 - __main__ - INFO -     R²: 0.3562, RMSE: 0.0234, MAE: 0.0196
+2025-10-23 12:52:18,074 - __main__ - INFO -   Test Performance:
+2025-10-23 12:52:18,074 - __main__ - INFO -     R²: 0.3398, RMSE: 0.0240, MAE: 0.0211
+2025-10-23 12:52:18,075 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0164)
+2025-10-23 12:52:18,075 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:52:18,075 - __main__ - INFO -     WaterMill: 0.013672
+2025-10-23 12:52:18,075 - __main__ - INFO -     WaterZumpf: -0.008464
+2025-10-23 12:52:18,075 - __main__ - INFO -     Ore: 0.001103
+2025-10-23 12:52:18,075 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:52:18,075 - __main__ - INFO -     Total features: 3
+2025-10-23 12:52:18,075 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 12:52:18,075 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 12:52:18,075 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:52:18,572 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_residuals.png
+2025-10-23 12:52:18,828 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_cv_results.png
+2025-10-23 12:52:18,829 - __main__ - INFO -   ✓ Model saved to process_model_PressureHC.pkl
+2025-10-23 12:52:18,829 - __main__ - INFO - 
+============================================================
+2025-10-23 12:52:18,830 - __main__ - INFO - Training model: MV → CirculativeLoad
+2025-10-23 12:52:18,830 - __main__ - INFO - ============================================================
+2025-10-23 12:52:18,830 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:52:18,883 - __main__ - INFO -       Best CV score: -0.0892
+2025-10-23 12:52:18,883 - __main__ - INFO -       Test R²: -0.0186
+2025-10-23 12:52:18,883 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 12:52:18,884 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:52:19,038 - __main__ - INFO -       Best CV score: -0.0579
+2025-10-23 12:52:19,038 - __main__ - INFO -       Test R²: -0.0000
+2025-10-23 12:52:19,038 - __main__ - INFO -       Best params: {'model__alpha': 0.1, 'model__l1_ratio': 0.3}
+2025-10-23 12:52:19,038 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:52:19,080 - __main__ - INFO -       Best CV score: -0.0601
+2025-10-23 12:52:19,080 - __main__ - INFO -       Test R²: -0.0000
+2025-10-23 12:52:19,080 - __main__ - INFO -       Best params: {'model__alpha': 0.1}
+2025-10-23 12:52:19,080 - __main__ - INFO - 
+  ✓ Best model type: ELASTICNET
+2025-10-23 12:52:19,080 - __main__ - INFO -   Best parameters:
+2025-10-23 12:52:19,080 - __main__ - INFO -     model__alpha: 0.1
+2025-10-23 12:52:19,082 - __main__ - INFO -     model__l1_ratio: 0.3
+2025-10-23 12:52:19,082 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:52:19,082 - model_improvements - INFO -   Total parameter combinations tested: 49
+2025-10-23 12:52:19,082 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:52:19,082 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:52:19,082 - model_improvements - INFO -       Mean CV Score: -0.0579 (±0.0682)
+2025-10-23 12:52:19,082 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.3}
+2025-10-23 12:52:19,084 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:19,084 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 12:52:19,084 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.7}
+2025-10-23 12:52:19,084 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:19,084 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 12:52:19,084 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.95}
+2025-10-23 12:52:19,085 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:19,085 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 12:52:19,085 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.99}
+2025-10-23 12:52:19,085 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:19,085 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 12:52:19,085 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.1}
+2025-10-23 12:52:19,088 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:52:19,088 - __main__ - INFO -     R²: 0.0000, RMSE: 0.1752, MAE: 0.1277
+2025-10-23 12:52:19,088 - __main__ - INFO -   Test Performance:
+2025-10-23 12:52:19,088 - __main__ - INFO -     R²: -0.0000, RMSE: 0.1989, MAE: 0.1313
+2025-10-23 12:52:19,088 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0000)
+2025-10-23 12:52:19,088 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:52:19,088 - __main__ - INFO -     Ore: -0.000000
+2025-10-23 12:52:19,090 - __main__ - INFO -     WaterMill: -0.000000
+2025-10-23 12:52:19,090 - __main__ - INFO -     WaterZumpf: -0.000000
+2025-10-23 12:52:19,090 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:52:19,090 - __main__ - INFO -     Total features: 3
+2025-10-23 12:52:19,090 - __main__ - INFO -     Non-zero coefficients: 0
+2025-10-23 12:52:19,090 - __main__ - INFO -     Sparsity: 100.0%
+2025-10-23 12:52:19,090 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:52:19,571 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_residuals.png
+2025-10-23 12:52:19,861 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_cv_results.png
+2025-10-23 12:52:19,861 - __main__ - INFO -   ✓ Model saved to process_model_CirculativeLoad.pkl
+2025-10-23 12:52:19,862 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:19,862 - __main__ - INFO - STEP 5: TRAINING QUALITY MODEL (CV + DV → Target)
+2025-10-23 12:52:19,862 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:19,864 - __main__ - INFO -   Filtered training data: 5232 → 5232 samples
+2025-10-23 12:52:19,864 - __main__ - INFO -   Filtered test data: 1308 → 1308 samples
+2025-10-23 12:52:19,864 - __main__ - INFO - 
+Training model: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad', 'Class_15', 'Daiki', 'FE'] → PSI200
+2025-10-23 12:52:19,866 - model_improvements - INFO -   Sample weighting:
+2025-10-23 12:52:19,866 - model_improvements - INFO -     In-range [16, 30]: 5228 samples (weight=2.0)
+2025-10-23 12:52:19,866 - model_improvements - INFO -     Out-of-range: 4 samples (weight=1.0)
+2025-10-23 12:52:19,866 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 12:52:19,929 - __main__ - INFO -       Best CV score: -2594.6048
+2025-10-23 12:52:19,931 - __main__ - INFO -       Test R²: 0.5261
+2025-10-23 12:52:19,931 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 12:52:19,931 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 12:52:20,146 - __main__ - INFO -       Best CV score: 0.0963
+2025-10-23 12:52:20,147 - __main__ - INFO -       Test R²: 0.2962
+2025-10-23 12:52:20,147 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.3}
+2025-10-23 12:52:20,147 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 12:52:20,201 - __main__ - INFO -       Best CV score: 0.2383
+2025-10-23 12:52:20,201 - __main__ - INFO -       Test R²: 0.5317
+2025-10-23 12:52:20,201 - __main__ - INFO -       Best params: {'model__alpha': 0.1}
+2025-10-23 12:52:20,202 - __main__ - INFO - 
+  ✓ Best model type: LASSO
+2025-10-23 12:52:20,202 - __main__ - INFO -   Best parameters:
+2025-10-23 12:52:20,202 - __main__ - INFO -     model__alpha: 0.1
+2025-10-23 12:52:20,202 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 12:52:20,203 - model_improvements - INFO -   Total parameter combinations tested: 7
+2025-10-23 12:52:20,203 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 12:52:20,203 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 12:52:20,203 - model_improvements - INFO -       Mean CV Score: 0.2383 (±0.2810)
+2025-10-23 12:52:20,203 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 12:52:20,203 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 12:52:20,203 - model_improvements - INFO -       Mean CV Score: -0.0518 (±0.1266)
+2025-10-23 12:52:20,203 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 12:52:20,203 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 12:52:20,203 - model_improvements - INFO -       Mean CV Score: -0.0818 (±0.1022)
+2025-10-23 12:52:20,203 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 12:52:20,204 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 12:52:20,204 - model_improvements - INFO -       Mean CV Score: -7917.0963 (±15835.0939)
+2025-10-23 12:52:20,204 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01}
+2025-10-23 12:52:20,204 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 12:52:20,204 - model_improvements - INFO -       Mean CV Score: -10304.6462 (±20610.1779)
+2025-10-23 12:52:20,204 - model_improvements - INFO -       Parameters: {'model__alpha': 0.001}
+2025-10-23 12:52:20,208 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 12:52:20,208 - __main__ - INFO -     R²: 0.4671, RMSE: 1.3650, MAE: 1.0420
+2025-10-23 12:52:20,208 - __main__ - INFO -   Test Performance:
+2025-10-23 12:52:20,208 - __main__ - INFO -     R²: 0.5317, RMSE: 1.1836, MAE: 0.8496
+2025-10-23 12:52:20,208 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 12:52:20,208 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 12:52:20,208 - __main__ - INFO -     DensityHC: 1.547553
+2025-10-23 12:52:20,209 - __main__ - INFO -     PressureHC: 0.587678
+2025-10-23 12:52:20,209 - __main__ - INFO -     CirculativeLoad: -0.355856
+2025-10-23 12:52:20,209 - __main__ - INFO -     Daiki: 0.068868
+2025-10-23 12:52:20,209 - __main__ - INFO -     PulpHC: 0.000000
+2025-10-23 12:52:20,209 - __main__ - INFO -     Class_15: -0.000000
+2025-10-23 12:52:20,209 - __main__ - INFO -     FE: 0.000000
+2025-10-23 12:52:20,209 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 12:52:20,209 - __main__ - INFO -     Total features: 7
+2025-10-23 12:52:20,209 - __main__ - INFO -     Non-zero coefficients: 4
+2025-10-23 12:52:20,209 - __main__ - INFO -     Sparsity: 42.9%
+2025-10-23 12:52:20,210 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 12:52:20,694 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_residuals.png
+2025-10-23 12:52:20,924 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_cv_results.png
+2025-10-23 12:52:20,925 - __main__ - INFO -   ✓ Model saved to quality_model.pkl
+2025-10-23 12:52:20,926 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:20,926 - __main__ - INFO - STEP 6: VALIDATING CASCADE
+2025-10-23 12:52:20,926 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:20,929 - __main__ - INFO -   Validating with 200 samples...
+2025-10-23 12:52:20,935 - __main__ - INFO -   Cascade Validation Results:
+2025-10-23 12:52:20,935 - __main__ - INFO -     R²: 0.0978
+2025-10-23 12:52:20,935 - __main__ - INFO -     RMSE: 1.7577
+2025-10-23 12:52:20,935 - __main__ - INFO -     MAE: 1.1263
+2025-10-23 12:52:21,408 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\cascade_validation.png
+2025-10-23 12:52:21,408 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 12:52:21,408 - __main__ - INFO - STEP 7: SAVING RESULTS
+2025-10-23 12:52:21,408 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 12:52:21,410 - __main__ - INFO -   ✓ Metadata saved to metadata_poly_upgraded.json
+2025-10-23 12:52:21,411 - __main__ - INFO -   ✓ Training results saved to training_results_poly_upgraded.json
+2025-10-23 12:52:21,411 - __main__ - INFO - 
+  Files created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06:
+2025-10-23 12:52:21,411 - __main__ - INFO -     - metadata_poly_upgraded.json
+2025-10-23 12:52:21,411 - __main__ - INFO -     - process_model_CirculativeLoad.pkl
+2025-10-23 12:52:21,411 - __main__ - INFO -     - process_model_DensityHC.pkl
+2025-10-23 12:52:21,412 - __main__ - INFO -     - process_model_PressureHC.pkl
+2025-10-23 12:52:21,412 - __main__ - INFO -     - process_model_PulpHC.pkl
+2025-10-23 12:52:21,412 - __main__ - INFO -     - quality_model.pkl
+2025-10-23 12:52:21,414 - __main__ - INFO -     - training_results_poly_upgraded.json
+2025-10-23 12:52:21,414 - __main__ - INFO - 
+  Plots created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots:
+2025-10-23 12:52:21,414 - __main__ - INFO -     - cascade_validation.png
+2025-10-23 12:52:21,414 - __main__ - INFO -     - process_model_CirculativeLoad_cv_results.png
+2025-10-23 12:52:21,414 - __main__ - INFO -     - process_model_CirculativeLoad_residuals.png
+2025-10-23 12:52:21,415 - __main__ - INFO -     - process_model_DensityHC_cv_results.png
+2025-10-23 12:52:21,415 - __main__ - INFO -     - process_model_DensityHC_residuals.png
+2025-10-23 12:52:21,415 - __main__ - INFO -     - process_model_PressureHC_cv_results.png
+2025-10-23 12:52:21,415 - __main__ - INFO -     - process_model_PressureHC_residuals.png
+2025-10-23 12:52:21,415 - __main__ - INFO -     - process_model_PulpHC_cv_results.png
+2025-10-23 12:52:21,415 - __main__ - INFO -     - process_model_PulpHC_residuals.png
+2025-10-23 12:52:21,415 - __main__ - INFO -     - quality_model_cv_results.png
+2025-10-23 12:52:21,416 - __main__ - INFO -     - quality_model_residuals.png
+2025-10-23 12:52:21,416 - __main__ - INFO - 
+================================================================================
+2025-10-23 12:52:21,416 - __main__ - INFO - IMPROVED POLYNOMIAL MODEL TRAINING COMPLETE
+2025-10-23 12:52:21,416 - __main__ - INFO - ================================================================================
+2025-10-23 12:52:21,416 - __main__ - INFO - Models saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06
+2025-10-23 12:52:21,416 - __main__ - INFO - Plots saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots
+2025-10-23 12:52:21,416 - __main__ - INFO - 
+✓ Improved polynomial model training pipeline completed successfully!
+2025-10-23 13:46:11,988 - __main__ - INFO - 
+================================================================================
+2025-10-23 13:46:11,989 - __main__ - INFO - STARTING IMPROVED POLYNOMIAL CASCADE TRAINING - MILL 6
+2025-10-23 13:46:11,989 - __main__ - INFO - ================================================================================
+2025-10-23 13:46:11,989 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:11,989 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-23 13:46:11,989 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:11,989 - __main__ - INFO - Loading data from C:\Projects\experiments\modeling\output\segmented_motifs_all_06.csv...
+2025-10-23 13:46:12,020 - __main__ - INFO -   Data shape: (6540, 22)
+2025-10-23 13:46:12,021 - __main__ - INFO -   Rows removed (NaN): 0 (0.00%)
+2025-10-23 13:46:12,021 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:12,021 - __main__ - INFO - STEP 2: DATA QUALITY DIAGNOSTICS
+2025-10-23 13:46:12,021 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:12,021 - model_improvements - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:12,021 - model_improvements - INFO - DATA QUALITY DIAGNOSTICS
+2025-10-23 13:46:12,022 - model_improvements - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:12,024 - model_improvements - INFO - 
+Ore:
+2025-10-23 13:46:12,024 - model_improvements - INFO -   Range: [116.250, 185.354]
+2025-10-23 13:46:12,024 - model_improvements - INFO -   Mean±Std: 176.443 ± 4.511
+2025-10-23 13:46:12,024 - model_improvements - INFO -   Coefficient of Variation: 2.6%
+2025-10-23 13:46:12,025 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 13:46:12,025 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,026 - model_improvements - INFO - 
+WaterMill:
+2025-10-23 13:46:12,027 - model_improvements - INFO -   Range: [13.218, 17.217]
+2025-10-23 13:46:12,027 - model_improvements - INFO -   Mean±Std: 15.857 ± 0.955
+2025-10-23 13:46:12,027 - model_improvements - INFO -   Coefficient of Variation: 6.0%
+2025-10-23 13:46:12,028 - model_improvements - INFO -   Outliers (>3 IQR): 780 (11.93%)
+2025-10-23 13:46:12,028 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,028 - model_improvements - WARNING -   ⚠ High outlier percentage
+2025-10-23 13:46:12,029 - model_improvements - INFO - 
+WaterZumpf:
+2025-10-23 13:46:12,029 - model_improvements - INFO -   Range: [127.760, 241.569]
+2025-10-23 13:46:12,030 - model_improvements - INFO -   Mean±Std: 213.018 ± 23.990
+2025-10-23 13:46:12,030 - model_improvements - INFO -   Coefficient of Variation: 11.3%
+2025-10-23 13:46:12,030 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:46:12,030 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,031 - model_improvements - INFO - 
+DensityHC:
+2025-10-23 13:46:12,031 - model_improvements - INFO -   Range: [1603.609, 1764.417]
+2025-10-23 13:46:12,031 - model_improvements - INFO -   Mean±Std: 1678.511 ± 29.012
+2025-10-23 13:46:12,031 - model_improvements - INFO -   Coefficient of Variation: 1.7%
+2025-10-23 13:46:12,031 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:46:12,032 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,033 - model_improvements - INFO - 
+PulpHC:
+2025-10-23 13:46:12,034 - model_improvements - INFO -   Range: [491.651, 599.983]
+2025-10-23 13:46:12,034 - model_improvements - INFO -   Mean±Std: 564.022 ± 19.841
+2025-10-23 13:46:12,034 - model_improvements - INFO -   Coefficient of Variation: 3.5%
+2025-10-23 13:46:12,034 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:46:12,034 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,036 - model_improvements - INFO - 
+PressureHC:
+2025-10-23 13:46:12,036 - model_improvements - INFO -   Range: [0.338, 0.465]
+2025-10-23 13:46:12,036 - model_improvements - INFO -   Mean±Std: 0.414 ± 0.030
+2025-10-23 13:46:12,036 - model_improvements - INFO -   Coefficient of Variation: 7.2%
+2025-10-23 13:46:12,036 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:46:12,036 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,037 - model_improvements - INFO - 
+CirculativeLoad:
+2025-10-23 13:46:12,038 - model_improvements - INFO -   Range: [1.859, 3.626]
+2025-10-23 13:46:12,038 - model_improvements - INFO -   Mean±Std: 2.311 ± 0.180
+2025-10-23 13:46:12,038 - model_improvements - INFO -   Coefficient of Variation: 7.8%
+2025-10-23 13:46:12,038 - model_improvements - INFO -   Outliers (>3 IQR): 12 (0.18%)
+2025-10-23 13:46:12,038 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,039 - model_improvements - INFO - 
+Class_15:
+2025-10-23 13:46:12,039 - model_improvements - INFO -   Range: [0.400, 2.100]
+2025-10-23 13:46:12,039 - model_improvements - INFO -   Mean±Std: 1.018 ± 0.403
+2025-10-23 13:46:12,039 - model_improvements - INFO -   Coefficient of Variation: 39.6%
+2025-10-23 13:46:12,039 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:46:12,039 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,041 - model_improvements - INFO - 
+Daiki:
+2025-10-23 13:46:12,042 - model_improvements - INFO -   Range: [0.202, 0.438]
+2025-10-23 13:46:12,042 - model_improvements - INFO -   Mean±Std: 0.327 ± 0.055
+2025-10-23 13:46:12,042 - model_improvements - INFO -   Coefficient of Variation: 16.7%
+2025-10-23 13:46:12,042 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:46:12,042 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,044 - model_improvements - INFO - 
+FE:
+2025-10-23 13:46:12,044 - model_improvements - INFO -   Range: [-5997.868, 3.995]
+2025-10-23 13:46:12,045 - model_improvements - INFO -   Mean±Std: -1.099 ± 139.132
+2025-10-23 13:46:12,045 - model_improvements - INFO -   Coefficient of Variation: -12657.3%
+2025-10-23 13:46:12,045 - model_improvements - INFO -   Outliers (>3 IQR): 9 (0.14%)
+2025-10-23 13:46:12,045 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,045 - model_improvements - WARNING -   ⚠ Very low variance - may not be informative
+2025-10-23 13:46:12,046 - model_improvements - INFO - 
+PSI200:
+2025-10-23 13:46:12,046 - model_improvements - INFO -   Range: [17.054, 31.143]
+2025-10-23 13:46:12,047 - model_improvements - INFO -   Mean±Std: 23.041 ± 1.845
+2025-10-23 13:46:12,047 - model_improvements - INFO -   Coefficient of Variation: 8.0%
+2025-10-23 13:46:12,047 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 13:46:12,047 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:46:12,047 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:12,047 - __main__ - INFO - STEP 3: SPLITTING DATA
+2025-10-23 13:46:12,047 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:12,047 - __main__ - INFO -   Train size: 5232
+2025-10-23 13:46:12,047 - __main__ - INFO -   Test size: 1308
+2025-10-23 13:46:12,047 - __main__ - INFO -   Test ratio: 20.0%
+2025-10-23 13:46:12,047 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:12,047 - __main__ - INFO - STEP 4: TRAINING PROCESS MODELS (MV → CV)
+2025-10-23 13:46:12,047 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:12,047 - __main__ - INFO - 
+============================================================
+2025-10-23 13:46:12,047 - __main__ - INFO - Training model: MV → DensityHC
+2025-10-23 13:46:12,048 - __main__ - INFO - ============================================================
+2025-10-23 13:46:12,049 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:46:14,194 - __main__ - INFO -       Best CV score: 0.0304
+2025-10-23 13:46:14,194 - __main__ - INFO -       Test R²: 0.2243
+2025-10-23 13:46:14,194 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:46:14,195 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:46:14,346 - __main__ - INFO -       Best CV score: 0.0529
+2025-10-23 13:46:14,346 - __main__ - INFO -       Test R²: 0.1807
+2025-10-23 13:46:14,346 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 13:46:14,346 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:46:14,387 - __main__ - INFO -       Best CV score: 0.0238
+2025-10-23 13:46:14,387 - __main__ - INFO -       Test R²: 0.2454
+2025-10-23 13:46:14,387 - __main__ - INFO -       Best params: {'model__alpha': 1.0}
+2025-10-23 13:46:14,387 - __main__ - INFO - 
+  ✓ Best model type: ELASTICNET
+2025-10-23 13:46:14,387 - __main__ - INFO -   Best parameters:
+2025-10-23 13:46:14,388 - __main__ - INFO -     model__alpha: 1.0
+2025-10-23 13:46:14,388 - __main__ - INFO -     model__l1_ratio: 0.7
+2025-10-23 13:46:14,388 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:46:14,388 - model_improvements - INFO -   Total parameter combinations tested: 49
+2025-10-23 13:46:14,388 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:46:14,389 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:46:14,389 - model_improvements - INFO -       Mean CV Score: 0.0529 (±0.1771)
+2025-10-23 13:46:14,389 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 13:46:14,389 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:14,389 - model_improvements - INFO -       Mean CV Score: 0.0512 (±0.1491)
+2025-10-23 13:46:14,389 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.5}
+2025-10-23 13:46:14,389 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:46:14,389 - model_improvements - INFO -       Mean CV Score: 0.0466 (±0.1333)
+2025-10-23 13:46:14,389 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.3}
+2025-10-23 13:46:14,389 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:46:14,389 - model_improvements - INFO -       Mean CV Score: 0.0415 (±0.1233)
+2025-10-23 13:46:14,391 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.1}
+2025-10-23 13:46:14,391 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:46:14,391 - model_improvements - INFO -       Mean CV Score: 0.0408 (±0.2353)
+2025-10-23 13:46:14,391 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.9}
+2025-10-23 13:46:14,394 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:46:14,394 - __main__ - INFO -     R²: 0.1312, RMSE: 26.4147, MAE: 20.6130
+2025-10-23 13:46:14,394 - __main__ - INFO -   Test Performance:
+2025-10-23 13:46:14,394 - __main__ - INFO -     R²: 0.1807, RMSE: 28.0106, MAE: 19.9753
+2025-10-23 13:46:14,394 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 13:46:14,394 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:46:14,394 - __main__ - INFO -     Ore: 6.374043
+2025-10-23 13:46:14,394 - __main__ - INFO -     WaterMill: -5.403721
+2025-10-23 13:46:14,394 - __main__ - INFO -     WaterZumpf: 0.681098
+2025-10-23 13:46:14,394 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:46:14,394 - __main__ - INFO -     Total features: 3
+2025-10-23 13:46:14,394 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 13:46:14,394 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 13:46:14,395 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:46:14,947 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_residuals.png
+2025-10-23 13:46:15,209 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_cv_results.png
+2025-10-23 13:46:15,210 - __main__ - INFO -   ✓ Model saved to process_model_DensityHC.pkl
+2025-10-23 13:46:15,210 - __main__ - INFO - 
+============================================================
+2025-10-23 13:46:15,211 - __main__ - INFO - Training model: MV → PulpHC
+2025-10-23 13:46:15,211 - __main__ - INFO - ============================================================
+2025-10-23 13:46:15,211 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:46:15,264 - __main__ - INFO -       Best CV score: 0.1272
+2025-10-23 13:46:15,264 - __main__ - INFO -       Test R²: 0.1710
+2025-10-23 13:46:15,265 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:46:15,265 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:46:15,418 - __main__ - INFO -       Best CV score: 0.1255
+2025-10-23 13:46:15,418 - __main__ - INFO -       Test R²: 0.1533
+2025-10-23 13:46:15,418 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 13:46:15,418 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:46:15,458 - __main__ - INFO -       Best CV score: 0.1180
+2025-10-23 13:46:15,458 - __main__ - INFO -       Test R²: 0.1755
+2025-10-23 13:46:15,458 - __main__ - INFO -       Best params: {'model__alpha': 1.0}
+2025-10-23 13:46:15,460 - __main__ - INFO - 
+  ✓ Best model type: RIDGE
+2025-10-23 13:46:15,460 - __main__ - INFO -   Best parameters:
+2025-10-23 13:46:15,460 - __main__ - INFO -     model__alpha: 1000.0
+2025-10-23 13:46:15,460 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:46:15,461 - model_improvements - INFO -   Total parameter combinations tested: 8
+2025-10-23 13:46:15,461 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:46:15,461 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:46:15,461 - model_improvements - INFO -       Mean CV Score: 0.1272 (±0.1830)
+2025-10-23 13:46:15,461 - model_improvements - INFO -       Parameters: {'model__alpha': 1000.0}
+2025-10-23 13:46:15,461 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:15,461 - model_improvements - INFO -       Mean CV Score: 0.1185 (±0.2334)
+2025-10-23 13:46:15,461 - model_improvements - INFO -       Parameters: {'model__alpha': 100.0}
+2025-10-23 13:46:15,461 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:46:15,462 - model_improvements - INFO -       Mean CV Score: 0.1104 (±0.2446)
+2025-10-23 13:46:15,462 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 13:46:15,462 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:46:15,462 - model_improvements - INFO -       Mean CV Score: 0.1093 (±0.2460)
+2025-10-23 13:46:15,463 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 13:46:15,463 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:46:15,463 - model_improvements - INFO -       Mean CV Score: 0.1091 (±0.2461)
+2025-10-23 13:46:15,463 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 13:46:15,466 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:46:15,466 - __main__ - INFO -     R²: 0.2393, RMSE: 16.6998, MAE: 12.3921
+2025-10-23 13:46:15,466 - __main__ - INFO -   Test Performance:
+2025-10-23 13:46:15,467 - __main__ - INFO -     R²: 0.1710, RMSE: 19.9223, MAE: 15.2983
+2025-10-23 13:46:15,467 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0682)
+2025-10-23 13:46:15,467 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:46:15,467 - __main__ - INFO -     WaterMill: 5.509466
+2025-10-23 13:46:15,467 - __main__ - INFO -     Ore: 3.692157
+2025-10-23 13:46:15,467 - __main__ - INFO -     WaterZumpf: -2.583796
+2025-10-23 13:46:15,467 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:46:15,468 - __main__ - INFO -     Total features: 3
+2025-10-23 13:46:15,468 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 13:46:15,468 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 13:46:15,468 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:46:15,987 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_residuals.png
+2025-10-23 13:46:16,267 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_cv_results.png
+2025-10-23 13:46:16,268 - __main__ - INFO -   ✓ Model saved to process_model_PulpHC.pkl
+2025-10-23 13:46:16,269 - __main__ - INFO - 
+============================================================
+2025-10-23 13:46:16,270 - __main__ - INFO - Training model: MV → PressureHC
+2025-10-23 13:46:16,270 - __main__ - INFO - ============================================================
+2025-10-23 13:46:16,271 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:46:16,313 - __main__ - INFO -       Best CV score: 0.1935
+2025-10-23 13:46:16,313 - __main__ - INFO -       Test R²: 0.3398
+2025-10-23 13:46:16,313 - __main__ - INFO -       Best params: {'model__alpha': 100.0}
+2025-10-23 13:46:16,313 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:46:16,477 - __main__ - INFO -       Best CV score: 0.1906
+2025-10-23 13:46:16,477 - __main__ - INFO -       Test R²: 0.3404
+2025-10-23 13:46:16,477 - __main__ - INFO -       Best params: {'model__alpha': 0.001, 'model__l1_ratio': 0.3}
+2025-10-23 13:46:16,479 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:46:16,520 - __main__ - INFO -       Best CV score: 0.1901
+2025-10-23 13:46:16,521 - __main__ - INFO -       Test R²: 0.3427
+2025-10-23 13:46:16,521 - __main__ - INFO -       Best params: {'model__alpha': 0.0001}
+2025-10-23 13:46:16,521 - __main__ - INFO - 
+  ✓ Best model type: RIDGE
+2025-10-23 13:46:16,521 - __main__ - INFO -   Best parameters:
+2025-10-23 13:46:16,521 - __main__ - INFO -     model__alpha: 100.0
+2025-10-23 13:46:16,522 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:46:16,522 - model_improvements - INFO -   Total parameter combinations tested: 8
+2025-10-23 13:46:16,522 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:46:16,522 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:46:16,522 - model_improvements - INFO -       Mean CV Score: 0.1935 (±0.2610)
+2025-10-23 13:46:16,522 - model_improvements - INFO -       Parameters: {'model__alpha': 100.0}
+2025-10-23 13:46:16,522 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:16,522 - model_improvements - INFO -       Mean CV Score: 0.1890 (±0.2739)
+2025-10-23 13:46:16,522 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 13:46:16,522 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:46:16,522 - model_improvements - INFO -       Mean CV Score: 0.1884 (±0.2755)
+2025-10-23 13:46:16,522 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 13:46:16,524 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:46:16,524 - model_improvements - INFO -       Mean CV Score: 0.1883 (±0.2756)
+2025-10-23 13:46:16,524 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 13:46:16,525 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:46:16,525 - model_improvements - INFO -       Mean CV Score: 0.1883 (±0.2757)
+2025-10-23 13:46:16,525 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01}
+2025-10-23 13:46:16,528 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:46:16,528 - __main__ - INFO -     R²: 0.3562, RMSE: 0.0234, MAE: 0.0196
+2025-10-23 13:46:16,528 - __main__ - INFO -   Test Performance:
+2025-10-23 13:46:16,528 - __main__ - INFO -     R²: 0.3398, RMSE: 0.0240, MAE: 0.0211
+2025-10-23 13:46:16,528 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0164)
+2025-10-23 13:46:16,528 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:46:16,528 - __main__ - INFO -     WaterMill: 0.013672
+2025-10-23 13:46:16,528 - __main__ - INFO -     WaterZumpf: -0.008464
+2025-10-23 13:46:16,528 - __main__ - INFO -     Ore: 0.001103
+2025-10-23 13:46:16,528 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:46:16,528 - __main__ - INFO -     Total features: 3
+2025-10-23 13:46:16,528 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 13:46:16,528 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 13:46:16,529 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:46:17,035 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_residuals.png
+2025-10-23 13:46:17,274 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_cv_results.png
+2025-10-23 13:46:17,275 - __main__ - INFO -   ✓ Model saved to process_model_PressureHC.pkl
+2025-10-23 13:46:17,276 - __main__ - INFO - 
+============================================================
+2025-10-23 13:46:17,276 - __main__ - INFO - Training model: MV → CirculativeLoad
+2025-10-23 13:46:17,276 - __main__ - INFO - ============================================================
+2025-10-23 13:46:17,278 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:46:17,329 - __main__ - INFO -       Best CV score: -0.0892
+2025-10-23 13:46:17,330 - __main__ - INFO -       Test R²: -0.0186
+2025-10-23 13:46:17,330 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:46:17,330 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:46:17,480 - __main__ - INFO -       Best CV score: -0.0579
+2025-10-23 13:46:17,480 - __main__ - INFO -       Test R²: -0.0000
+2025-10-23 13:46:17,480 - __main__ - INFO -       Best params: {'model__alpha': 0.1, 'model__l1_ratio': 0.3}
+2025-10-23 13:46:17,481 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:46:17,521 - __main__ - INFO -       Best CV score: -0.0601
+2025-10-23 13:46:17,522 - __main__ - INFO -       Test R²: -0.0000
+2025-10-23 13:46:17,522 - __main__ - INFO -       Best params: {'model__alpha': 0.1}
+2025-10-23 13:46:17,522 - __main__ - INFO - 
+  ✓ Best model type: ELASTICNET
+2025-10-23 13:46:17,522 - __main__ - INFO -   Best parameters:
+2025-10-23 13:46:17,522 - __main__ - INFO -     model__alpha: 0.1
+2025-10-23 13:46:17,522 - __main__ - INFO -     model__l1_ratio: 0.3
+2025-10-23 13:46:17,522 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:46:17,522 - model_improvements - INFO -   Total parameter combinations tested: 49
+2025-10-23 13:46:17,524 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:46:17,524 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:46:17,524 - model_improvements - INFO -       Mean CV Score: -0.0579 (±0.0682)
+2025-10-23 13:46:17,524 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.3}
+2025-10-23 13:46:17,524 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:17,524 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:46:17,524 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.7}
+2025-10-23 13:46:17,524 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:17,525 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:46:17,525 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.95}
+2025-10-23 13:46:17,525 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:17,525 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:46:17,525 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.99}
+2025-10-23 13:46:17,525 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:17,525 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:46:17,525 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.1}
+2025-10-23 13:46:17,528 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:46:17,529 - __main__ - INFO -     R²: 0.0000, RMSE: 0.1752, MAE: 0.1277
+2025-10-23 13:46:17,529 - __main__ - INFO -   Test Performance:
+2025-10-23 13:46:17,529 - __main__ - INFO -     R²: -0.0000, RMSE: 0.1989, MAE: 0.1313
+2025-10-23 13:46:17,529 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0000)
+2025-10-23 13:46:17,529 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:46:17,529 - __main__ - INFO -     Ore: -0.000000
+2025-10-23 13:46:17,529 - __main__ - INFO -     WaterMill: -0.000000
+2025-10-23 13:46:17,529 - __main__ - INFO -     WaterZumpf: -0.000000
+2025-10-23 13:46:17,529 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:46:17,529 - __main__ - INFO -     Total features: 3
+2025-10-23 13:46:17,529 - __main__ - INFO -     Non-zero coefficients: 0
+2025-10-23 13:46:17,529 - __main__ - INFO -     Sparsity: 100.0%
+2025-10-23 13:46:17,529 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:46:18,009 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_residuals.png
+2025-10-23 13:46:18,318 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_cv_results.png
+2025-10-23 13:46:18,319 - __main__ - INFO -   ✓ Model saved to process_model_CirculativeLoad.pkl
+2025-10-23 13:46:18,319 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:18,320 - __main__ - INFO - STEP 5: TRAINING QUALITY MODEL (CV + DV → Target)
+2025-10-23 13:46:18,320 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:18,322 - __main__ - INFO -   Filtered training data: 5232 → 5232 samples
+2025-10-23 13:46:18,322 - __main__ - INFO -   Filtered test data: 1308 → 1308 samples
+2025-10-23 13:46:18,322 - __main__ - INFO - 
+Training model: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad', 'Class_15', 'Daiki', 'FE'] → PSI200
+2025-10-23 13:46:18,322 - model_improvements - INFO -   Sample weighting:
+2025-10-23 13:46:18,322 - model_improvements - INFO -     In-range [16, 30]: 5228 samples (weight=2.0)
+2025-10-23 13:46:18,322 - model_improvements - INFO -     Out-of-range: 4 samples (weight=1.0)
+2025-10-23 13:46:18,324 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:46:18,389 - __main__ - INFO -       Best CV score: -2594.6048
+2025-10-23 13:46:18,389 - __main__ - INFO -       Test R²: 0.5261
+2025-10-23 13:46:18,389 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:46:18,389 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:46:18,609 - __main__ - INFO -       Best CV score: 0.0963
+2025-10-23 13:46:18,609 - __main__ - INFO -       Test R²: 0.2962
+2025-10-23 13:46:18,609 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.3}
+2025-10-23 13:46:18,609 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:46:18,663 - __main__ - INFO -       Best CV score: 0.2383
+2025-10-23 13:46:18,663 - __main__ - INFO -       Test R²: 0.5317
+2025-10-23 13:46:18,663 - __main__ - INFO -       Best params: {'model__alpha': 0.1}
+2025-10-23 13:46:18,663 - __main__ - INFO - 
+  ✓ Best model type: LASSO
+2025-10-23 13:46:18,663 - __main__ - INFO -   Best parameters:
+2025-10-23 13:46:18,663 - __main__ - INFO -     model__alpha: 0.1
+2025-10-23 13:46:18,663 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:46:18,663 - model_improvements - INFO -   Total parameter combinations tested: 7
+2025-10-23 13:46:18,663 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:46:18,665 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:46:18,665 - model_improvements - INFO -       Mean CV Score: 0.2383 (±0.2810)
+2025-10-23 13:46:18,665 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 13:46:18,665 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:46:18,665 - model_improvements - INFO -       Mean CV Score: -0.0518 (±0.1266)
+2025-10-23 13:46:18,665 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 13:46:18,665 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:46:18,666 - model_improvements - INFO -       Mean CV Score: -0.0818 (±0.1022)
+2025-10-23 13:46:18,666 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 13:46:18,666 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:46:18,666 - model_improvements - INFO -       Mean CV Score: -7917.0963 (±15835.0939)
+2025-10-23 13:46:18,666 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01}
+2025-10-23 13:46:18,666 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:46:18,666 - model_improvements - INFO -       Mean CV Score: -10304.6462 (±20610.1779)
+2025-10-23 13:46:18,666 - model_improvements - INFO -       Parameters: {'model__alpha': 0.001}
+2025-10-23 13:46:18,669 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:46:18,670 - __main__ - INFO -     R²: 0.4671, RMSE: 1.3650, MAE: 1.0420
+2025-10-23 13:46:18,670 - __main__ - INFO -   Test Performance:
+2025-10-23 13:46:18,670 - __main__ - INFO -     R²: 0.5317, RMSE: 1.1836, MAE: 0.8496
+2025-10-23 13:46:18,670 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 13:46:18,670 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:46:18,670 - __main__ - INFO -     DensityHC: 1.547553
+2025-10-23 13:46:18,670 - __main__ - INFO -     PressureHC: 0.587678
+2025-10-23 13:46:18,670 - __main__ - INFO -     CirculativeLoad: -0.355856
+2025-10-23 13:46:18,671 - __main__ - INFO -     Daiki: 0.068868
+2025-10-23 13:46:18,671 - __main__ - INFO -     PulpHC: 0.000000
+2025-10-23 13:46:18,671 - __main__ - INFO -     Class_15: -0.000000
+2025-10-23 13:46:18,671 - __main__ - INFO -     FE: 0.000000
+2025-10-23 13:46:18,671 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:46:18,671 - __main__ - INFO -     Total features: 7
+2025-10-23 13:46:18,671 - __main__ - INFO -     Non-zero coefficients: 4
+2025-10-23 13:46:18,671 - __main__ - INFO -     Sparsity: 42.9%
+2025-10-23 13:46:18,671 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:46:19,175 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_residuals.png
+2025-10-23 13:46:19,424 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_cv_results.png
+2025-10-23 13:46:19,425 - __main__ - INFO -   ✓ Model saved to quality_model.pkl
+2025-10-23 13:46:19,426 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:19,426 - __main__ - INFO - STEP 6: VALIDATING CASCADE
+2025-10-23 13:46:19,426 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:19,428 - __main__ - INFO -   Validating with 200 samples...
+2025-10-23 13:46:19,433 - __main__ - INFO -   Cascade Validation Results:
+2025-10-23 13:46:19,433 - __main__ - INFO -     R²: 0.0978
+2025-10-23 13:46:19,433 - __main__ - INFO -     RMSE: 1.7577
+2025-10-23 13:46:19,433 - __main__ - INFO -     MAE: 1.1263
+2025-10-23 13:46:19,890 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\cascade_validation.png
+2025-10-23 13:46:19,890 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:46:19,890 - __main__ - INFO - STEP 7: SAVING RESULTS
+2025-10-23 13:46:19,891 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:46:19,892 - __main__ - INFO -   ✓ Metadata saved to metadata_poly_upgraded.json
+2025-10-23 13:46:19,894 - __main__ - INFO -   ✓ Training results saved to training_results_poly_upgraded.json
+2025-10-23 13:46:19,894 - __main__ - INFO - 
+  Files created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06:
+2025-10-23 13:46:19,894 - __main__ - INFO -     - metadata_poly_upgraded.json
+2025-10-23 13:46:19,894 - __main__ - INFO -     - process_model_CirculativeLoad.pkl
+2025-10-23 13:46:19,895 - __main__ - INFO -     - process_model_DensityHC.pkl
+2025-10-23 13:46:19,895 - __main__ - INFO -     - process_model_PressureHC.pkl
+2025-10-23 13:46:19,895 - __main__ - INFO -     - process_model_PulpHC.pkl
+2025-10-23 13:46:19,895 - __main__ - INFO -     - quality_model.pkl
+2025-10-23 13:46:19,895 - __main__ - INFO -     - training_results_poly_upgraded.json
+2025-10-23 13:46:19,895 - __main__ - INFO - 
+  Plots created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots:
+2025-10-23 13:46:19,897 - __main__ - INFO -     - cascade_validation.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_CirculativeLoad_cv_results.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_CirculativeLoad_residuals.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_DensityHC_cv_results.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_DensityHC_residuals.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_PressureHC_cv_results.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_PressureHC_residuals.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_PulpHC_cv_results.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - process_model_PulpHC_residuals.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - quality_model_cv_results.png
+2025-10-23 13:46:19,897 - __main__ - INFO -     - quality_model_residuals.png
+2025-10-23 13:46:19,897 - __main__ - INFO - 
+================================================================================
+2025-10-23 13:46:19,898 - __main__ - INFO - IMPROVED POLYNOMIAL MODEL TRAINING COMPLETE
+2025-10-23 13:46:19,898 - __main__ - INFO - ================================================================================
+2025-10-23 13:46:19,899 - __main__ - INFO - Models saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06
+2025-10-23 13:46:19,899 - __main__ - INFO - Plots saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots
+2025-10-23 13:46:19,899 - __main__ - INFO - 
+✓ Improved polynomial model training pipeline completed successfully!
+2025-10-23 13:52:22,168 - __main__ - INFO - 
+================================================================================
+2025-10-23 13:52:22,169 - __main__ - INFO - STARTING IMPROVED POLYNOMIAL CASCADE TRAINING - MILL 6
+2025-10-23 13:52:22,169 - __main__ - INFO - ================================================================================
+2025-10-23 13:52:22,169 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:22,169 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-23 13:52:22,169 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:22,169 - __main__ - INFO - Loading data from C:\Projects\experiments\modeling\output\segmented_motifs_all_06.csv...
+2025-10-23 13:52:22,198 - __main__ - INFO -   Data shape: (6540, 22)
+2025-10-23 13:52:22,198 - __main__ - INFO -   Rows removed (NaN): 0 (0.00%)
+2025-10-23 13:52:22,198 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:22,198 - __main__ - INFO - STEP 2: DATA QUALITY DIAGNOSTICS
+2025-10-23 13:52:22,199 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:22,199 - model_improvements - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:22,199 - model_improvements - INFO - DATA QUALITY DIAGNOSTICS
+2025-10-23 13:52:22,199 - model_improvements - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:22,200 - model_improvements - INFO - 
+Ore:
+2025-10-23 13:52:22,201 - model_improvements - INFO -   Range: [116.250, 185.354]
+2025-10-23 13:52:22,201 - model_improvements - INFO -   Mean±Std: 176.443 ± 4.511
+2025-10-23 13:52:22,202 - model_improvements - INFO -   Coefficient of Variation: 2.6%
+2025-10-23 13:52:22,202 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 13:52:22,202 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,203 - model_improvements - INFO - 
+WaterMill:
+2025-10-23 13:52:22,204 - model_improvements - INFO -   Range: [13.218, 17.217]
+2025-10-23 13:52:22,205 - model_improvements - INFO -   Mean±Std: 15.857 ± 0.955
+2025-10-23 13:52:22,205 - model_improvements - INFO -   Coefficient of Variation: 6.0%
+2025-10-23 13:52:22,205 - model_improvements - INFO -   Outliers (>3 IQR): 780 (11.93%)
+2025-10-23 13:52:22,205 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,205 - model_improvements - WARNING -   ⚠ High outlier percentage
+2025-10-23 13:52:22,206 - model_improvements - INFO - 
+WaterZumpf:
+2025-10-23 13:52:22,206 - model_improvements - INFO -   Range: [127.760, 241.569]
+2025-10-23 13:52:22,206 - model_improvements - INFO -   Mean±Std: 213.018 ± 23.990
+2025-10-23 13:52:22,206 - model_improvements - INFO -   Coefficient of Variation: 11.3%
+2025-10-23 13:52:22,206 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:52:22,208 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,209 - model_improvements - INFO - 
+DensityHC:
+2025-10-23 13:52:22,209 - model_improvements - INFO -   Range: [1603.609, 1764.417]
+2025-10-23 13:52:22,209 - model_improvements - INFO -   Mean±Std: 1678.511 ± 29.012
+2025-10-23 13:52:22,209 - model_improvements - INFO -   Coefficient of Variation: 1.7%
+2025-10-23 13:52:22,209 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:52:22,211 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,211 - model_improvements - INFO - 
+PulpHC:
+2025-10-23 13:52:22,211 - model_improvements - INFO -   Range: [491.651, 599.983]
+2025-10-23 13:52:22,211 - model_improvements - INFO -   Mean±Std: 564.022 ± 19.841
+2025-10-23 13:52:22,211 - model_improvements - INFO -   Coefficient of Variation: 3.5%
+2025-10-23 13:52:22,211 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:52:22,213 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,214 - model_improvements - INFO - 
+PressureHC:
+2025-10-23 13:52:22,214 - model_improvements - INFO -   Range: [0.338, 0.465]
+2025-10-23 13:52:22,214 - model_improvements - INFO -   Mean±Std: 0.414 ± 0.030
+2025-10-23 13:52:22,214 - model_improvements - INFO -   Coefficient of Variation: 7.2%
+2025-10-23 13:52:22,214 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:52:22,214 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,215 - model_improvements - INFO - 
+CirculativeLoad:
+2025-10-23 13:52:22,216 - model_improvements - INFO -   Range: [1.859, 3.626]
+2025-10-23 13:52:22,216 - model_improvements - INFO -   Mean±Std: 2.311 ± 0.180
+2025-10-23 13:52:22,216 - model_improvements - INFO -   Coefficient of Variation: 7.8%
+2025-10-23 13:52:22,216 - model_improvements - INFO -   Outliers (>3 IQR): 12 (0.18%)
+2025-10-23 13:52:22,216 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,217 - model_improvements - INFO - 
+Class_15:
+2025-10-23 13:52:22,217 - model_improvements - INFO -   Range: [0.400, 2.100]
+2025-10-23 13:52:22,217 - model_improvements - INFO -   Mean±Std: 1.018 ± 0.403
+2025-10-23 13:52:22,217 - model_improvements - INFO -   Coefficient of Variation: 39.6%
+2025-10-23 13:52:22,217 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:52:22,217 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,218 - model_improvements - INFO - 
+Daiki:
+2025-10-23 13:52:22,218 - model_improvements - INFO -   Range: [0.202, 0.438]
+2025-10-23 13:52:22,218 - model_improvements - INFO -   Mean±Std: 0.327 ± 0.055
+2025-10-23 13:52:22,218 - model_improvements - INFO -   Coefficient of Variation: 16.7%
+2025-10-23 13:52:22,218 - model_improvements - INFO -   Outliers (>3 IQR): 0 (0.00%)
+2025-10-23 13:52:22,218 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,220 - model_improvements - INFO - 
+FE:
+2025-10-23 13:52:22,220 - model_improvements - INFO -   Range: [-5997.868, 3.995]
+2025-10-23 13:52:22,220 - model_improvements - INFO -   Mean±Std: -1.099 ± 139.132
+2025-10-23 13:52:22,221 - model_improvements - INFO -   Coefficient of Variation: -12657.3%
+2025-10-23 13:52:22,221 - model_improvements - INFO -   Outliers (>3 IQR): 9 (0.14%)
+2025-10-23 13:52:22,221 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,221 - model_improvements - WARNING -   ⚠ Very low variance - may not be informative
+2025-10-23 13:52:22,222 - model_improvements - INFO - 
+PSI200:
+2025-10-23 13:52:22,222 - model_improvements - INFO -   Range: [17.054, 31.143]
+2025-10-23 13:52:22,222 - model_improvements - INFO -   Mean±Std: 23.041 ± 1.845
+2025-10-23 13:52:22,222 - model_improvements - INFO -   Coefficient of Variation: 8.0%
+2025-10-23 13:52:22,222 - model_improvements - INFO -   Outliers (>3 IQR): 17 (0.26%)
+2025-10-23 13:52:22,223 - model_improvements - INFO -   Missing values: 0 (0.00%)
+2025-10-23 13:52:22,223 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:22,223 - __main__ - INFO - STEP 3: SPLITTING DATA
+2025-10-23 13:52:22,223 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:22,223 - __main__ - INFO -   Train size: 5232
+2025-10-23 13:52:22,223 - __main__ - INFO -   Test size: 1308
+2025-10-23 13:52:22,223 - __main__ - INFO -   Test ratio: 20.0%
+2025-10-23 13:52:22,223 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:22,223 - __main__ - INFO - STEP 4: TRAINING PROCESS MODELS (MV → CV)
+2025-10-23 13:52:22,224 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:22,224 - __main__ - INFO - 
+============================================================
+2025-10-23 13:52:22,224 - __main__ - INFO - Training model: MV → DensityHC
+2025-10-23 13:52:22,224 - __main__ - INFO - ============================================================
+2025-10-23 13:52:22,225 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:52:24,361 - __main__ - INFO -       Best CV score: 0.0304
+2025-10-23 13:52:24,361 - __main__ - INFO -       Test R²: 0.2243
+2025-10-23 13:52:24,361 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:52:24,361 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:52:24,508 - __main__ - INFO -       Best CV score: 0.0529
+2025-10-23 13:52:24,508 - __main__ - INFO -       Test R²: 0.1807
+2025-10-23 13:52:24,508 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 13:52:24,508 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:52:24,548 - __main__ - INFO -       Best CV score: 0.0238
+2025-10-23 13:52:24,548 - __main__ - INFO -       Test R²: 0.2454
+2025-10-23 13:52:24,548 - __main__ - INFO -       Best params: {'model__alpha': 1.0}
+2025-10-23 13:52:24,548 - __main__ - INFO - 
+  ✓ Best model type: ELASTICNET
+2025-10-23 13:52:24,548 - __main__ - INFO -   Best parameters:
+2025-10-23 13:52:24,549 - __main__ - INFO -     model__alpha: 1.0
+2025-10-23 13:52:24,549 - __main__ - INFO -     model__l1_ratio: 0.7
+2025-10-23 13:52:24,549 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:52:24,550 - model_improvements - INFO -   Total parameter combinations tested: 49
+2025-10-23 13:52:24,550 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:52:24,550 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:52:24,550 - model_improvements - INFO -       Mean CV Score: 0.0529 (±0.1771)
+2025-10-23 13:52:24,550 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 13:52:24,550 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:24,550 - model_improvements - INFO -       Mean CV Score: 0.0512 (±0.1491)
+2025-10-23 13:52:24,550 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.5}
+2025-10-23 13:52:24,551 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:52:24,551 - model_improvements - INFO -       Mean CV Score: 0.0466 (±0.1333)
+2025-10-23 13:52:24,551 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.3}
+2025-10-23 13:52:24,551 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:52:24,551 - model_improvements - INFO -       Mean CV Score: 0.0415 (±0.1233)
+2025-10-23 13:52:24,552 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.1}
+2025-10-23 13:52:24,552 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:52:24,552 - model_improvements - INFO -       Mean CV Score: 0.0408 (±0.2353)
+2025-10-23 13:52:24,552 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.9}
+2025-10-23 13:52:24,555 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:52:24,555 - __main__ - INFO -     R²: 0.1312, RMSE: 26.4147, MAE: 20.6130
+2025-10-23 13:52:24,555 - __main__ - INFO -   Test Performance:
+2025-10-23 13:52:24,555 - __main__ - INFO -     R²: 0.1807, RMSE: 28.0106, MAE: 19.9753
+2025-10-23 13:52:24,873 - model_improvements - INFO -   ✓ Train/Test prediction plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_predictions.png
+2025-10-23 13:52:24,873 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 13:52:24,873 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:52:24,874 - __main__ - INFO -     Ore: 6.374043
+2025-10-23 13:52:24,874 - __main__ - INFO -     WaterMill: -5.403721
+2025-10-23 13:52:24,874 - __main__ - INFO -     WaterZumpf: 0.681098
+2025-10-23 13:52:24,875 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:52:24,875 - __main__ - INFO -     Total features: 3
+2025-10-23 13:52:24,875 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 13:52:24,876 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 13:52:24,876 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:52:25,365 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_residuals.png
+2025-10-23 13:52:25,652 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_DensityHC_cv_results.png
+2025-10-23 13:52:25,652 - __main__ - INFO -   ✓ Model saved to process_model_DensityHC.pkl
+2025-10-23 13:52:25,653 - __main__ - INFO - 
+============================================================
+2025-10-23 13:52:25,654 - __main__ - INFO - Training model: MV → PulpHC
+2025-10-23 13:52:25,654 - __main__ - INFO - ============================================================
+2025-10-23 13:52:25,656 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:52:25,708 - __main__ - INFO -       Best CV score: 0.1272
+2025-10-23 13:52:25,708 - __main__ - INFO -       Test R²: 0.1710
+2025-10-23 13:52:25,708 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:52:25,708 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:52:25,873 - __main__ - INFO -       Best CV score: 0.1255
+2025-10-23 13:52:25,873 - __main__ - INFO -       Test R²: 0.1533
+2025-10-23 13:52:25,873 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.7}
+2025-10-23 13:52:25,873 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:52:25,915 - __main__ - INFO -       Best CV score: 0.1180
+2025-10-23 13:52:25,915 - __main__ - INFO -       Test R²: 0.1755
+2025-10-23 13:52:25,915 - __main__ - INFO -       Best params: {'model__alpha': 1.0}
+2025-10-23 13:52:25,915 - __main__ - INFO - 
+  ✓ Best model type: RIDGE
+2025-10-23 13:52:25,915 - __main__ - INFO -   Best parameters:
+2025-10-23 13:52:25,915 - __main__ - INFO -     model__alpha: 1000.0
+2025-10-23 13:52:25,916 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:52:25,916 - model_improvements - INFO -   Total parameter combinations tested: 8
+2025-10-23 13:52:25,916 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:52:25,917 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Mean CV Score: 0.1272 (±0.1830)
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Parameters: {'model__alpha': 1000.0}
+2025-10-23 13:52:25,917 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Mean CV Score: 0.1185 (±0.2334)
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Parameters: {'model__alpha': 100.0}
+2025-10-23 13:52:25,917 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Mean CV Score: 0.1104 (±0.2446)
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 13:52:25,917 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Mean CV Score: 0.1093 (±0.2460)
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 13:52:25,917 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:52:25,917 - model_improvements - INFO -       Mean CV Score: 0.1091 (±0.2461)
+2025-10-23 13:52:25,918 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 13:52:25,921 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:52:25,921 - __main__ - INFO -     R²: 0.2393, RMSE: 16.6998, MAE: 12.3921
+2025-10-23 13:52:25,922 - __main__ - INFO -   Test Performance:
+2025-10-23 13:52:25,922 - __main__ - INFO -     R²: 0.1710, RMSE: 19.9223, MAE: 15.2983
+2025-10-23 13:52:26,173 - model_improvements - INFO -   ✓ Train/Test prediction plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_predictions.png
+2025-10-23 13:52:26,175 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0682)
+2025-10-23 13:52:26,175 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:52:26,175 - __main__ - INFO -     WaterMill: 5.509466
+2025-10-23 13:52:26,176 - __main__ - INFO -     Ore: 3.692157
+2025-10-23 13:52:26,176 - __main__ - INFO -     WaterZumpf: -2.583796
+2025-10-23 13:52:26,177 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:52:26,177 - __main__ - INFO -     Total features: 3
+2025-10-23 13:52:26,177 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 13:52:26,177 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 13:52:26,177 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:52:26,663 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_residuals.png
+2025-10-23 13:52:26,921 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PulpHC_cv_results.png
+2025-10-23 13:52:26,922 - __main__ - INFO -   ✓ Model saved to process_model_PulpHC.pkl
+2025-10-23 13:52:26,922 - __main__ - INFO - 
+============================================================
+2025-10-23 13:52:26,922 - __main__ - INFO - Training model: MV → PressureHC
+2025-10-23 13:52:26,923 - __main__ - INFO - ============================================================
+2025-10-23 13:52:26,923 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:52:26,975 - __main__ - INFO -       Best CV score: 0.1935
+2025-10-23 13:52:26,975 - __main__ - INFO -       Test R²: 0.3398
+2025-10-23 13:52:26,975 - __main__ - INFO -       Best params: {'model__alpha': 100.0}
+2025-10-23 13:52:26,976 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:52:27,131 - __main__ - INFO -       Best CV score: 0.1906
+2025-10-23 13:52:27,131 - __main__ - INFO -       Test R²: 0.3404
+2025-10-23 13:52:27,132 - __main__ - INFO -       Best params: {'model__alpha': 0.001, 'model__l1_ratio': 0.3}
+2025-10-23 13:52:27,132 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:52:27,172 - __main__ - INFO -       Best CV score: 0.1901
+2025-10-23 13:52:27,173 - __main__ - INFO -       Test R²: 0.3427
+2025-10-23 13:52:27,173 - __main__ - INFO -       Best params: {'model__alpha': 0.0001}
+2025-10-23 13:52:27,173 - __main__ - INFO - 
+  ✓ Best model type: RIDGE
+2025-10-23 13:52:27,173 - __main__ - INFO -   Best parameters:
+2025-10-23 13:52:27,173 - __main__ - INFO -     model__alpha: 100.0
+2025-10-23 13:52:27,174 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:52:27,174 - model_improvements - INFO -   Total parameter combinations tested: 8
+2025-10-23 13:52:27,174 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:52:27,174 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:52:27,174 - model_improvements - INFO -       Mean CV Score: 0.1935 (±0.2610)
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Parameters: {'model__alpha': 100.0}
+2025-10-23 13:52:27,175 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Mean CV Score: 0.1890 (±0.2739)
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 13:52:27,175 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Mean CV Score: 0.1884 (±0.2755)
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 13:52:27,175 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Mean CV Score: 0.1883 (±0.2756)
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 13:52:27,175 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Mean CV Score: 0.1883 (±0.2757)
+2025-10-23 13:52:27,175 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01}
+2025-10-23 13:52:27,179 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:52:27,179 - __main__ - INFO -     R²: 0.3562, RMSE: 0.0234, MAE: 0.0196
+2025-10-23 13:52:27,179 - __main__ - INFO -   Test Performance:
+2025-10-23 13:52:27,180 - __main__ - INFO -     R²: 0.3398, RMSE: 0.0240, MAE: 0.0211
+2025-10-23 13:52:27,451 - model_improvements - INFO -   ✓ Train/Test prediction plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_predictions.png
+2025-10-23 13:52:27,451 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0164)
+2025-10-23 13:52:27,451 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:52:27,451 - __main__ - INFO -     WaterMill: 0.013672
+2025-10-23 13:52:27,451 - __main__ - INFO -     WaterZumpf: -0.008464
+2025-10-23 13:52:27,451 - __main__ - INFO -     Ore: 0.001103
+2025-10-23 13:52:27,452 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:52:27,453 - __main__ - INFO -     Total features: 3
+2025-10-23 13:52:27,453 - __main__ - INFO -     Non-zero coefficients: 3
+2025-10-23 13:52:27,453 - __main__ - INFO -     Sparsity: 0.0%
+2025-10-23 13:52:27,454 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:52:27,944 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_residuals.png
+2025-10-23 13:52:28,188 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_PressureHC_cv_results.png
+2025-10-23 13:52:28,190 - __main__ - INFO -   ✓ Model saved to process_model_PressureHC.pkl
+2025-10-23 13:52:28,190 - __main__ - INFO - 
+============================================================
+2025-10-23 13:52:28,190 - __main__ - INFO - Training model: MV → CirculativeLoad
+2025-10-23 13:52:28,190 - __main__ - INFO - ============================================================
+2025-10-23 13:52:28,190 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:52:28,234 - __main__ - INFO -       Best CV score: -0.0892
+2025-10-23 13:52:28,234 - __main__ - INFO -       Test R²: -0.0186
+2025-10-23 13:52:28,234 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:52:28,234 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:52:28,392 - __main__ - INFO -       Best CV score: -0.0579
+2025-10-23 13:52:28,392 - __main__ - INFO -       Test R²: -0.0000
+2025-10-23 13:52:28,392 - __main__ - INFO -       Best params: {'model__alpha': 0.1, 'model__l1_ratio': 0.3}
+2025-10-23 13:52:28,392 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:52:28,490 - __main__ - INFO -       Best CV score: -0.0601
+2025-10-23 13:52:28,490 - __main__ - INFO -       Test R²: -0.0000
+2025-10-23 13:52:28,490 - __main__ - INFO -       Best params: {'model__alpha': 0.1}
+2025-10-23 13:52:28,490 - __main__ - INFO - 
+  ✓ Best model type: ELASTICNET
+2025-10-23 13:52:28,490 - __main__ - INFO -   Best parameters:
+2025-10-23 13:52:28,490 - __main__ - INFO -     model__alpha: 0.1
+2025-10-23 13:52:28,490 - __main__ - INFO -     model__l1_ratio: 0.3
+2025-10-23 13:52:28,492 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:52:28,492 - model_improvements - INFO -   Total parameter combinations tested: 49
+2025-10-23 13:52:28,492 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:52:28,492 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:52:28,492 - model_improvements - INFO -       Mean CV Score: -0.0579 (±0.0682)
+2025-10-23 13:52:28,492 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.3}
+2025-10-23 13:52:28,493 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:28,493 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:52:28,493 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.7}
+2025-10-23 13:52:28,493 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:28,493 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:52:28,493 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.95}
+2025-10-23 13:52:28,494 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:28,494 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:52:28,494 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1, 'model__l1_ratio': 0.99}
+2025-10-23 13:52:28,494 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:28,494 - model_improvements - INFO -       Mean CV Score: -0.0601 (±0.0690)
+2025-10-23 13:52:28,494 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0, 'model__l1_ratio': 0.1}
+2025-10-23 13:52:28,498 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:52:28,498 - __main__ - INFO -     R²: 0.0000, RMSE: 0.1752, MAE: 0.1277
+2025-10-23 13:52:28,498 - __main__ - INFO -   Test Performance:
+2025-10-23 13:52:28,498 - __main__ - INFO -     R²: -0.0000, RMSE: 0.1989, MAE: 0.1313
+2025-10-23 13:52:28,754 - model_improvements - INFO -   ✓ Train/Test prediction plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_predictions.png
+2025-10-23 13:52:28,754 - __main__ - INFO -     ✓ Healthy bias-variance tradeoff (R² gap: 0.0000)
+2025-10-23 13:52:28,755 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:52:28,755 - __main__ - INFO -     Ore: -0.000000
+2025-10-23 13:52:28,755 - __main__ - INFO -     WaterMill: -0.000000
+2025-10-23 13:52:28,756 - __main__ - INFO -     WaterZumpf: -0.000000
+2025-10-23 13:52:28,756 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:52:28,756 - __main__ - INFO -     Total features: 3
+2025-10-23 13:52:28,756 - __main__ - INFO -     Non-zero coefficients: 0
+2025-10-23 13:52:28,756 - __main__ - INFO -     Sparsity: 100.0%
+2025-10-23 13:52:28,756 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:52:29,242 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_residuals.png
+2025-10-23 13:52:29,500 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\process_model_CirculativeLoad_cv_results.png
+2025-10-23 13:52:29,501 - __main__ - INFO -   ✓ Model saved to process_model_CirculativeLoad.pkl
+2025-10-23 13:52:29,501 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:29,501 - __main__ - INFO - STEP 5: TRAINING QUALITY MODEL (CV + DV → Target)
+2025-10-23 13:52:29,501 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:29,502 - __main__ - INFO -   Filtered training data: 5232 → 5232 samples
+2025-10-23 13:52:29,502 - __main__ - INFO -   Filtered test data: 1308 → 1308 samples
+2025-10-23 13:52:29,502 - __main__ - INFO - 
+Training model: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad', 'Class_15', 'Daiki', 'FE'] → PSI200
+2025-10-23 13:52:29,504 - model_improvements - INFO -   Sample weighting:
+2025-10-23 13:52:29,505 - model_improvements - INFO -     In-range [16, 30]: 5228 samples (weight=2.0)
+2025-10-23 13:52:29,505 - model_improvements - INFO -     Out-of-range: 4 samples (weight=1.0)
+2025-10-23 13:52:29,505 - __main__ - INFO - 
+    Testing RIDGE...
+2025-10-23 13:52:29,568 - __main__ - INFO -       Best CV score: -2594.6048
+2025-10-23 13:52:29,568 - __main__ - INFO -       Test R²: 0.5261
+2025-10-23 13:52:29,569 - __main__ - INFO -       Best params: {'model__alpha': 1000.0}
+2025-10-23 13:52:29,569 - __main__ - INFO - 
+    Testing ELASTICNET...
+2025-10-23 13:52:29,765 - __main__ - INFO -       Best CV score: 0.0963
+2025-10-23 13:52:29,765 - __main__ - INFO -       Test R²: 0.2962
+2025-10-23 13:52:29,765 - __main__ - INFO -       Best params: {'model__alpha': 1.0, 'model__l1_ratio': 0.3}
+2025-10-23 13:52:29,765 - __main__ - INFO - 
+    Testing LASSO...
+2025-10-23 13:52:29,817 - __main__ - INFO -       Best CV score: 0.2383
+2025-10-23 13:52:29,817 - __main__ - INFO -       Test R²: 0.5317
+2025-10-23 13:52:29,817 - __main__ - INFO -       Best params: {'model__alpha': 0.1}
+2025-10-23 13:52:29,817 - __main__ - INFO - 
+  ✓ Best model type: LASSO
+2025-10-23 13:52:29,817 - __main__ - INFO -   Best parameters:
+2025-10-23 13:52:29,817 - __main__ - INFO -     model__alpha: 0.1
+2025-10-23 13:52:29,818 - model_improvements - INFO - 
+  Cross-Validation Diagnostics:
+2025-10-23 13:52:29,818 - model_improvements - INFO -   Total parameter combinations tested: 7
+2025-10-23 13:52:29,818 - model_improvements - INFO - 
+  Top 5 parameter combinations:
+2025-10-23 13:52:29,818 - model_improvements - INFO - 
+    Rank 1:
+2025-10-23 13:52:29,819 - model_improvements - INFO -       Mean CV Score: 0.2383 (±0.2810)
+2025-10-23 13:52:29,819 - model_improvements - INFO -       Parameters: {'model__alpha': 0.1}
+2025-10-23 13:52:29,819 - model_improvements - INFO - 
+    Rank 2:
+2025-10-23 13:52:29,819 - model_improvements - INFO -       Mean CV Score: -0.0518 (±0.1266)
+2025-10-23 13:52:29,819 - model_improvements - INFO -       Parameters: {'model__alpha': 1.0}
+2025-10-23 13:52:29,819 - model_improvements - INFO - 
+    Rank 3:
+2025-10-23 13:52:29,820 - model_improvements - INFO -       Mean CV Score: -0.0818 (±0.1022)
+2025-10-23 13:52:29,820 - model_improvements - INFO -       Parameters: {'model__alpha': 10.0}
+2025-10-23 13:52:29,820 - model_improvements - INFO - 
+    Rank 4:
+2025-10-23 13:52:29,820 - model_improvements - INFO -       Mean CV Score: -7917.0963 (±15835.0939)
+2025-10-23 13:52:29,820 - model_improvements - INFO -       Parameters: {'model__alpha': 0.01}
+2025-10-23 13:52:29,820 - model_improvements - INFO - 
+    Rank 5:
+2025-10-23 13:52:29,820 - model_improvements - INFO -       Mean CV Score: -10304.6462 (±20610.1779)
+2025-10-23 13:52:29,820 - model_improvements - INFO -       Parameters: {'model__alpha': 0.001}
+2025-10-23 13:52:29,825 - __main__ - INFO - 
+  Training Performance:
+2025-10-23 13:52:29,825 - __main__ - INFO -     R²: 0.4671, RMSE: 1.3650, MAE: 1.0420
+2025-10-23 13:52:29,825 - __main__ - INFO -   Test Performance:
+2025-10-23 13:52:29,825 - __main__ - INFO -     R²: 0.5317, RMSE: 1.1836, MAE: 0.8496
+2025-10-23 13:52:30,096 - model_improvements - INFO -   ✓ Train/Test prediction plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_predictions.png
+2025-10-23 13:52:30,097 - __main__ - INFO -     ✓ Good generalization (Test R² > Train R²)
+2025-10-23 13:52:30,097 - __main__ - INFO - 
+  Top 15 Feature Coefficients:
+2025-10-23 13:52:30,097 - __main__ - INFO -     DensityHC: 1.547553
+2025-10-23 13:52:30,097 - __main__ - INFO -     PressureHC: 0.587678
+2025-10-23 13:52:30,097 - __main__ - INFO -     CirculativeLoad: -0.355856
+2025-10-23 13:52:30,098 - __main__ - INFO -     Daiki: 0.068868
+2025-10-23 13:52:30,098 - __main__ - INFO -     PulpHC: 0.000000
+2025-10-23 13:52:30,098 - __main__ - INFO -     Class_15: -0.000000
+2025-10-23 13:52:30,098 - __main__ - INFO -     FE: 0.000000
+2025-10-23 13:52:30,098 - __main__ - INFO - 
+  Feature Selection:
+2025-10-23 13:52:30,098 - __main__ - INFO -     Total features: 7
+2025-10-23 13:52:30,098 - __main__ - INFO -     Non-zero coefficients: 4
+2025-10-23 13:52:30,098 - __main__ - INFO -     Sparsity: 42.9%
+2025-10-23 13:52:30,098 - __main__ - INFO - 
+  Creating visualizations...
+2025-10-23 13:52:30,578 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_residuals.png
+2025-10-23 13:52:30,819 - model_improvements - INFO -   ✓ CV results plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\quality_model_cv_results.png
+2025-10-23 13:52:30,820 - __main__ - INFO -   ✓ Model saved to quality_model.pkl
+2025-10-23 13:52:30,820 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:30,820 - __main__ - INFO - STEP 6: VALIDATING CASCADE
+2025-10-23 13:52:30,820 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:30,822 - __main__ - INFO -   Validating with 200 samples...
+2025-10-23 13:52:30,828 - __main__ - INFO -   Cascade Validation Results:
+2025-10-23 13:52:30,828 - __main__ - INFO -     R²: 0.0978
+2025-10-23 13:52:30,828 - __main__ - INFO -     RMSE: 1.7577
+2025-10-23 13:52:30,828 - __main__ - INFO -     MAE: 1.1263
+2025-10-23 13:52:31,330 - model_improvements - INFO -   ✓ Residual plot saved to C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots\cascade_validation.png
+2025-10-23 13:52:31,332 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-23 13:52:31,332 - __main__ - INFO - STEP 7: SAVING RESULTS
+2025-10-23 13:52:31,332 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-23 13:52:31,333 - __main__ - INFO -   ✓ Metadata saved to metadata_poly_upgraded.json
+2025-10-23 13:52:31,335 - __main__ - INFO -   ✓ Training results saved to training_results_poly_upgraded.json
+2025-10-23 13:52:31,335 - __main__ - INFO - 
+  Files created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06:
+2025-10-23 13:52:31,336 - __main__ - INFO -     - metadata_poly_upgraded.json
+2025-10-23 13:52:31,336 - __main__ - INFO -     - process_model_CirculativeLoad.pkl
+2025-10-23 13:52:31,336 - __main__ - INFO -     - process_model_DensityHC.pkl
+2025-10-23 13:52:31,336 - __main__ - INFO -     - process_model_PressureHC.pkl
+2025-10-23 13:52:31,336 - __main__ - INFO -     - process_model_PulpHC.pkl
+2025-10-23 13:52:31,336 - __main__ - INFO -     - quality_model.pkl
+2025-10-23 13:52:31,336 - __main__ - INFO -     - training_results_poly_upgraded.json
+2025-10-23 13:52:31,337 - __main__ - INFO - 
+  Plots created in C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots:
+2025-10-23 13:52:31,337 - __main__ - INFO -     - cascade_validation.png
+2025-10-23 13:52:31,337 - __main__ - INFO -     - process_model_CirculativeLoad_cv_results.png
+2025-10-23 13:52:31,337 - __main__ - INFO -     - process_model_CirculativeLoad_predictions.png
+2025-10-23 13:52:31,337 - __main__ - INFO -     - process_model_CirculativeLoad_residuals.png
+2025-10-23 13:52:31,337 - __main__ - INFO -     - process_model_DensityHC_cv_results.png
+2025-10-23 13:52:31,337 - __main__ - INFO -     - process_model_DensityHC_predictions.png
+2025-10-23 13:52:31,337 - __main__ - INFO -     - process_model_DensityHC_residuals.png
+2025-10-23 13:52:31,337 - __main__ - INFO -     - process_model_PressureHC_cv_results.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - process_model_PressureHC_predictions.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - process_model_PressureHC_residuals.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - process_model_PulpHC_cv_results.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - process_model_PulpHC_predictions.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - process_model_PulpHC_residuals.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - quality_model_cv_results.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - quality_model_predictions.png
+2025-10-23 13:52:31,339 - __main__ - INFO -     - quality_model_residuals.png
+2025-10-23 13:52:31,340 - __main__ - INFO - 
+================================================================================
+2025-10-23 13:52:31,340 - __main__ - INFO - IMPROVED POLYNOMIAL MODEL TRAINING COMPLETE
+2025-10-23 13:52:31,340 - __main__ - INFO - ================================================================================
+2025-10-23 13:52:31,340 - __main__ - INFO - Models saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06
+2025-10-23 13:52:31,340 - __main__ - INFO - Plots saved to: C:\Projects\experiments\modeling\output\mill_poly_upgraded_06\plots
+2025-10-23 13:52:31,340 - __main__ - INFO - 
+✓ Improved polynomial model training pipeline completed successfully!
