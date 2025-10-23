@@ -3,9 +3,8 @@ Improved Polynomial Model Training Pipeline
 
 Enhanced version with:
 - Multiple regularization methods (Ridge, ElasticNet, Lasso)
-- Wider hyperparameter search with interaction-only option
+- Wider hyperparameter search
 - Better scoring metrics (R² instead of MAE)
-- Domain-specific feature engineering
 - Data quality diagnostics
 - Sample weighting for quality model (instead of hard filtering)
 - Residual analysis and visualization
@@ -24,7 +23,7 @@ import json
 import logging
 from datetime import datetime
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge, ElasticNet, Lasso
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
@@ -41,13 +40,12 @@ if str(project_root) not in sys.path:
 
 from config import PipelineConfig
 from model_improvements import (
-    engineer_mill_features,
     diagnose_data_quality,
     compute_target_weights,
-    analyze_polynomial_complexity,
     plot_residuals,
     plot_cv_results,
-    log_cv_diagnostics
+    log_cv_diagnostics,
+    plot_train_test_predictions
 )
 
 # Setup logging with UTF-8 encoding
@@ -126,9 +124,7 @@ class ImprovedPolynomialCascadeTrainer:
 
         # Try multiple possible filenames
         possible_files = [
-            self.config.paths.output_dir / 'segmented_motifs_all.csv',
             self.config.paths.output_dir / f'segmented_motifs_all_{self.mill_number:02d}.csv',
-            self.config.paths.output_dir / f'segmented_motifsMV_{self.mill_number:02d}.csv'
         ]
         
         data_path = None
@@ -195,8 +191,6 @@ class ImprovedPolynomialCascadeTrainer:
             "improvements": [
                 "Multiple regularization methods (Ridge, ElasticNet, Lasso)",
                 "Wider hyperparameter search",
-                "Interaction-only polynomial features",
-                "Domain-specific feature engineering",
                 "Sample weighting instead of hard filtering",
                 "R² scoring instead of MAE",
                 "Comprehensive diagnostics and visualization"
@@ -210,7 +204,7 @@ class ImprovedPolynomialCascadeTrainer:
                     "cv_features": self.cv_features,
                     "dv_features": self.dv_features,
                     "target_variable": self.dv_target,
-                    "using_custom_features": True
+                    "using_custom_features": False
                 }
             },
             "model_performance": {},
@@ -228,18 +222,9 @@ class ImprovedPolynomialCascadeTrainer:
             logger.info(f"Training model: MV → {cv_var}")
             logger.info(f"{'='*60}")
 
-            # Feature engineering
-            logger.info("\n  Applying feature engineering...")
-            train_eng = engineer_mill_features(train_df, self.mv_features)
-            test_eng = engineer_mill_features(test_df, self.mv_features)
-            
-            # Get engineered feature names
-            eng_features = [col for col in train_eng.columns if col not in train_df.columns]
-            all_input_features = self.mv_features + eng_features
-
-            X_train = train_eng[all_input_features]
+            X_train = train_df[self.mv_features]
             y_train = train_df[cv_var]
-            X_test = test_eng[all_input_features]
+            X_test = test_df[self.mv_features]
             y_test = test_df[cv_var]
 
             result = self._train_single_model_improved(
@@ -305,47 +290,34 @@ class ImprovedPolynomialCascadeTrainer:
         Improved training with multiple regularization methods and better hyperparameters.
         """
         
-        # Define multiple pipelines to test
         pipelines = {
             'ridge': Pipeline([
                 ("scaler", StandardScaler()),
-                ("poly", PolynomialFeatures(include_bias=False)),
                 ("model", Ridge(max_iter=10000))
             ]),
             'elasticnet': Pipeline([
                 ("scaler", StandardScaler()),
-                ("poly", PolynomialFeatures(include_bias=False)),
                 ("model", ElasticNet(max_iter=10000, tol=1e-4))
             ]),
             'lasso': Pipeline([
                 ("scaler", StandardScaler()),
-                ("poly", PolynomialFeatures(include_bias=False)),
                 ("model", Lasso(max_iter=10000, tol=1e-4))
             ])
         }
-        
-        # Define parameter grids for each model type
+
         param_grids = {
             'ridge': {
-                "poly__degree": [1, 2, 3],
-                "poly__interaction_only": [False, True],
-                "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0],
+                "model__alpha": [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0],
             },
             'elasticnet': {
-                "poly__degree": [1, 2, 3],
-                "poly__interaction_only": [False, True],
-                "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0, 100.0],
-                "model__l1_ratio": [0.1, 0.5, 0.7, 0.9, 0.95, 0.99],
+                "model__alpha": [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0],
+                "model__l1_ratio": [0.1, 0.3, 0.5, 0.7, 0.9, 0.95, 0.99],
             },
             'lasso': {
-                "poly__degree": [1, 2, 3],
-                "poly__interaction_only": [False, True],
-                "model__alpha": [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
+                "model__alpha": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
             }
         }
-        
-        logger.info("\n  Testing multiple regularization methods...")
-        
+
         # Try each model type and keep the best
         best_score = -np.inf
         best_pipeline = None
@@ -406,9 +378,6 @@ class ImprovedPolynomialCascadeTrainer:
         # Log CV diagnostics
         log_cv_diagnostics(best_search, top_n=5)
         
-        # Analyze polynomial complexity
-        complexity = analyze_polynomial_complexity(best_pipeline, X_train)
-        
         # Calculate metrics
         train_pred = best_pipeline.predict(X_train)
         test_pred = best_pipeline.predict(X_test)
@@ -424,7 +393,20 @@ class ImprovedPolynomialCascadeTrainer:
         logger.info(f"    R²: {train_r2:.4f}, RMSE: {train_rmse:.4f}, MAE: {train_mae:.4f}")
         logger.info(f"  Test Performance:")
         logger.info(f"    R²: {test_r2:.4f}, RMSE: {test_rmse:.4f}, MAE: {test_mae:.4f}")
-        
+
+        # Create train/test prediction plot
+        predictions_plot_path = self.plots_dir / f"{model_name}_predictions.png"
+        plot_train_test_predictions(
+            y_train.values if isinstance(y_train, pd.Series) else y_train,
+            train_pred,
+            train_r2,
+            y_test.values if isinstance(y_test, pd.Series) else y_test,
+            test_pred,
+            test_r2,
+            title=f"{model_name} - {output_var}",
+            save_path=str(predictions_plot_path)
+        )
+
         # Calculate overfitting indicator
         r2_gap = train_r2 - test_r2
         if r2_gap > 0.15:
@@ -435,9 +417,8 @@ class ImprovedPolynomialCascadeTrainer:
             logger.info(f"    ✓ Healthy bias-variance tradeoff (R² gap: {r2_gap:.4f})")
         
         # Extract feature importance
-        poly_step = best_pipeline.named_steps["poly"]
         model_step = best_pipeline.named_steps["model"]
-        feature_names = poly_step.get_feature_names_out(X_train.columns)
+        feature_names = X_train.columns
         coefficients = model_step.coef_
         
         # Sort by absolute coefficient value
@@ -502,8 +483,7 @@ class ImprovedPolynomialCascadeTrainer:
             "best_params": best_params,
             "n_features_total": len(coefficients),
             "n_features_nonzero": int(non_zero_coeffs),
-            "cv_score": float(best_score),
-            "polynomial_complexity": complexity
+            "cv_score": float(best_score)
         }
 
     def validate_cascade(self):
@@ -525,12 +505,7 @@ class ImprovedPolynomialCascadeTrainer:
 
         logger.info(f"  Validating with {n_samples} samples...")
 
-        # Apply feature engineering for process models
-        sample_eng = engineer_mill_features(sample_df, self.mv_features)
-        eng_features = [col for col in sample_eng.columns if col not in sample_df.columns]
-        all_input_features = self.mv_features + eng_features
-        
-        X_mv = sample_eng[all_input_features]
+        X_mv = sample_df[self.mv_features]
 
         cv_predictions = {}
         for cv_var in self.cv_features:
@@ -597,7 +572,7 @@ class ImprovedPolynomialCascadeTrainer:
                 "cv_features": self.cv_features,
                 "dv_features": self.dv_features,
                 "target_variable": self.dv_target,
-                "using_custom_features": True
+                "using_custom_features": False
             },
             "improvements_applied": self.metadata["improvements"]
         }
@@ -624,7 +599,7 @@ class ImprovedPolynomialCascadeTrainer:
 
 def main():
     """Main entry point."""
-    mill_number = 8
+    mill_number = 6
     start_date = "2025-01-01"
     end_date = "2025-10-19"
 

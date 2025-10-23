@@ -277,6 +277,50 @@ def plot_residuals(
     return fig
 
 
+def plot_train_test_predictions(
+    y_train: np.ndarray,
+    train_pred: np.ndarray,
+    train_r2: float,
+    y_test: np.ndarray,
+    test_pred: np.ndarray,
+    test_r2: float,
+    title: str = "Prediction Performance",
+    save_path: Optional[str] = None
+) -> plt.Figure:
+    """Plot actual vs predicted values for train and test sets."""
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+    # Training set plot
+    axes[0].scatter(y_train, train_pred, alpha=0.6, edgecolor='k', linewidth=0.5)
+    min_train = min(np.min(y_train), np.min(train_pred))
+    max_train = max(np.max(y_train), np.max(train_pred))
+    axes[0].plot([min_train, max_train], [min_train, max_train], 'r--', linewidth=2)
+    axes[0].set_title(f"Train Predictions (R²={train_r2:.3f})", fontsize=12, fontweight='bold')
+    axes[0].set_xlabel('Actual Values', fontsize=11)
+    axes[0].set_ylabel('Predicted Values', fontsize=11)
+    axes[0].grid(True, alpha=0.3)
+
+    # Test set plot
+    axes[1].scatter(y_test, test_pred, alpha=0.6, edgecolor='k', linewidth=0.5)
+    min_test = min(np.min(y_test), np.min(test_pred))
+    max_test = max(np.max(y_test), np.max(test_pred))
+    axes[1].plot([min_test, max_test], [min_test, max_test], 'r--', linewidth=2)
+    axes[1].set_title(f"Test Predictions (R²={test_r2:.3f})", fontsize=12, fontweight='bold')
+    axes[1].set_xlabel('Actual Values', fontsize=11)
+    axes[1].set_ylabel('Predicted Values', fontsize=11)
+    axes[1].grid(True, alpha=0.3)
+
+    fig.suptitle(title, fontsize=14, fontweight='bold', y=0.97)
+    plt.tight_layout(rect=[0, 0, 1, 0.97])
+
+    if save_path:
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        logger.info(f"  ✓ Train/Test prediction plot saved to {save_path}")
+
+    return fig
+
+
 def plot_cv_results(cv_results_df: pd.DataFrame, save_path: Optional[str] = None) -> plt.Figure:
     """
     Visualize cross-validation results.
