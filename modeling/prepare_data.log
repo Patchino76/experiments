@@ -327,3 +327,170 @@ Motif 8 (2 instances):
 2025-10-21 15:56:54,273 - __main__ - INFO - Plots saved to: C:\Projects\experiments\modeling\output\plots
 2025-10-21 15:56:54,273 - __main__ - INFO - 
 ✓ Data preparation pipeline completed successfully!
+2025-10-22 16:11:10,632 - __main__ - INFO - 
+================================================================================
+2025-10-22 16:11:10,632 - __main__ - INFO - STARTING DATA PREPARATION PIPELINE
+2025-10-22 16:11:10,632 - __main__ - INFO - ================================================================================
+2025-10-22 16:11:10,632 - __main__ - INFO - ============================================================
+PIPELINE CONFIGURATION SUMMARY
+============================================================
+
+Mill Number: 8
+Date Range: 2025-01-01 to 2025-10-19
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE']
+  Target: PSI200
+
+Motif Discovery:
+  Window Size: 60 min
+  Max Motifs: 20
+  Radius: 4.5
+  Correlation Filter: True
+
+Model Training:
+  Test Size: 0.2
+  CV Splits: 5
+
+Output Paths:
+  Output: C:\Projects\experiments\modeling\output
+  Models: C:\Projects\experiments\modeling\models
+  Analysis: C:\Projects\experiments\modeling\output\analysis
+  Plots: C:\Projects\experiments\modeling\output\plots
+============================================================
+2025-10-22 16:11:10,633 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 16:11:10,633 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-22 16:11:10,633 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 16:11:10,634 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2025-10-22 16:11:10,751 - db.db_connector - INFO - ✅ Database connection test successful
+2025-10-22 16:11:10,751 - database - INFO - ✅ Database connector initialized
+2025-10-22 16:11:10,751 - database - INFO - Loading data from database for Mill 8...
+2025-10-22 16:11:10,752 - database - INFO -   Date range: 2025-01-01 to 2025-10-19
+2025-10-22 16:11:10,752 - database - INFO -   Resample frequency: 1min
+2025-10-22 16:11:10,752 - db.db_connector - INFO - === STARTING get_combined_data for Mill 8 ===
+2025-10-22 16:11:10,752 - db.db_connector - INFO - DEBUG: Request parameters - mill_number=8, start_date=2025-01-01, end_date=2025-10-19
+2025-10-22 16:11:10,752 - db.db_connector - INFO - DEBUG: Additional parameters - resample_freq=1min, save_to_logs=False, no_interpolation=True
+2025-10-22 16:11:10,752 - db.db_connector - INFO - Retrieving mill data for mill 8 from 2025-01-01 to 2025-10-19
+2025-10-22 16:11:10,753 - db.db_connector - INFO - DEBUG: get_mill_data called with mill_number=8, start_date=2025-01-01, end_date=2025-10-19
+2025-10-22 16:11:10,753 - db.db_connector - INFO - DEBUG: Current time: 2025-10-22 16:11:10.753284
+2025-10-22 16:11:10,754 - db.db_connector - INFO - DEBUG: Parsed start_date: 2025-01-01 00:00:00 (timezone: None)
+2025-10-22 16:11:10,755 - db.db_connector - INFO - DEBUG: Parsed end_date: 2025-10-19 00:00:00 (timezone: None)
+2025-10-22 16:11:10,755 - db.db_connector - INFO - DEBUG: Days from now to end_date: -4
+2025-10-22 16:11:10,755 - db.db_connector - INFO - DEBUG: Converted start_date 2025-01-01 -> 2025-01-01 00:00:00
+2025-10-22 16:11:10,756 - db.db_connector - INFO - DEBUG: Converted end_date 2025-10-19 -> 2025-10-19 00:00:00
+2025-10-22 16:11:10,756 - db.db_connector - INFO - DEBUG: Executing query: SELECT * FROM mills."MILL_08" WHERE "TimeStamp" >= '2025-01-01 00:00:00' AND "TimeStamp" <= '2025-10-19 00:00:00'
+2025-10-22 16:11:10,756 - db.db_connector - INFO - DEBUG: Query will search table: mills."MILL_08"
+2025-10-22 16:11:10,819 - db.db_connector - INFO - DEBUG: Table MILL_08 has 419390 total records
+2025-10-22 16:11:10,820 - db.db_connector - INFO - DEBUG: Table MILL_08 date range: 2025-01-01 02:07:00 to 2025-10-19 08:58:00
+2025-10-22 16:11:10,836 - db.db_connector - INFO - DEBUG: Table MILL_08 has 97672 records after 2025-08-12 12:54:00
+2025-10-22 16:11:13,977 - db.db_connector - INFO - Retrieved 418852 rows for Mill 8
+2025-10-22 16:11:13,978 - db.db_connector - INFO - DEBUG: Mill data date range: 2025-01-01 02:07:00 to 2025-10-19 00:00:00
+2025-10-22 16:11:13,978 - db.db_connector - INFO - DEBUG: Last 5 timestamps in mill data: [Timestamp('2025-10-18 23:56:00'), Timestamp('2025-10-18 23:57:00'), Timestamp('2025-10-18 23:58:00'), Timestamp('2025-10-18 23:59:00'), Timestamp('2025-10-19 00:00:00')]
+2025-10-22 16:11:13,984 - db.db_connector - INFO - DEBUG: Records after 2025-08-12 12:54:00: 97134
+2025-10-22 16:11:13,984 - db.db_connector - INFO - DEBUG: First timestamp after cutoff: 2025-08-12 12:55:00
+2025-10-22 16:11:13,984 - db.db_connector - INFO - DEBUG: Last timestamp after cutoff: 2025-10-19 00:00:00
+2025-10-22 16:11:13,984 - db.db_connector - INFO - Mill data retrieved: 418852 rows, 13 columns
+2025-10-22 16:11:13,984 - db.db_connector - INFO - Mill data columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200']
+2025-10-22 16:11:13,994 - db.db_connector - INFO - Mill data sample:
+                            Ore  WaterMill  WaterZumpf  ...    MotorAmp  PSI80  PSI200
+TimeStamp                                               ...                           
+2025-01-01 02:07:00  159.315385  15.702312  258.096000  ...  192.221716  667.0   157.0
+2025-01-01 02:08:00  159.332000  15.722000  258.096000  ...  190.582104  667.0   157.0
+2025-01-01 02:09:00  159.827091  15.685437  256.093313  ...  189.505359  667.0   157.0
+
+[3 rows x 13 columns]
+2025-10-22 16:11:14,008 - db.db_connector - INFO - DEBUG: process_dataframe date filtering - start=2025-01-01 00:00:00, end=2025-10-19 00:00:00
+2025-10-22 16:11:14,008 - db.db_connector - INFO - DEBUG: Before date filtering: 418852 rows, date range: 2025-01-01 02:07:00 to 2025-10-19 00:00:00
+2025-10-22 16:11:14,020 - db.db_connector - INFO - DEBUG: After start date filter (2025-01-01 00:00:00): 418852 rows (removed 0 rows)
+2025-10-22 16:11:14,029 - db.db_connector - INFO - DEBUG: After end date filter (2025-10-19 00:00:00): 418852 rows (removed 0 rows)
+2025-10-22 16:11:14,029 - db.db_connector - INFO - DEBUG: After date filtering: 418852 rows, date range: 2025-01-01 02:07:00 to 2025-10-19 00:00:00
+2025-10-22 16:11:14,375 - db.db_connector - INFO - Applied resampling with interpolation
+2025-10-22 16:11:14,524 - db.db_connector - INFO - Applied smoothing with rolling window of size 15
+2025-10-22 16:11:14,524 - db.db_connector - INFO - Resampled data to 1min frequency
+2025-10-22 16:11:14,538 - db.db_connector - INFO - Processed mill data: 418914 rows, 13 columns
+2025-10-22 16:11:14,538 - db.db_connector - INFO - Retrieving ore quality data
+2025-10-22 16:11:14,539 - db.db_connector - INFO - DEBUG: get_ore_quality called with start_date=2025-01-01, end_date=2025-10-19
+2025-10-22 16:11:14,539 - db.db_connector - INFO - DEBUG: Ore quality parsed start_date: 2025-01-01 00:00:00 (timezone: None)
+2025-10-22 16:11:14,540 - db.db_connector - INFO - DEBUG: Ore quality parsed end_date: 2025-10-19 00:00:00 (timezone: None)
+2025-10-22 16:11:14,540 - db.db_connector - INFO - DEBUG: Ore quality converted start_date 2025-01-01 -> 2025-01-01 00:00:00
+2025-10-22 16:11:14,541 - db.db_connector - INFO - DEBUG: Ore quality converted end_date 2025-10-19 -> 2025-10-19 00:00:00
+2025-10-22 16:11:14,541 - db.db_connector - INFO - DEBUG: Executing ore quality query: SELECT * FROM mills.ore_quality WHERE "TimeStamp" >= '2025-01-01 00:00:00' AND "TimeStamp" <= '2025-10-19 00:00:00'
+2025-10-22 16:11:14,545 - db.db_connector - INFO - DEBUG: ore_quality table has 876 total records
+2025-10-22 16:11:14,545 - db.db_connector - INFO - DEBUG: ore_quality table date range: 2025-01-01 06:00:00 to 2025-10-19 22:00:00
+2025-10-22 16:11:14,548 - db.db_connector - INFO - DEBUG: ore_quality table has 206 records after 2025-08-12 12:54:00
+2025-10-22 16:11:14,551 - db.db_connector - INFO - DEBUG: ore_quality has 873 records in requested range 2025-01-01 to 2025-10-19
+2025-10-22 16:11:14,563 - db.db_connector - INFO - Retrieved 873 rows of ore quality data
+2025-10-22 16:11:14,565 - db.db_connector - INFO - DEBUG: Ore quality data date range: 2025-01-01 06:00:00 to 2025-10-18 22:00:00
+2025-10-22 16:11:14,565 - db.db_connector - INFO - DEBUG: Last 5 timestamps in ore quality data: [Timestamp('2025-10-17 14:00:00'), Timestamp('2025-10-17 22:00:00'), Timestamp('2025-10-18 06:00:00'), Timestamp('2025-10-18 14:00:00'), Timestamp('2025-10-18 22:00:00')]
+2025-10-22 16:11:14,567 - db.db_connector - INFO - DEBUG: Ore quality records after 2025-08-12 12:54:00: 203
+2025-10-22 16:11:14,567 - db.db_connector - INFO - Ore data retrieved: 873 rows, 11 columns
+2025-10-22 16:11:14,567 - db.db_connector - INFO - Ore data columns: ['id', 'Date', 'Shift', 'TimeStamp', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet', 'Created_At']
+2025-10-22 16:11:14,568 - db.db_connector - WARNING - Found 3 duplicate timestamps, removing duplicates
+2025-10-22 16:11:14,568 - db.db_connector - INFO - After removing duplicates: 870 rows remaining
+2025-10-22 16:11:14,569 - db.db_connector - INFO - DEBUG: process_dataframe date filtering - start=2025-01-01 00:00:00, end=2025-10-19 00:00:00
+2025-10-22 16:11:14,569 - db.db_connector - INFO - DEBUG: Before date filtering: 870 rows, date range: 2025-01-01 06:00:00 to 2025-10-18 22:00:00
+2025-10-22 16:11:14,569 - db.db_connector - INFO - DEBUG: After start date filter (2025-01-01 00:00:00): 870 rows (removed 0 rows)
+2025-10-22 16:11:14,570 - db.db_connector - INFO - DEBUG: After end date filter (2025-10-19 00:00:00): 870 rows (removed 0 rows)
+2025-10-22 16:11:14,570 - db.db_connector - INFO - DEBUG: After date filtering: 870 rows, date range: 2025-01-01 06:00:00 to 2025-10-18 22:00:00
+2025-10-22 16:11:14,624 - db.db_connector - INFO - Applied resampling with constant values (no interpolation or smoothing)
+2025-10-22 16:11:14,624 - db.db_connector - INFO - Resampled data to 1min frequency
+2025-10-22 16:11:14,635 - db.db_connector - INFO - Processed ore data: 418561 rows, 9 columns - with constant values (no interpolation)
+2025-10-22 16:11:14,636 - db.db_connector - INFO - DF1 (mill): 418914 rows, index range: 2025-01-01 02:07:00 to 2025-10-19 00:00:00
+2025-10-22 16:11:14,637 - db.db_connector - INFO - DF2 (ore): 418561 rows, index range: 2025-01-01 06:00:00 to 2025-10-18 22:00:00
+2025-10-22 16:11:14,637 - db.db_connector - INFO - Found 418561 common timestamps
+2025-10-22 16:11:14,709 - db.db_connector - INFO - Successfully joined dataframes: 418561 rows, 22 columns
+2025-10-22 16:11:14,710 - db.db_connector - INFO - Joined dataframe columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'id', 'Date', 'Shift', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet']
+2025-10-22 16:11:14,711 - db.db_connector - INFO - DEBUG: Final combined data date range: 2025-01-01 06:00:00 to 2025-10-18 22:00:00
+2025-10-22 16:11:14,716 - db.db_connector - INFO - DEBUG: Combined data records after 2025-08-12 12:54:00: 97026
+2025-10-22 16:11:14,717 - db.db_connector - INFO - DEBUG: SUCCESS - Combined data extends beyond 2025-08-12 with 97026 records
+2025-10-22 16:11:14,719 - db.db_connector - INFO - 
+=== Combined Dataframe Head (first 3 rows) ===
+2025-10-22 16:11:14,723 - db.db_connector - INFO -                             Ore  WaterMill  WaterZumpf        Power   ZumpfLevel  PressureHC    DensityHC        FE      PulpHC     PumpRPM    MotorAmp  PSI80  PSI200  id  Date  Shift  Class_15  Class_12  Grano  Daiki  Shisti  Original_Sheet
+TimeStamp                                                                                                                                                                                                                                        
+2025-01-01 06:00:00  159.853259  15.706490  258.472941  2026.902125  1505.710421    0.360636  1660.632839  2.785400  322.676153  666.854745  191.768525  667.0   157.0   1   NaN      1       2.4       4.8  0.559  0.399   0.042             NaN
+2025-01-01 06:01:00  159.870241  15.711090  258.601370  2025.973661  1504.913626    0.361004  1660.880326  2.787333  322.795287  666.969479  191.739175  667.0   157.0   1   NaN      1       2.4       4.8  0.559  0.399   0.042             NaN
+2025-01-01 06:02:00  160.079986  15.708438  258.240704  2024.919471  1503.087200    0.361537  1661.098045  2.786400  322.773103  666.968316  191.574054  667.0   157.0   1   NaN      1       2.4       4.8  0.559  0.399   0.042             NaN
+2025-10-22 16:11:14,724 - db.db_connector - INFO - 
+=== Combined Dataframe Tail (last 3 rows) ===
+2025-10-22 16:11:14,727 - db.db_connector - INFO -                             Ore  WaterMill  WaterZumpf        Power   ZumpfLevel  PressureHC    DensityHC        FE      PulpHC     PumpRPM    MotorAmp      PSI80     PSI200   id  Date  Shift  Class_15  Class_12  Grano  Daiki  Shisti  Original_Sheet
+TimeStamp                                                                                                                                                                                                                                                
+2025-10-18 21:58:00  177.954583  14.592665  240.649053  1948.029611  1557.060110    0.381727  1661.053830  3.466000  568.625900  722.042933  184.576568  46.384783  28.876232  872   NaN      2       1.1       5.6  0.678  0.247   0.075             NaN
+2025-10-18 21:59:00  177.934650  14.590065  240.422186  1950.278729  1553.013663    0.381927  1660.682735  3.468867  568.275615  721.808922  184.761958  46.300000  28.933333  872   NaN      2       1.1       5.6  0.678  0.247   0.075             NaN
+2025-10-18 22:00:00  177.896650  14.587437  240.379386  1951.767803  1550.478061    0.381856  1660.388364  3.471733  567.863525  721.724656  184.889164  46.300000  28.900000  873   NaN      3       1.1       7.0  0.664  0.263   0.073             NaN
+2025-10-22 16:11:14,727 - db.db_connector - INFO - ==================================================
+2025-10-22 16:11:14,734 - db.db_connector - INFO - Combined data has 418561 rows and 22 columns
+2025-10-22 16:11:14,735 - db.db_connector - INFO - Combined data columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'id', 'Date', 'Shift', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet']
+2025-10-22 16:11:14,745 - db.db_connector - INFO - Combined data sample:
+                            Ore  WaterMill  WaterZumpf  ...  Daiki  Shisti  Original_Sheet
+TimeStamp                                               ...                               
+2025-01-01 06:00:00  159.853259  15.706490  258.472941  ...  0.399   0.042             NaN
+2025-01-01 06:01:00  159.870241  15.711090  258.601370  ...  0.399   0.042             NaN
+2025-01-01 06:02:00  160.079986  15.708438  258.240704  ...  0.399   0.042             NaN
+
+[3 rows x 22 columns]
+2025-10-22 16:11:14,746 - db.db_connector - INFO - === COMPLETED get_combined_data for Mill 8 ===
+2025-10-22 16:11:14,746 - db.db_connector - INFO - DEBUG: Final result - 418561 total records
+2025-10-22 16:11:14,746 - db.db_connector - INFO - DEBUG: Final date range: 2025-01-01 06:00:00 to 2025-10-18 22:00:00
+2025-10-22 16:11:14,846 - database - INFO -   ✓ Loaded 418561 rows, 24 columns
+2025-10-22 16:11:21,363 - database - INFO -   ✓ Cached to C:\Projects\experiments\modeling\output\initial_data.csv
+2025-10-22 16:11:21,363 - database - INFO - ✓ All 10 required columns present
+2025-10-22 16:11:21,363 - database - INFO - Applying data filters...
+2025-10-22 16:11:21,379 - database - INFO -   Ore: 100 < x < 220
+2025-10-22 16:11:21,381 - database - INFO -   PulpHC: 400 < x < 600
+2025-10-22 16:11:21,381 - database - INFO -   DensityHC: 1600 < x < 1800
+2025-10-22 16:11:21,403 - database - INFO -   ✓ Filtered: 260559 rows kept, 158002 removed (37.7%)
+2025-10-22 16:11:21,434 - __main__ - INFO -   ✓ Circulative load calculation complete
+2025-10-22 16:11:26,551 - __main__ - INFO -   ✓ Updated data with circulative load saved to initial_data.csv
+2025-10-22 16:11:26,551 - __main__ - INFO - ✓ Data loaded and filtered: 260559 rows
+2025-10-22 16:11:26,551 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-22 16:11:26,551 - __main__ - INFO - STEP 2: DISCOVERING MV MOTIFS
+2025-10-22 16:11:26,551 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-10-22 16:11:26,551 - motif_discovery - INFO - Discovering motifs in 3 features...
+2025-10-22 16:11:26,552 - motif_discovery - INFO -   Window size: 60
+2025-10-22 16:11:26,552 - motif_discovery - INFO -   Max motifs: 20
+2025-10-22 16:11:26,552 - motif_discovery - INFO -   Radius: 4.5
+2025-10-22 16:11:26,564 - motif_discovery - INFO -   Computing multivariate matrix profile...
