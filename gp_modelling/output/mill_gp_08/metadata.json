@@ -1,0 +1,158 @@
+{
+  "mill_number": 8,
+  "created_at": "2025-10-23T20:15:38.783626",
+  "model_version": "1.0.0",
+  "model_type": "Gaussian Process Regression",
+  "kernel": "Matern(nu=2.5) + WhiteKernel",
+  "features": {
+    "mv_features": [
+      "Ore",
+      "WaterMill",
+      "WaterZumpf"
+    ],
+    "cv_features": [
+      "DensityHC",
+      "PulpHC",
+      "PressureHC",
+      "CirculativeLoad"
+    ],
+    "dv_features": [
+      "Class_15",
+      "Daiki",
+      "FE"
+    ],
+    "target_variable": "PSI200"
+  },
+  "training_config": {
+    "test_size": 0.2,
+    "data_shape": [
+      3900,
+      22
+    ],
+    "n_restarts_optimizer": 10
+  },
+  "model_performance": {
+    "process_model_DensityHC": {
+      "model_name": "process_model_DensityHC",
+      "output_var": "DensityHC",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "0.997**2 * Matern(length_scale=0.0671, nu=2.5) + WhiteKernel(noise_level=0.0289)",
+      "train_metrics": {
+        "r2": 0.9844120541366762,
+        "rmse": 2.5283372678941975,
+        "mae": 1.2251984620831415,
+        "mean_uncertainty": 4.147769702783879
+      },
+      "test_metrics": {
+        "r2": 0.6274645912390486,
+        "rmse": 15.364527099591381,
+        "mae": 9.498893479816871,
+        "mean_uncertainty": 11.490168755854238
+      }
+    },
+    "process_model_PulpHC": {
+      "model_name": "process_model_PulpHC",
+      "output_var": "PulpHC",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "0.894**2 * Matern(length_scale=0.0724, nu=2.5) + WhiteKernel(noise_level=0.0248)",
+      "train_metrics": {
+        "r2": 0.9858350756056851,
+        "rmse": 2.05639029896073,
+        "mae": 1.005424870249787,
+        "mean_uncertainty": 3.2433433628724875
+      },
+      "test_metrics": {
+        "r2": 0.7009803333380791,
+        "rmse": 10.279647615503912,
+        "mae": 6.83590413634254,
+        "mean_uncertainty": 8.697738275394853
+      }
+    },
+    "process_model_PressureHC": {
+      "model_name": "process_model_PressureHC",
+      "output_var": "PressureHC",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "0.766**2 * Matern(length_scale=0.157, nu=2.5) + WhiteKernel(noise_level=0.00846)",
+      "train_metrics": {
+        "r2": 0.9937713096386004,
+        "rmse": 0.001073963534400891,
+        "mae": 0.0006721464330912019,
+        "mean_uncertainty": 0.0014029089689301987
+      },
+      "test_metrics": {
+        "r2": 0.7430907488097538,
+        "rmse": 0.006342852471857334,
+        "mae": 0.00400551962282713,
+        "mean_uncertainty": 0.004211439058918222
+      }
+    },
+    "process_model_CirculativeLoad": {
+      "model_name": "process_model_CirculativeLoad",
+      "output_var": "CirculativeLoad",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "0.995**2 * Matern(length_scale=0.0667, nu=2.5) + WhiteKernel(noise_level=0.0312)",
+      "train_metrics": {
+        "r2": 0.982966362335914,
+        "rmse": 0.024401773431261993,
+        "mae": 0.011817044396277569,
+        "mean_uncertainty": 0.039739615927587034
+      },
+      "test_metrics": {
+        "r2": 0.5908456613297253,
+        "rmse": 0.12433882497509906,
+        "mae": 0.0778896924059644,
+        "mean_uncertainty": 0.10691296482058683
+      }
+    },
+    "quality_model": {
+      "model_name": "quality_model",
+      "output_var": "PSI200",
+      "input_features": [
+        "DensityHC",
+        "PulpHC",
+        "PressureHC",
+        "CirculativeLoad",
+        "Class_15",
+        "Daiki",
+        "FE"
+      ],
+      "kernel": "0.814**2 * Matern(length_scale=0.262, nu=2.5) + WhiteKernel(noise_level=0.00108)",
+      "train_metrics": {
+        "r2": 0.9996194598061506,
+        "rmse": 0.035393966182937546,
+        "mae": 0.01890779220797469,
+        "mean_uncertainty": 0.07647391137860741
+      },
+      "test_metrics": {
+        "r2": 0.5703662657091093,
+        "rmse": 1.1570469772844376,
+        "mae": 0.704730568708847,
+        "mean_uncertainty": 0.912814704508477
+      },
+      "model_type": "quality_model"
+    }
+  },
+  "cascade_validation": {
+    "n_samples": 780,
+    "r2": 0.5048625464868483,
+    "rmse": 1.2421232596951224,
+    "mae": 0.8136567742265813,
+    "mean_uncertainty": 0.9655564283977883
+  }
+}
