@@ -138,6 +138,15 @@ class GaussianProcessCascadeTrainer:
         parse_dates = ['TimeStamp'] if 'TimeStamp' in preview.columns else None
         self.df = pd.read_csv(data_path, parse_dates=parse_dates)
 
+        # Filter by date range if TimeStamp column exists
+        if 'TimeStamp' in self.df.columns:
+            original_rows = len(self.df)
+            start_date = pd.to_datetime(self.config.data.start_date)
+            end_date = pd.to_datetime(self.config.data.end_date)
+            self.df = self.df[(self.df['TimeStamp'] >= start_date) & (self.df['TimeStamp'] <= end_date)]
+            logger.info(f"  Date filtering: {original_rows} → {len(self.df)} rows")
+            logger.info(f"  Date range: {self.config.data.start_date} to {self.config.data.end_date}")
+
         required_cols = self.mv_features + self.cv_features + self.dv_features + [self.dv_target]
         missing_cols = [col for col in required_cols if col not in self.df.columns]
         if missing_cols:
@@ -148,7 +157,7 @@ class GaussianProcessCascadeTrainer:
         cleaned_shape = self.df.shape
 
         rows_removed = original_shape[0] - cleaned_shape[0]
-        logger.info(f"  Data shape: {cleaned_shape}, Rows removed: {rows_removed}")
+        logger.info(f"  Data shape: {cleaned_shape}, Rows removed (NaN): {rows_removed}")
 
     def split_data(self):
         """Split data into train and test sets."""
@@ -435,7 +444,7 @@ class GaussianProcessCascadeTrainer:
 def main():
     """Main entry point."""
     mill_number = 8
-    start_date = "2025-01-01"
+    start_date = "2025-07-01"
     end_date = "2025-10-19"
     
     config = PipelineConfig.create_default(mill_number, start_date, end_date)
