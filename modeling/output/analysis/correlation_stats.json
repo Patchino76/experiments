@@ -1,22 +1,22 @@
 {
   "1": {
-    "total_instances": 3,
-    "valid_instances": 3,
+    "total_instances": 2,
+    "valid_instances": 2,
     "avg_correlations": {}
   },
   "2": {
-    "total_instances": 103,
-    "valid_instances": 103,
+    "total_instances": 107,
+    "valid_instances": 107,
     "avg_correlations": {}
   },
   "3": {
-    "total_instances": 84,
-    "valid_instances": 84,
+    "total_instances": 11,
+    "valid_instances": 11,
     "avg_correlations": {}
   },
   "4": {
-    "total_instances": 181,
-    "valid_instances": 181,
+    "total_instances": 63,
+    "valid_instances": 63,
     "avg_correlations": {}
   },
   "5": {
@@ -25,28 +25,28 @@
     "avg_correlations": {}
   },
   "6": {
-    "total_instances": 17,
-    "valid_instances": 17,
+    "total_instances": 81,
+    "valid_instances": 81,
     "avg_correlations": {}
   },
   "7": {
-    "total_instances": 17,
-    "valid_instances": 17,
+    "total_instances": 36,
+    "valid_instances": 36,
     "avg_correlations": {}
   },
   "8": {
-    "total_instances": 104,
-    "valid_instances": 104,
+    "total_instances": 2,
+    "valid_instances": 2,
     "avg_correlations": {}
   },
   "9": {
-    "total_instances": 9,
-    "valid_instances": 9,
+    "total_instances": 94,
+    "valid_instances": 94,
     "avg_correlations": {}
   },
   "10": {
-    "total_instances": 187,
-    "valid_instances": 187,
+    "total_instances": 17,
+    "valid_instances": 17,
     "avg_correlations": {}
   },
   "11": {
@@ -55,43 +55,43 @@
     "avg_correlations": {}
   },
   "12": {
-    "total_instances": 45,
-    "valid_instances": 45,
+    "total_instances": 43,
+    "valid_instances": 43,
     "avg_correlations": {}
   },
   "13": {
-    "total_instances": 3,
-    "valid_instances": 3,
+    "total_instances": 5,
+    "valid_instances": 5,
     "avg_correlations": {}
   },
   "14": {
-    "total_instances": 27,
-    "valid_instances": 27,
+    "total_instances": 64,
+    "valid_instances": 64,
     "avg_correlations": {}
   },
   "15": {
-    "total_instances": 39,
-    "valid_instances": 39,
+    "total_instances": 4,
+    "valid_instances": 4,
     "avg_correlations": {}
   },
   "16": {
-    "total_instances": 137,
-    "valid_instances": 137,
+    "total_instances": 19,
+    "valid_instances": 19,
     "avg_correlations": {}
   },
   "17": {
-    "total_instances": 1,
-    "valid_instances": 1,
+    "total_instances": 48,
+    "valid_instances": 48,
     "avg_correlations": {}
   },
   "18": {
-    "total_instances": 13,
-    "valid_instances": 13,
+    "total_instances": 2,
+    "valid_instances": 2,
     "avg_correlations": {}
   },
   "19": {
-    "total_instances": 24,
-    "valid_instances": 24,
+    "total_instances": 3,
+    "valid_instances": 3,
     "avg_correlations": {}
   },
   "20": {
