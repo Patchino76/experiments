@@ -453,9 +453,9 @@ class DataPreparationPipeline:
 def main():
     """Main entry point."""
     # Configuration
-    mill_number = 8
-    start_date = "2025-01-01"
-    end_date = "2025-10-19"
+    mill_number = 6
+    start_date = "2025-06-26"
+    end_date = "2025-10-26"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)

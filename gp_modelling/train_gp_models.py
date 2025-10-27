@@ -444,7 +444,7 @@ class GaussianProcessCascadeTrainer:
 def main():
     """Main entry point."""
     mill_number = 8
-    start_date = "2025-08-01"
+    start_date = "2025-09-01"
     end_date = "2025-10-19"
     
     config = PipelineConfig.create_default(mill_number, start_date, end_date)

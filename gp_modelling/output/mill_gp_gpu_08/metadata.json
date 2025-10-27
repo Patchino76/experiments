@@ -1,0 +1,170 @@
+{
+  "mill_number": 8,
+  "created_at": "2025-10-27T10:14:13.221515",
+  "model_version": "1.0.0-GPU",
+  "model_type": "Gaussian Process Regression (GPyTorch)",
+  "device": "cuda:0",
+  "kernel": "Matern(nu=2.5) + Gaussian Noise",
+  "features": {
+    "mv_features": [
+      "Ore",
+      "WaterMill",
+      "WaterZumpf"
+    ],
+    "cv_features": [
+      "DensityHC",
+      "PulpHC",
+      "PressureHC",
+      "CirculativeLoad"
+    ],
+    "dv_features": [
+      "Class_15",
+      "Daiki",
+      "FE"
+    ],
+    "target_variable": "PSI200"
+  },
+  "training_config": {
+    "test_size": 0.2,
+    "data_shape": [
+      16020,
+      22
+    ],
+    "max_vram_gb": 14.0,
+    "training_iterations": 100
+  },
+  "model_performance": {
+    "process_model_DensityHC": {
+      "model_name": "process_model_DensityHC",
+      "output_var": "DensityHC",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "ScaleKernel(\n  (base_kernel): MaternKernel(\n    (raw_lengthscale_constraint): Positive()\n  )\n  (raw_outputscale_constraint): Positive()\n)",
+      "train_samples": 12816,
+      "chunk_size": 12816,
+      "train_metrics": {
+        "r2": 0.382342060505089,
+        "rmse": 24.62980393939885,
+        "mae": 18.542134358279764,
+        "mean_uncertainty": 1.9650909900665283
+      },
+      "test_metrics": {
+        "r2": -0.34232710045232406,
+        "rmse": 35.039866227118,
+        "mae": 22.695901165779045,
+        "mean_uncertainty": 1.9671235084533691
+      }
+    },
+    "process_model_PulpHC": {
+      "model_name": "process_model_PulpHC",
+      "output_var": "PulpHC",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "ScaleKernel(\n  (base_kernel): MaternKernel(\n    (raw_lengthscale_constraint): Positive()\n  )\n  (raw_outputscale_constraint): Positive()\n)",
+      "train_samples": 12816,
+      "chunk_size": 12816,
+      "train_metrics": {
+        "r2": 0.5827918378184743,
+        "rmse": 22.88373117600827,
+        "mae": 15.92889102920862,
+        "mean_uncertainty": 2.2447967529296875
+      },
+      "test_metrics": {
+        "r2": 0.4456030167081495,
+        "rmse": 27.356364233258525,
+        "mae": 19.136628929803436,
+        "mean_uncertainty": 2.24723482131958
+      }
+    },
+    "process_model_PressureHC": {
+      "model_name": "process_model_PressureHC",
+      "output_var": "PressureHC",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "ScaleKernel(\n  (base_kernel): MaternKernel(\n    (raw_lengthscale_constraint): Positive()\n  )\n  (raw_outputscale_constraint): Positive()\n)",
+      "train_samples": 12816,
+      "chunk_size": 12816,
+      "train_metrics": {
+        "r2": 0.933744130010337,
+        "rmse": 0.005629303091895787,
+        "mae": 0.003756602644094425,
+        "mean_uncertainty": 0.013252913020551205
+      },
+      "test_metrics": {
+        "r2": 0.8843585639403939,
+        "rmse": 0.00742084604205721,
+        "mae": 0.005202406992543216,
+        "mean_uncertainty": 0.013848318718373775
+      }
+    },
+    "process_model_CirculativeLoad": {
+      "model_name": "process_model_CirculativeLoad",
+      "output_var": "CirculativeLoad",
+      "input_features": [
+        "Ore",
+        "WaterMill",
+        "WaterZumpf"
+      ],
+      "kernel": "ScaleKernel(\n  (base_kernel): MaternKernel(\n    (raw_lengthscale_constraint): Positive()\n  )\n  (raw_outputscale_constraint): Positive()\n)",
+      "train_samples": 12816,
+      "chunk_size": 12816,
+      "train_metrics": {
+        "r2": 0.9947170687386073,
+        "rmse": 0.024278850860052513,
+        "mae": 0.008840703772356844,
+        "mean_uncertainty": 0.26227691769599915
+      },
+      "test_metrics": {
+        "r2": 0.6299218755887975,
+        "rmse": 0.19138083727464217,
+        "mae": 0.1188393721306631,
+        "mean_uncertainty": 0.2895670235157013
+      }
+    },
+    "quality_model": {
+      "model_name": "quality_model",
+      "output_var": "PSI200",
+      "input_features": [
+        "DensityHC",
+        "PulpHC",
+        "PressureHC",
+        "CirculativeLoad",
+        "Class_15",
+        "Daiki",
+        "FE"
+      ],
+      "kernel": "ScaleKernel(\n  (base_kernel): MaternKernel(\n    (raw_lengthscale_constraint): Positive()\n  )\n  (raw_outputscale_constraint): Positive()\n)",
+      "train_samples": 12810,
+      "chunk_size": 12810,
+      "train_metrics": {
+        "r2": 0.9810947031153818,
+        "rmse": 0.2592899838719372,
+        "mae": 0.1561286253314695,
+        "mean_uncertainty": 1.7043907642364502
+      },
+      "test_metrics": {
+        "r2": -3.0699631177091957,
+        "rmse": 4.23702518883991,
+        "mae": 2.5330674740554135,
+        "mean_uncertainty": 2.055576801300049
+      },
+      "model_type": "quality_model"
+    }
+  },
+  "cascade_validation": {
+    "n_samples": 3204,
+    "r2": -12.249959879281871,
+    "rmse": 7.644922562106966,
+    "mae": 6.083819111342479,
+    "mean_uncertainty": 2.1947555541992188
+  }
+}
