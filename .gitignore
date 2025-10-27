@@ -1,3 +1,4 @@
 modeling/output/initial_data.csv
+modeling/output/segmented_*.csv
 
-*.pkl   
+*.pkl
