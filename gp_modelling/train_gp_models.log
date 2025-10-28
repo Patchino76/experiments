@@ -373,3 +373,68 @@ Training GP model: MV → DensityHC
 2025-10-27 13:48:45,383 - INFO - 
 Training GP model: MV → DensityHC
 2025-10-27 13:48:45,384 - INFO -   Training with 12816 samples...
+2025-10-27 16:25:35,152 - INFO -   ✓ Training complete
+2025-10-27 16:25:35,157 - INFO -   Optimized kernel: 0.943**2 * Matern(length_scale=0.0935, nu=2.5) + WhiteKernel(noise_level=0.0239)
+2025-10-27 16:25:49,187 - INFO -   Train: R²=0.9848, RMSE=3.8626, σ=5.6459
+2025-10-27 16:25:49,187 - INFO -   Test:  R²=0.5621, RMSE=20.0124, σ=14.5454
+2025-10-27 16:25:50,461 - INFO - 
+Training GP model: MV → PulpHC
+2025-10-27 16:25:50,469 - INFO -   Training with 12816 samples...
+2025-10-27 19:10:46,783 - INFO -   ✓ Training complete
+2025-10-27 19:10:46,784 - INFO -   Optimized kernel: 0.903**2 * Matern(length_scale=0.0829, nu=2.5) + WhiteKernel(noise_level=0.0181)
+2025-10-27 19:11:01,233 - INFO -   Train: R²=0.9894, RMSE=3.6448, σ=5.6510
+2025-10-27 19:11:01,233 - INFO -   Test:  R²=0.6396, RMSE=22.0566, σ=16.2076
+2025-10-27 19:11:02,593 - INFO - 
+Training GP model: MV → PressureHC
+2025-10-27 19:11:02,595 - INFO -   Training with 12816 samples...
+2025-10-27 22:07:27,158 - INFO -   ✓ Training complete
+2025-10-27 22:07:27,163 - INFO -   Optimized kernel: 0.832**2 * Matern(length_scale=0.125, nu=2.5) + WhiteKernel(noise_level=0.00478)
+2025-10-27 22:07:41,666 - INFO -   Train: R²=0.9971, RMSE=0.0012, σ=0.0018
+2025-10-27 22:07:41,666 - INFO -   Test:  R²=0.8103, RMSE=0.0095, σ=0.0067
+2025-10-27 22:07:42,903 - INFO - 
+Training GP model: MV → CirculativeLoad
+2025-10-27 22:07:42,914 - INFO -   Training with 12816 samples...
+2025-10-28 01:10:29,997 - INFO -   ✓ Training complete
+2025-10-28 01:10:29,999 - INFO -   Optimized kernel: 0.936**2 * Matern(length_scale=0.0866, nu=2.5) + WhiteKernel(noise_level=0.0236)
+2025-10-28 01:10:44,506 - INFO -   Train: R²=0.9855, RMSE=0.0402, σ=0.0603
+2025-10-28 01:10:44,507 - INFO -   Test:  R²=0.5754, RMSE=0.2050, σ=0.1590
+2025-10-28 01:10:45,653 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 01:10:45,654 - INFO - STEP 4: TRAINING QUALITY MODEL (CV + DV → Target)
+2025-10-28 01:10:45,654 - INFO - --------------------------------------------------------------------------------
+2025-10-28 01:10:45,668 - INFO -   Filtered: Train 12810, Test 3204
+2025-10-28 01:10:45,672 - INFO -   Training with 12810 samples...
+2025-10-28 04:17:18,543 - INFO -   ✓ Training complete
+2025-10-28 04:17:18,546 - INFO -   Optimized kernel: 1.06**2 * Matern(length_scale=0.209, nu=2.5) + WhiteKernel(noise_level=0.00391)
+2025-10-28 04:17:33,924 - INFO -   Train: R²=0.9978, RMSE=0.0883, σ=0.1411
+2025-10-28 04:17:33,924 - INFO -   Test:  R²=0.5840, RMSE=1.3545, σ=1.1304
+2025-10-28 04:17:35,143 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 04:17:35,143 - INFO - STEP 5: CASCADE VALIDATION WITH UNCERTAINTY PROPAGATION
+2025-10-28 04:17:35,143 - INFO - --------------------------------------------------------------------------------
+2025-10-28 04:17:35,149 - INFO -   Using 3204 test samples
+2025-10-28 04:17:38,531 - INFO -   DensityHC: σ=14.5454
+2025-10-28 04:17:42,156 - INFO -   PulpHC: σ=16.2076
+2025-10-28 04:17:45,731 - INFO -   PressureHC: σ=0.0067
+2025-10-28 04:17:49,336 - INFO -   CirculativeLoad: σ=0.1590
+2025-10-28 04:17:53,136 - INFO - 
+  Cascade Performance:
+2025-10-28 04:17:53,136 - INFO -     R²=0.5667, RMSE=1.3824, MAE=0.8113
+2025-10-28 04:17:53,136 - INFO -     Mean σ=1.2854
+2025-10-28 04:17:53,811 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 04:17:53,812 - INFO - STEP 6: SAVING RESULTS
+2025-10-28 04:17:53,812 - INFO - --------------------------------------------------------------------------------
+2025-10-28 04:17:59,228 - INFO -   ✓ Saved process_model_DensityHC
+2025-10-28 04:18:04,509 - INFO -   ✓ Saved process_model_PulpHC
+2025-10-28 04:18:09,596 - INFO -   ✓ Saved process_model_PressureHC
+2025-10-28 04:18:14,720 - INFO -   ✓ Saved process_model_CirculativeLoad
+2025-10-28 04:18:19,352 - INFO -   ✓ Saved quality_model
+2025-10-28 04:18:19,355 - INFO -   ✓ Saved metadata
+2025-10-28 04:18:19,355 - INFO - 
+================================================================================
+2025-10-28 04:18:19,355 - INFO - GAUSSIAN PROCESS MODEL TRAINING COMPLETE
+2025-10-28 04:18:19,355 - INFO - ================================================================================
+2025-10-28 04:18:19,355 - INFO - Models saved to: C:\Projects\experiments\gp_modelling\output\mill_gp_08
+2025-10-28 04:18:19,355 - INFO - 
+✓ Gaussian Process training completed successfully!
