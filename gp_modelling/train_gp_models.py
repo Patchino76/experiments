@@ -443,7 +443,7 @@ class GaussianProcessCascadeTrainer:
 
 def main():
     """Main entry point."""
-    mill_number = 8
+    mill_number = 6
     start_date = "2025-09-01"
     end_date = "2025-10-19"
     
