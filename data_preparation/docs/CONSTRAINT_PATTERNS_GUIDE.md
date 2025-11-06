@@ -1,5 +1,8 @@
 # Constraint Patterns System - Complete Guide
 
+> **📝 Note:** This documentation reflects the **actual implementation** in `patterns/constraint_pattern.py`.  
+> All code snippets are taken directly from or closely match the real codebase.
+
 ## 📚 Table of Contents
 
 1. [Overview](#overview)
@@ -96,34 +99,77 @@ Feature should have **high variability** (actively changing)
 For a window to be valid, **ALL constraints must be satisfied**:
 
 ```python
-def _check_constraints(self, df, start_idx):
-    """Check if window satisfies ALL constraints."""
+def _check_constraints(self, df: pd.DataFrame, idx: int) -> bool:
+    """
+    Check if window at idx satisfies all constraints.
     
-    window = df.iloc[start_idx:start_idx + self.window_size]
-    
-    for feature, constraint in self.constraints.items():
-        data = window[feature].values
-        cv = np.std(data) / np.mean(data)
+    Args:
+        df: DataFrame
+        idx: Window start index
         
-        if constraint['type'] == 'stable':
-            if cv > constraint['max_cv']:
-                return False  # ❌ Too variable
-                
-        elif constraint['type'] == 'varying':
-            if cv < constraint['min_cv']:
-                return False  # ❌ Not varying enough
+    Returns:
+        True if constraints satisfied
+    """
+    cvs = {}
+    
+    # Calculate CV for all features
+    for feature in self.features:
+        data = df[feature].iloc[idx:idx + self.window_size].values
+        cvs[feature] = self.calculate_variability(data)
+    
+    # Check stable features (low CV)
+    for feature in self.stable_features:
+        constraint = self.constraints[feature]
+        max_cv = constraint.get('max_cv', 0.01)
+        
+        if cvs[feature] > max_cv:
+            return False  # ❌ Too variable
+    
+    # Check varying features (high CV)
+    for feature in self.varying_features:
+        constraint = self.constraints[feature]
+        min_cv = constraint.get('min_cv', 0.0008)
+        
+        if cvs[feature] < min_cv:
+            return False  # ❌ Not varying enough
+    
+    # Check relative variability (varying should be more variable than stable)
+    if self.stable_features and self.varying_features:
+        max_stable_cv = max(cvs[f] for f in self.stable_features)
+        min_varying_cv = min(cvs[f] for f in self.varying_features)
+        
+        if min_varying_cv < max_stable_cv * self.relative_variability_factor:
+            return False  # ❌ Not relatively variable enough
     
     return True  # ✅ All constraints satisfied
 ```
+
+**Key Implementation Details:**
+
+1. **Pre-calculate all CVs**: More efficient than calculating on-demand
+2. **Use `calculate_variability()` method**: Handles edge cases (division by zero, NaN)
+3. **Default values**: Uses `.get()` with defaults for robustness
+4. **Relative variability check**: Ensures varying features are significantly more variable than stable features (by `relative_variability_factor`, typically 2.0)
 
 ### 4. Relative Variability Check
 
 Ensures varying features are **significantly more variable** than stable features:
 
 ```python
-# Varying features should be at least 2x more variable than stable
-varying_cv > stable_cv * variability_factor
+# From actual implementation:
+if self.stable_features and self.varying_features:
+    max_stable_cv = max(cvs[f] for f in self.stable_features)
+    min_varying_cv = min(cvs[f] for f in self.varying_features)
+    
+    # Varying should be at least 2x more variable than stable
+    if min_varying_cv < max_stable_cv * self.relative_variability_factor:
+        return False  # Not different enough
 ```
+
+**Why This Matters:**
+- Prevents patterns where "stable" and "varying" features have similar variability
+- Ensures meaningful operational distinctions
+- Default `relative_variability_factor = 2.0` (configurable)
 
 ---
 
@@ -355,55 +401,72 @@ def create_density_pattern(
 ```python
 @PatternRegistry.register('constraint')
 class ConstraintPattern(BasePattern):
-    """Universal constraint-based motif discovery."""
+    """
+    Universal constraint-based motif discovery.
     
-    def __init__(self, name, constraints, window_size, max_motifs, 
-                 radius, max_instances_per_motif, **kwargs):
+    Discovers motifs based on configurable variability constraints.
+    Features can be marked as 'stable' (low CV) or 'varying' (high CV).
+    """
+    
+    def __init__(self, name: str, config: dict):
         """
         Initialize constraint pattern.
         
         Args:
             name: Pattern name
-            constraints: Dict of feature constraints
-            window_size: Window size in minutes
-            max_motifs: Maximum motifs to discover
-            radius: Distance threshold
-            max_instances_per_motif: Max instances per motif
+            config: Configuration dictionary with 'constraints' key
         """
-        super().__init__(name, window_size, max_motifs, radius)
+        super().__init__(name, config)
         
-        self.constraints = constraints
-        self.max_instances_per_motif = max_instances_per_motif
+        # Parse constraints
+        self.constraints = config.get('constraints', {})
+        self.features = list(self.constraints.keys())
+        self.relative_variability_factor = config.get('relative_variability_factor', 1.2)
         
         # Separate stable and varying features
-        self.stable_features = [
-            k for k, v in constraints.items() 
-            if v.get('type') == 'stable'
-        ]
-        self.varying_features = [
-            k for k, v in constraints.items() 
-            if v.get('type') == 'varying'
-        ]
+        self.stable_features = []
+        self.varying_features = []
+        
+        for feature, constraint in self.constraints.items():
+            constraint_type = constraint.get('type', 'stable')
+            if constraint_type == 'stable':
+                self.stable_features.append(feature)
+            elif constraint_type == 'varying':
+                self.varying_features.append(feature)
     
     def discover(self, df: pd.DataFrame) -> List[Motif]:
-        """Main discovery method."""
-        # 1. Prepare time series
-        # 2. Compute matrix profile
-        # 3. Find seed points
-        # 4. Find similar instances
-        # 5. Create motifs
+        """
+        Discover constraint-based motifs.
+        
+        Steps:
+        1. Validate data
+        2. Prepare time series
+        3. Compute matrix profile (STUMPY mstump)
+        4. Find constrained seeds
+        5. Find similar instances for each seed
+        6. Create Motif objects
+        """
+        # Implementation in actual code
         pass
     
-    def _check_constraints(self, df, start_idx) -> bool:
-        """Check if window satisfies constraints."""
+    def _check_constraints(self, df: pd.DataFrame, idx: int) -> bool:
+        """
+        Check if window at idx satisfies all constraints.
+        
+        Returns True if:
+        - All stable features have CV <= max_cv
+        - All varying features have CV >= min_cv
+        - Varying features are more variable than stable (by factor)
+        """
+        # See Core Concepts section for full implementation
         pass
     
-    def _find_seed_points(self, df, mp) -> List[int]:
-        """Find candidate seed points."""
+    def _find_constrained_seed(self, df, mp_distances, n_windows, used) -> Tuple[int, float]:
+        """Find best seed that satisfies constraints."""
         pass
     
-    def _find_similar_instances(self, df, seed_idx, mp, used) -> List:
-        """Find instances similar to seed."""
+    def _find_constrained_instances(self, df, T, seed_idx, n_windows, used, mp) -> List[dict]:
+        """Find instances similar to seed that satisfy constraints."""
         pass
 ```
 
