@@ -1,0 +1,744 @@
+2025-11-06 11:58:28,770 - core.data_loader - WARNING - Database module not available, will use cache only
+2025-11-06 11:58:28,771 - pipeline - INFO - 
+================================================================================
+2025-11-06 11:58:28,771 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 11:58:28,771 - pipeline - INFO - ================================================================================
+2025-11-06 11:58:28,772 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 11:58:28,772 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 11:58:28,772 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 11:58:28,772 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 11:58:28,772 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 11:58:28,772 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 11:58:28,772 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 11:58:28,774 - pipeline - ERROR - Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 11:58:28,774 - __main__ - ERROR - 
+✗ Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\run.py", line 67, in main
+    pipeline.run()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 11:59:50,118 - core.data_loader - WARNING - Database module not available, will use cache only
+2025-11-06 11:59:50,120 - pipeline - INFO - 
+================================================================================
+2025-11-06 11:59:50,121 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 11:59:50,121 - pipeline - INFO - ================================================================================
+2025-11-06 11:59:50,121 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 11:59:50,121 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 11:59:50,122 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 11:59:50,122 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 11:59:50,122 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 11:59:50,122 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 11:59:50,122 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 11:59:50,122 - pipeline - ERROR - Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 11:59:50,125 - __main__ - ERROR - 
+✗ Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\run.py", line 67, in main
+    pipeline.run()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 12:00:05,467 - core.data_loader - WARNING - Database module not available, will use cache only
+2025-11-06 12:00:05,467 - pipeline - INFO - 
+================================================================================
+2025-11-06 12:00:05,467 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 12:00:05,467 - pipeline - INFO - ================================================================================
+2025-11-06 12:00:05,467 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 12:00:05,468 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:00:05,468 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 12:00:05,468 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:00:05,468 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 12:00:05,468 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 12:00:05,468 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 12:00:05,468 - pipeline - ERROR - Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 12:00:05,470 - __main__ - ERROR - 
+✗ Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\run.py", line 67, in main
+    pipeline.run()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 12:00:15,947 - core.data_loader - WARNING - Database module not available, will use cache only
+2025-11-06 12:00:15,947 - pipeline - INFO - 
+================================================================================
+2025-11-06 12:00:15,947 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 12:00:15,948 - pipeline - INFO - ================================================================================
+2025-11-06 12:00:15,948 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 12:00:15,948 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:00:15,948 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 12:00:15,949 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:00:15,949 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 12:00:15,949 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 12:00:15,949 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 12:00:15,949 - pipeline - ERROR - Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 12:00:15,950 - __main__ - ERROR - 
+✗ Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\run.py", line 67, in main
+    pipeline.run()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 12:05:57,907 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2025-11-06 12:05:58,081 - db.db_connector - INFO - ✅ Database connection test successful
+2025-11-06 12:05:58,082 - core.data_loader - INFO - ✅ Database connector initialized
+2025-11-06 12:05:58,082 - pipeline - INFO - 
+================================================================================
+2025-11-06 12:05:58,082 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 12:05:58,082 - pipeline - INFO - ================================================================================
+2025-11-06 12:05:58,083 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 12:05:58,083 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:05:58,083 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 12:05:58,083 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:05:58,083 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 12:05:58,083 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 12:05:58,083 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 12:05:58,083 - core.data_loader - INFO -   Loading from database...
+2025-11-06 12:05:58,084 - pipeline - ERROR - Pipeline failed: 'MillsDataConnector' object has no attribute 'load_mill_data'
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\data_loader.py", line 100, in load_mill_data
+    df = self.connector.load_mill_data(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MillsDataConnector' object has no attribute 'load_mill_data'. Did you mean: 'get_mill_data'?
+2025-11-06 12:05:58,086 - __main__ - ERROR - 
+✗ Pipeline failed: 'MillsDataConnector' object has no attribute 'load_mill_data'
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\run.py", line 67, in main
+    pipeline.run()
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\data_loader.py", line 100, in load_mill_data
+    df = self.connector.load_mill_data(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MillsDataConnector' object has no attribute 'load_mill_data'. Did you mean: 'get_mill_data'?
+2025-11-06 12:09:20,355 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2025-11-06 12:09:20,481 - db.db_connector - INFO - ✅ Database connection test successful
+2025-11-06 12:09:20,481 - core.data_loader - INFO - ✅ Database connector initialized
+2025-11-06 12:09:20,481 - pipeline - INFO - 
+================================================================================
+2025-11-06 12:09:20,481 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 12:09:20,482 - pipeline - INFO - ================================================================================
+2025-11-06 12:09:20,482 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 12:09:20,482 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:09:20,482 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 12:09:20,483 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:09:20,483 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 12:09:20,483 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 12:09:20,483 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 12:09:20,483 - core.data_loader - INFO -   Loading from database...
+2025-11-06 12:09:20,483 - pipeline - ERROR - Pipeline failed: MillsDataConnector.get_mill_data() got an unexpected keyword argument 'resample_freq'
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\data_loader.py", line 100, in load_mill_data
+    df = self.connector.get_mill_data(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MillsDataConnector.get_mill_data() got an unexpected keyword argument 'resample_freq'
+2025-11-06 12:09:20,485 - __main__ - ERROR - 
+✗ Pipeline failed: MillsDataConnector.get_mill_data() got an unexpected keyword argument 'resample_freq'
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\run.py", line 67, in main
+    pipeline.run()
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "C:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\data_loader.py", line 100, in load_mill_data
+    df = self.connector.get_mill_data(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MillsDataConnector.get_mill_data() got an unexpected keyword argument 'resample_freq'
+2025-11-06 12:11:24,236 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2025-11-06 12:11:24,368 - db.db_connector - INFO - ✅ Database connection test successful
+2025-11-06 12:11:24,368 - core.data_loader - INFO - ✅ Database connector initialized
+2025-11-06 12:11:24,369 - pipeline - INFO - 
+================================================================================
+2025-11-06 12:11:24,369 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 12:11:24,369 - pipeline - INFO - ================================================================================
+2025-11-06 12:11:24,370 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 12:11:24,371 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:11:24,371 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 12:11:24,371 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:11:24,371 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 12:11:24,371 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 12:11:24,371 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 12:11:24,372 - core.data_loader - INFO -   Loading from database...
+2025-11-06 12:11:24,372 - db.db_connector - INFO - === STARTING get_combined_data for Mill 8 ===
+2025-11-06 12:11:24,373 - db.db_connector - INFO - DEBUG: Request parameters - mill_number=8, start_date=2025-09-01, end_date=2025-11-03
+2025-11-06 12:11:24,373 - db.db_connector - INFO - DEBUG: Additional parameters - resample_freq=1min, save_to_logs=False, no_interpolation=True
+2025-11-06 12:11:24,373 - db.db_connector - INFO - Retrieving mill data for mill 8 from 2025-09-01 to 2025-11-03
+2025-11-06 12:11:24,373 - db.db_connector - INFO - DEBUG: get_mill_data called with mill_number=8, start_date=2025-09-01, end_date=2025-11-03
+2025-11-06 12:11:24,373 - db.db_connector - INFO - DEBUG: Current time: 2025-11-06 12:11:24.373928
+2025-11-06 12:11:24,374 - db.db_connector - INFO - DEBUG: Parsed start_date: 2025-09-01 00:00:00 (timezone: None)
+2025-11-06 12:11:24,375 - db.db_connector - INFO - DEBUG: Parsed end_date: 2025-11-03 00:00:00 (timezone: None)
+2025-11-06 12:11:24,379 - db.db_connector - INFO - DEBUG: Days from now to end_date: -4
+2025-11-06 12:11:24,380 - db.db_connector - INFO - DEBUG: Converted start_date 2025-09-01 -> 2025-09-01 00:00:00
+2025-11-06 12:11:24,381 - db.db_connector - INFO - DEBUG: Converted end_date 2025-11-03 -> 2025-11-03 00:00:00
+2025-11-06 12:11:24,381 - db.db_connector - INFO - DEBUG: Executing query: SELECT * FROM mills."MILL_08" WHERE "TimeStamp" >= '2025-09-01 00:00:00' AND "TimeStamp" <= '2025-11-03 00:00:00'
+2025-11-06 12:11:24,381 - db.db_connector - INFO - DEBUG: Query will search table: mills."MILL_08"
+2025-11-06 12:11:24,514 - db.db_connector - INFO - DEBUG: Table MILL_08 has 445480 total records
+2025-11-06 12:11:24,514 - db.db_connector - INFO - DEBUG: Table MILL_08 date range: 2025-01-01 02:07:00 to 2025-11-06 11:48:00
+2025-11-06 12:11:24,656 - db.db_connector - INFO - DEBUG: Table MILL_08 has 123762 records after 2025-08-12 12:54:00
+2025-11-06 12:11:25,358 - db.db_connector - INFO - Retrieved 90709 rows for Mill 8
+2025-11-06 12:11:25,358 - db.db_connector - INFO - DEBUG: Mill data date range: 2025-09-01 00:00:00 to 2025-11-03 00:00:00
+2025-11-06 12:11:25,363 - db.db_connector - INFO - DEBUG: Last 5 timestamps in mill data: [Timestamp('2025-11-02 23:56:00'), Timestamp('2025-11-02 23:57:00'), Timestamp('2025-11-02 23:58:00'), Timestamp('2025-11-02 23:59:00'), Timestamp('2025-11-03 00:00:00')]
+2025-11-06 12:11:25,367 - db.db_connector - INFO - DEBUG: Records after 2025-08-12 12:54:00: 90709
+2025-11-06 12:11:25,367 - db.db_connector - INFO - DEBUG: First timestamp after cutoff: 2025-09-01 00:00:00
+2025-11-06 12:11:25,367 - db.db_connector - INFO - DEBUG: Last timestamp after cutoff: 2025-11-03 00:00:00
+2025-11-06 12:11:25,368 - db.db_connector - INFO - Mill data retrieved: 90709 rows, 13 columns
+2025-11-06 12:11:25,368 - db.db_connector - INFO - Mill data columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200']
+2025-11-06 12:11:25,382 - db.db_connector - INFO - Mill data sample:
+                           Ore  WaterMill  ...      PSI80     PSI200
+TimeStamp                                  ...                      
+2025-09-01 00:00:00  159.15780  11.889000  ...  51.300000  23.800000
+2025-09-01 00:01:00  158.25700  11.936857  ...  51.045283  24.054717
+2025-09-01 00:02:00  158.50875  12.023000  ...  50.800000  24.300000
+
+[3 rows x 13 columns]
+2025-11-06 12:11:25,391 - db.db_connector - INFO - DEBUG: process_dataframe date filtering - start=2025-09-01 00:00:00, end=2025-11-03 00:00:00
+2025-11-06 12:11:25,392 - db.db_connector - INFO - DEBUG: Before date filtering: 90709 rows, date range: 2025-09-01 00:00:00 to 2025-11-03 00:00:00
+2025-11-06 12:11:25,395 - db.db_connector - INFO - DEBUG: After start date filter (2025-09-01 00:00:00): 90709 rows (removed 0 rows)
+2025-11-06 12:11:25,399 - db.db_connector - INFO - DEBUG: After end date filter (2025-11-03 00:00:00): 90709 rows (removed 0 rows)
+2025-11-06 12:11:25,400 - db.db_connector - INFO - DEBUG: After date filtering: 90709 rows, date range: 2025-09-01 00:00:00 to 2025-11-03 00:00:00
+2025-11-06 12:11:25,464 - db.db_connector - INFO - Applied resampling with interpolation
+2025-11-06 12:11:25,492 - db.db_connector - INFO - Applied smoothing with rolling window of size 15
+2025-11-06 12:11:25,493 - db.db_connector - INFO - Resampled data to 1min frequency
+2025-11-06 12:11:25,495 - db.db_connector - INFO - Processed mill data: 90721 rows, 13 columns
+2025-11-06 12:11:25,496 - db.db_connector - INFO - Retrieving ore quality data
+2025-11-06 12:11:25,496 - db.db_connector - INFO - DEBUG: get_ore_quality called with start_date=2025-09-01, end_date=2025-11-03
+2025-11-06 12:11:25,496 - db.db_connector - INFO - DEBUG: Ore quality parsed start_date: 2025-09-01 00:00:00 (timezone: None)
+2025-11-06 12:11:25,497 - db.db_connector - INFO - DEBUG: Ore quality parsed end_date: 2025-11-03 00:00:00 (timezone: None)
+2025-11-06 12:11:25,497 - db.db_connector - INFO - DEBUG: Ore quality converted start_date 2025-09-01 -> 2025-09-01 00:00:00
+2025-11-06 12:11:25,498 - db.db_connector - INFO - DEBUG: Ore quality converted end_date 2025-11-03 -> 2025-11-03 00:00:00
+2025-11-06 12:11:25,498 - db.db_connector - INFO - DEBUG: Executing ore quality query: SELECT * FROM mills.ore_quality WHERE "TimeStamp" >= '2025-09-01 00:00:00' AND "TimeStamp" <= '2025-11-03 00:00:00'
+2025-11-06 12:11:25,508 - db.db_connector - INFO - DEBUG: ore_quality table has 921 total records
+2025-11-06 12:11:25,509 - db.db_connector - INFO - DEBUG: ore_quality table date range: 2025-01-01 06:00:00 to 2025-11-03 22:00:00
+2025-11-06 12:11:25,511 - db.db_connector - INFO - DEBUG: ore_quality table has 251 records after 2025-08-12 12:54:00
+2025-11-06 12:11:25,512 - db.db_connector - INFO - DEBUG: ore_quality has 189 records in requested range 2025-09-01 to 2025-11-03
+2025-11-06 12:11:25,517 - db.db_connector - INFO - Retrieved 189 rows of ore quality data
+2025-11-06 12:11:25,518 - db.db_connector - INFO - DEBUG: Ore quality data date range: 2025-09-01 06:00:00 to 2025-11-02 22:00:00
+2025-11-06 12:11:25,518 - db.db_connector - INFO - DEBUG: Last 5 timestamps in ore quality data: [Timestamp('2025-11-01 14:00:00'), Timestamp('2025-11-01 22:00:00'), Timestamp('2025-11-02 06:00:00'), Timestamp('2025-11-02 14:00:00'), Timestamp('2025-11-02 22:00:00')]
+2025-11-06 12:11:25,520 - db.db_connector - INFO - DEBUG: Ore quality records after 2025-08-12 12:54:00: 189
+2025-11-06 12:11:25,520 - db.db_connector - INFO - Ore data retrieved: 189 rows, 11 columns
+2025-11-06 12:11:25,520 - db.db_connector - INFO - Ore data columns: ['id', 'Date', 'Shift', 'TimeStamp', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet', 'Created_At']
+2025-11-06 12:11:25,521 - db.db_connector - INFO - DEBUG: process_dataframe date filtering - start=2025-09-01 00:00:00, end=2025-11-03 00:00:00
+2025-11-06 12:11:25,521 - db.db_connector - INFO - DEBUG: Before date filtering: 189 rows, date range: 2025-09-01 06:00:00 to 2025-11-02 22:00:00
+2025-11-06 12:11:25,521 - db.db_connector - INFO - DEBUG: After start date filter (2025-09-01 00:00:00): 189 rows (removed 0 rows)
+2025-11-06 12:11:25,521 - db.db_connector - INFO - DEBUG: After end date filter (2025-11-03 00:00:00): 189 rows (removed 0 rows)
+2025-11-06 12:11:25,521 - db.db_connector - INFO - DEBUG: After date filtering: 189 rows, date range: 2025-09-01 06:00:00 to 2025-11-02 22:00:00
+2025-11-06 12:11:25,534 - db.db_connector - INFO - Applied resampling with constant values (no interpolation or smoothing)
+2025-11-06 12:11:25,535 - db.db_connector - INFO - Resampled data to 1min frequency
+2025-11-06 12:11:25,537 - db.db_connector - INFO - Processed ore data: 90241 rows, 9 columns - with constant values (no interpolation)
+2025-11-06 12:11:25,537 - db.db_connector - INFO - DF1 (mill): 90721 rows, index range: 2025-09-01 00:00:00 to 2025-11-03 00:00:00
+2025-11-06 12:11:25,537 - db.db_connector - INFO - DF2 (ore): 90241 rows, index range: 2025-09-01 06:00:00 to 2025-11-02 22:00:00
+2025-11-06 12:11:25,538 - db.db_connector - INFO - Found 90241 common timestamps
+2025-11-06 12:11:25,552 - db.db_connector - INFO - Successfully joined dataframes: 90241 rows, 22 columns
+2025-11-06 12:11:25,552 - db.db_connector - INFO - Joined dataframe columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'id', 'Date', 'Shift', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet']
+2025-11-06 12:11:25,553 - db.db_connector - INFO - DEBUG: Final combined data date range: 2025-09-01 06:00:00 to 2025-11-02 22:00:00
+2025-11-06 12:11:25,563 - db.db_connector - INFO - DEBUG: Combined data records after 2025-08-12 12:54:00: 90241
+2025-11-06 12:11:25,563 - db.db_connector - INFO - DEBUG: SUCCESS - Combined data extends beyond 2025-08-12 with 90241 records
+2025-11-06 12:11:25,563 - db.db_connector - INFO - 
+=== Combined Dataframe Head (first 3 rows) ===
+2025-11-06 12:11:25,568 - db.db_connector - INFO -                             Ore  WaterMill  WaterZumpf        Power   ZumpfLevel  PressureHC    DensityHC        FE      PulpHC  PumpRPM    MotorAmp  PSI80  PSI200   id  Date  Shift  Class_15  Class_12  Grano  Daiki  Shisti  Original_Sheet
+TimeStamp                                                                                                                                                                                                                                      
+2025-09-01 06:00:00  156.890305  11.722579  196.992968  1960.387021  1508.929739    0.351096  1655.974206  3.207067  541.232102  671.841  186.364162   51.3    23.7  730   NaN      1       0.6       5.6  0.668  0.273   0.059             NaN
+2025-09-01 06:01:00  156.872716  11.722913  196.923968  1958.575147  1509.889679    0.350762  1656.100381  3.203933  541.485381  671.841  186.136927   51.3    23.7  730   NaN      1       0.6       5.6  0.668  0.273   0.059             NaN
+2025-09-01 06:02:00  156.870916  11.724042  196.815801  1956.897972  1510.439388    0.350560  1656.211026  3.200800  541.449294  671.841  186.028273   51.3    23.7  730   NaN      1       0.6       5.6  0.668  0.273   0.059             NaN
+2025-11-06 12:11:25,568 - db.db_connector - INFO - 
+=== Combined Dataframe Tail (last 3 rows) ===
+2025-11-06 12:11:25,571 - db.db_connector - INFO -                             Ore  WaterMill  WaterZumpf        Power   ZumpfLevel  PressureHC    DensityHC        FE      PulpHC     PumpRPM    MotorAmp      PSI80     PSI200   id  Date  Shift  Class_15  Class_12  Grano  Daiki  Shisti  Original_Sheet
+TimeStamp                                                                                                                                                                                                                                                
+2025-11-02 21:58:00  162.899071  13.557176  237.202669  1944.137325  1570.842068    0.368823  1765.304037  3.448200  376.551515  666.810864  183.318323  49.206667  26.113119  917   NaN      2       0.6       7.6  0.656  0.277   0.067             NaN
+2025-11-02 21:59:00  162.869405  13.565208  237.181335  1945.143783  1571.309935    0.368631  1765.624296  3.444467  376.927802  666.919064  183.404781  49.280000  26.066452  917   NaN      2       0.6       7.6  0.656  0.277   0.067             NaN
+2025-11-02 22:00:00  162.839738  13.577674  237.087535  1943.529258  1570.771032    0.368298  1765.877933  3.440733  377.188217  667.007769  183.273082  49.353333  26.019785  918   NaN      3       0.8       7.5  0.668  0.304   0.028             NaN
+2025-11-06 12:11:25,571 - db.db_connector - INFO - ==================================================
+2025-11-06 12:11:25,574 - db.db_connector - INFO - Combined data has 90241 rows and 22 columns
+2025-11-06 12:11:25,575 - db.db_connector - INFO - Combined data columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'id', 'Date', 'Shift', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet']
+2025-11-06 12:11:25,584 - db.db_connector - INFO - Combined data sample:
+                            Ore  WaterMill  WaterZumpf  ...  Daiki  Shisti  Original_Sheet
+TimeStamp                                               ...                               
+2025-09-01 06:00:00  156.890305  11.722579  196.992968  ...  0.273   0.059             NaN
+2025-09-01 06:01:00  156.872716  11.722913  196.923968  ...  0.273   0.059             NaN
+2025-09-01 06:02:00  156.870916  11.724042  196.815801  ...  0.273   0.059             NaN
+
+[3 rows x 22 columns]
+2025-11-06 12:11:25,584 - db.db_connector - INFO - === COMPLETED get_combined_data for Mill 8 ===
+2025-11-06 12:11:25,585 - db.db_connector - INFO - DEBUG: Final result - 90241 total records
+2025-11-06 12:11:25,585 - db.db_connector - INFO - DEBUG: Final date range: 2025-09-01 06:00:00 to 2025-11-02 22:00:00
+2025-11-06 12:11:25,613 - core.data_loader - INFO -   ✓ Loaded 90241 rows, 24 columns from database
+2025-11-06 12:11:26,767 - core.data_loader - INFO -   ✓ Cached data to C:\Projects\experiments\data_preparation\output\initial_data.csv
+2025-11-06 12:11:26,767 - core.data_loader - INFO -   ✓ All required columns present: 11 columns
+2025-11-06 12:11:26,767 - core.data_loader - INFO - Filtering data...
+2025-11-06 12:11:26,772 - core.data_loader - INFO -   Ore: [100, 220] - removed 182 rows
+2025-11-06 12:11:26,778 - core.data_loader - INFO -   PulpHC: [400, 600] - removed 13622 rows
+2025-11-06 12:11:26,784 - core.data_loader - INFO -   DensityHC: [1600, 1800] - removed 428 rows
+2025-11-06 12:11:26,784 - core.data_loader - INFO -   ✓ Filtered: 90241 → 76009 rows (84.2% retained)
+2025-11-06 12:11:26,787 - core.data_loader - INFO - Calculating circulative load...
+2025-11-06 12:11:26,789 - core.data_loader - INFO -   ✓ Circulative load calculated
+2025-11-06 12:11:26,789 - core.data_loader - INFO -   Valid range [0.5, 5.0]: 99.9% of data
+2025-11-06 12:11:26,790 - core.data_loader - INFO -   Mean: 1.04, Std: 0.20
+2025-11-06 12:11:27,981 - pipeline - INFO - ✓ Data ready: 76009 rows, 28 columns
+2025-11-06 12:11:27,981 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:11:27,982 - pipeline - INFO - STEP 2: DISCOVERING PATTERNS
+2025-11-06 12:11:27,982 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:11:27,982 - pipeline - INFO - Enabled patterns: 4
+2025-11-06 12:11:27,982 - core.pattern_registry - ERROR - Error discovering pattern 'mv': Pattern type 'mv' not registered. Available: []
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 96, in discover_all
+    pattern = cls.create_pattern(name, config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 59, in create_pattern
+    raise ValueError(
+ValueError: Pattern type 'mv' not registered. Available: []
+2025-11-06 12:11:27,984 - core.pattern_registry - ERROR - Error discovering pattern 'density': Pattern type 'constraint' not registered. Available: []
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 96, in discover_all
+    pattern = cls.create_pattern(name, config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 59, in create_pattern
+    raise ValueError(
+ValueError: Pattern type 'constraint' not registered. Available: []
+2025-11-06 12:11:27,984 - core.pattern_registry - ERROR - Error discovering pattern 'inverse': Pattern type 'constraint' not registered. Available: []
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 96, in discover_all
+    pattern = cls.create_pattern(name, config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 59, in create_pattern
+    raise ValueError(
+ValueError: Pattern type 'constraint' not registered. Available: []
+2025-11-06 12:11:27,985 - core.pattern_registry - ERROR - Error discovering pattern 'dynamic': Pattern type 'constraint' not registered. Available: []
+Traceback (most recent call last):
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 96, in discover_all
+    pattern = cls.create_pattern(name, config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Projects\experiments\data_preparation\core\pattern_registry.py", line 59, in create_pattern
+    raise ValueError(
+ValueError: Pattern type 'constraint' not registered. Available: []
+2025-11-06 12:11:27,986 - pipeline - INFO - 
+✓ Pattern discovery complete:
+2025-11-06 12:11:27,986 - pipeline - INFO -   Total motifs: 0
+2025-11-06 12:11:27,986 - pipeline - INFO -   Total instances: 0
+2025-11-06 12:11:27,986 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:11:27,986 - pipeline - INFO - STEP 3: ANALYZING PATTERNS
+2025-11-06 12:11:27,986 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:11:27,986 - pipeline - INFO - 
+✓ Pattern analysis complete
+2025-11-06 12:11:27,987 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:11:27,987 - pipeline - INFO - STEP 4: CREATING SEGMENTED DATASETS
+2025-11-06 12:11:27,987 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:11:27,987 - pipeline - INFO - 
+Creating combined dataset (all patterns)...
+2025-11-06 12:11:27,987 - core.segmentation - INFO - Merging motif collections...
+2025-11-06 12:11:27,987 - core.segmentation - INFO -   mv: 0 motifs
+2025-11-06 12:11:27,987 - core.segmentation - INFO -   density: 0 motifs
+2025-11-06 12:11:27,987 - core.segmentation - INFO -   inverse: 0 motifs
+2025-11-06 12:11:27,987 - core.segmentation - INFO -   dynamic: 0 motifs
+2025-11-06 12:11:27,987 - core.segmentation - INFO -   ✓ Reassigned motif IDs sequentially
+2025-11-06 12:11:27,987 - core.segmentation - INFO -   ✓ Total merged motifs: 0
+2025-11-06 12:11:27,987 - core.segmentation - INFO - Creating segmented dataset from motifs...
+2025-11-06 12:11:27,988 - core.segmentation - WARNING -   ⚠ No segments found!
+2025-11-06 12:11:27,988 - pipeline - INFO - 
+✓ Segmented datasets created
+2025-11-06 12:11:27,988 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:11:27,988 - pipeline - INFO - STEP 5: CREATING VISUALIZATIONS
+2025-11-06 12:11:27,988 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:11:27,989 - pipeline - INFO - 
+✓ Visualizations saved to C:\Projects\experiments\data_preparation\output\plots\mill_8
+2025-11-06 12:11:27,989 - pipeline - INFO - 
+================================================================================
+2025-11-06 12:11:27,989 - pipeline - INFO - DATA PREPARATION COMPLETE
+2025-11-06 12:11:27,989 - pipeline - INFO - ================================================================================
+2025-11-06 12:11:27,989 - pipeline - INFO - Output directory: C:\Projects\experiments\data_preparation\output
+2025-11-06 12:11:27,990 - pipeline - INFO - Analysis directory: C:\Projects\experiments\data_preparation\output\analysis
+2025-11-06 12:11:27,990 - pipeline - INFO - Plots directory: C:\Projects\experiments\data_preparation\output\plots
+2025-11-06 12:11:27,990 - __main__ - INFO - 
+✓ Data preparation pipeline completed successfully!
+2025-11-06 12:11:57,136 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2025-11-06 12:11:57,226 - db.db_connector - INFO - ✅ Database connection test successful
+2025-11-06 12:11:57,227 - core.data_loader - INFO - ✅ Database connector initialized
+2025-11-06 12:11:57,227 - pipeline - INFO - 
+================================================================================
+2025-11-06 12:11:57,227 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 12:11:57,228 - pipeline - INFO - ================================================================================
+2025-11-06 12:11:57,228 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 12:11:57,228 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:11:57,228 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 12:11:57,229 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:11:57,229 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 12:11:57,229 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 12:11:57,230 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 12:11:57,230 - core.data_loader - INFO -   Loading from cache: C:\Projects\experiments\data_preparation\output\initial_data.csv
+2025-11-06 12:11:57,468 - core.data_loader - INFO -   ✓ Loaded 76009 rows from cache
+2025-11-06 12:11:57,468 - core.data_loader - INFO -   ✓ All required columns present: 11 columns
+2025-11-06 12:11:57,469 - core.data_loader - INFO - Filtering data...
+2025-11-06 12:11:57,478 - core.data_loader - INFO -   ✓ Filtered: 76009 → 76009 rows (100.0% retained)
+2025-11-06 12:11:57,480 - core.data_loader - INFO - Calculating circulative load...
+2025-11-06 12:11:57,482 - core.data_loader - INFO -   ✓ Circulative load calculated
+2025-11-06 12:11:57,482 - core.data_loader - INFO -   Valid range [0.5, 5.0]: 99.9% of data
+2025-11-06 12:11:57,484 - core.data_loader - INFO -   Mean: 1.04, Std: 0.20
+2025-11-06 12:11:58,663 - pipeline - INFO - ✓ Data ready: 76009 rows, 28 columns
+2025-11-06 12:11:58,663 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 12:11:58,663 - pipeline - INFO - STEP 2: DISCOVERING PATTERNS
+2025-11-06 12:11:58,664 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 12:11:58,664 - pipeline - INFO - Enabled patterns: 4
+2025-11-06 12:11:58,664 - core.base_pattern - INFO - Initialized pattern: mv
+2025-11-06 12:11:58,664 - patterns.mv_pattern - INFO -   Features: ['Ore', 'WaterMill', 'WaterZumpf']
+2025-11-06 12:11:58,664 - patterns.mv_pattern - INFO -   Window: 60, Max motifs: 20, Radius: 4.5
+2025-11-06 12:11:58,664 - patterns.mv_pattern - INFO - 
+Discovering MV motifs: mv
+2025-11-06 12:11:58,667 - patterns.mv_pattern - INFO -   Computing multivariate matrix profile...

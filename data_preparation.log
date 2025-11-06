@@ -1,0 +1,72 @@
+2025-11-06 11:58:10,111 - core.data_loader - WARNING - Database module not available, will use cache only
+2025-11-06 11:58:10,113 - pipeline - INFO - 
+================================================================================
+2025-11-06 11:58:10,113 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-06 11:58:10,114 - pipeline - INFO - ================================================================================
+2025-11-06 11:58:10,114 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (4 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-06 11:58:10,115 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 11:58:10,116 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-06 11:58:10,116 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-06 11:58:10,116 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-06 11:58:10,116 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-06 11:58:10,117 - core.data_loader - INFO -   Resample: 1min
+2025-11-06 11:58:10,117 - pipeline - ERROR - Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+2025-11-06 11:58:10,119 - __main__ - ERROR - 
+✗ Pipeline failed: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.
+Traceback (most recent call last):
+  File "c:\Projects\experiments\data_preparation\run.py", line 67, in main
+    pipeline.run()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 64, in run
+    self.load_data()
+  File "c:\Projects\experiments\data_preparation\pipeline.py", line 102, in load_data
+    self.df = self.data_loader.load_mill_data(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\experiments\data_preparation\core\data_loader.py", line 102, in load_mill_data
+    raise FileNotFoundError(
+FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
+Database is not available. Please provide cached data.

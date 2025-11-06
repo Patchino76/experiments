@@ -447,8 +447,8 @@ def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
     mill_number = 8
-    start_date = "2025-06-21"
-    end_date = "2025-11-04"
+    start_date = "2025-01-01"
+    end_date = "2025-11-03"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)

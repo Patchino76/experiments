@@ -150,3 +150,43 @@ Training model: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad', 'Class_
 2025-11-05 09:12:09,547 - __main__ - INFO - Models saved to: C:\Projects\experiments\modeling\models\mill_8
 2025-11-05 09:12:09,547 - __main__ - INFO - 
 ✓ Model training pipeline completed successfully!
+2025-11-06 09:32:51,003 - __main__ - INFO - 
+================================================================================
+2025-11-06 09:32:51,004 - __main__ - INFO - STARTING CASCADE MODEL TRAINING - MILL 8
+2025-11-06 09:32:51,004 - __main__ - INFO - ================================================================================
+2025-11-06 09:32:51,004 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 09:32:51,005 - __main__ - INFO - STEP 1: LOADING DATA
+2025-11-06 09:32:51,005 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-06 09:32:51,005 - __main__ - INFO - Loading data from C:\Projects\experiments\modeling\output\segmented_motifs_all_06.csv...
+2025-11-06 09:32:51,368 - __main__ - INFO -   Data shape: (144900, 22)
+2025-11-06 09:32:51,370 - __main__ - INFO -   Rows removed (NaN): 0 (0.00%)
+2025-11-06 09:32:51,370 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 09:32:51,370 - __main__ - INFO - STEP 2: SPLITTING DATA
+2025-11-06 09:32:51,371 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-06 09:32:51,371 - __main__ - INFO -   Train size: 115920
+2025-11-06 09:32:51,371 - __main__ - INFO -   Test size: 28980
+2025-11-06 09:32:51,371 - __main__ - INFO -   Test ratio: 20.0%
+2025-11-06 09:32:51,371 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-06 09:32:51,371 - __main__ - INFO - STEP 3: TRAINING PROCESS MODELS (MV → CV)
+2025-11-06 09:32:51,372 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-06 09:32:51,372 - __main__ - INFO - 
+Training model: MV → DensityHC
+2025-11-06 09:32:51,378 - __main__ - INFO -   Running GridSearchCV...
+2025-11-06 09:36:41,008 - __main__ - INFO -   Best parameters:
+2025-11-06 09:36:41,009 - __main__ - INFO -     colsample_bytree: 1.0
+2025-11-06 09:36:41,009 - __main__ - INFO -     learning_rate: 0.05
+2025-11-06 09:36:41,009 - __main__ - INFO -     max_depth: 8
+2025-11-06 09:36:41,010 - __main__ - INFO -     n_estimators: 150
+2025-11-06 09:36:41,010 - __main__ - INFO -     subsample: 0.6
+2025-11-06 09:36:41,064 - __main__ - INFO -   Train R²: 0.7619, RMSE: 15.6719
+2025-11-06 09:36:41,064 - __main__ - INFO -   Test R²: 0.6390, RMSE: 20.8650
+2025-11-06 09:36:41,065 - __main__ - INFO -   Feature Importance:
+2025-11-06 09:36:41,065 - __main__ - INFO -     WaterZumpf: 0.5215
+2025-11-06 09:36:41,065 - __main__ - INFO -     WaterMill: 0.2481
+2025-11-06 09:36:41,065 - __main__ - INFO -     Ore: 0.2303
+2025-11-06 09:36:41,076 - __main__ - INFO - 
+Training model: MV → PulpHC
+2025-11-06 09:36:41,084 - __main__ - INFO -   Running GridSearchCV...
