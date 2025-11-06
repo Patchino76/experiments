@@ -1,0 +1,237 @@
+================================================================================
+MOTIF DISCOVERY SUMMARY REPORT
+================================================================================
+
+Total Motifs: 50
+Total Instances: 561
+
+--------------------------------------------------------------------------------
+MOTIF DETAILS
+--------------------------------------------------------------------------------
+
+Motif 1 (mv):
+  Instances: 20
+  Avg Distance: 1.9117
+
+Motif 2 (mv):
+  Instances: 20
+  Avg Distance: 2.0403
+
+Motif 3 (mv):
+  Instances: 20
+  Avg Distance: 3.4838
+
+Motif 4 (mv):
+  Instances: 20
+  Avg Distance: 2.8261
+
+Motif 5 (mv):
+  Instances: 20
+  Avg Distance: 2.8886
+
+Motif 6 (mv):
+  Instances: 20
+  Avg Distance: 3.6053
+
+Motif 7 (mv):
+  Instances: 15
+  Avg Distance: 3.4263
+
+Motif 8 (mv):
+  Instances: 15
+  Avg Distance: 3.7936
+
+Motif 9 (mv):
+  Instances: 14
+  Avg Distance: 3.6546
+
+Motif 10 (mv):
+  Instances: 2
+  Avg Distance: 1.4518
+
+Motif 11 (mv):
+  Instances: 16
+  Avg Distance: 3.6638
+
+Motif 12 (mv):
+  Instances: 11
+  Avg Distance: 3.5805
+
+Motif 13 (mv):
+  Instances: 3
+  Avg Distance: 2.8612
+
+Motif 14 (mv):
+  Instances: 9
+  Avg Distance: 3.3344
+
+Motif 15 (mv):
+  Instances: 7
+  Avg Distance: 3.6269
+
+Motif 16 (mv):
+  Instances: 2
+  Avg Distance: 1.7282
+
+Motif 17 (mv):
+  Instances: 6
+  Avg Distance: 3.1537
+
+Motif 18 (mv):
+  Instances: 9
+  Avg Distance: 3.3244
+
+Motif 19 (density):
+  Instances: 10
+  Avg Distance: 3.1297
+
+Motif 20 (density):
+  Instances: 11
+  Avg Distance: 3.4436
+
+Motif 21 (density):
+  Instances: 8
+  Avg Distance: 3.2732
+
+Motif 22 (density):
+  Instances: 3
+  Avg Distance: 2.6884
+
+Motif 23 (density):
+  Instances: 2
+  Avg Distance: 2.0501
+
+Motif 24 (density):
+  Instances: 2
+  Avg Distance: 1.7282
+
+Motif 25 (density):
+  Instances: 2
+  Avg Distance: 1.7137
+
+Motif 26 (density):
+  Instances: 2
+  Avg Distance: 1.9618
+
+Motif 27 (density):
+  Instances: 2
+  Avg Distance: 2.2188
+
+Motif 28 (density):
+  Instances: 2
+  Avg Distance: 1.9987
+
+Motif 29 (density):
+  Instances: 2
+  Avg Distance: 1.6919
+
+Motif 30 (density):
+  Instances: 2
+  Avg Distance: 1.8961
+
+Motif 31 (inverse):
+  Instances: 20
+  Avg Distance: 3.4442
+
+Motif 32 (inverse):
+  Instances: 20
+  Avg Distance: 3.3671
+
+Motif 33 (inverse):
+  Instances: 20
+  Avg Distance: 3.3413
+
+Motif 34 (inverse):
+  Instances: 20
+  Avg Distance: 3.3809
+
+Motif 35 (inverse):
+  Instances: 10
+  Avg Distance: 3.6555
+
+Motif 36 (inverse):
+  Instances: 6
+  Avg Distance: 2.7899
+
+Motif 37 (inverse):
+  Instances: 13
+  Avg Distance: 3.5260
+
+Motif 38 (inverse):
+  Instances: 7
+  Avg Distance: 3.1898
+
+Motif 39 (inverse):
+  Instances: 10
+  Avg Distance: 3.5837
+
+Motif 40 (inverse):
+  Instances: 6
+  Avg Distance: 3.5587
+
+Motif 41 (dynamic):
+  Instances: 20
+  Avg Distance: 1.9117
+
+Motif 42 (dynamic):
+  Instances: 20
+  Avg Distance: 2.0403
+
+Motif 43 (dynamic):
+  Instances: 17
+  Avg Distance: 3.3935
+
+Motif 44 (dynamic):
+  Instances: 20
+  Avg Distance: 2.9698
+
+Motif 45 (dynamic):
+  Instances: 20
+  Avg Distance: 2.9765
+
+Motif 46 (dynamic):
+  Instances: 18
+  Avg Distance: 3.6292
+
+Motif 47 (dynamic):
+  Instances: 7
+  Avg Distance: 2.6204
+
+Motif 48 (dynamic):
+  Instances: 19
+  Avg Distance: 3.3981
+
+Motif 49 (dynamic):
+  Instances: 9
+  Avg Distance: 3.3473
+
+Motif 50 (dynamic):
+  Instances: 2
+  Avg Distance: 1.4518
+
+--------------------------------------------------------------------------------
+DENSITY BEHAVIOR ANALYSIS
+--------------------------------------------------------------------------------
+
+Pattern: density
+  Instances: 48
+  Avg Density Change: 0.70
+  Avg Ore Correlation: -0.167
+  Avg WaterMill Correlation: -0.070
+  Avg WaterZumpf Correlation: -0.078
+
+Pattern: inverse
+  Instances: 132
+  Avg Density Change: -0.84
+  Avg Ore Correlation: 0.062
+  Avg WaterMill Correlation: 0.127
+  Avg WaterZumpf Correlation: -0.381
+
+Pattern: dynamic
+  Instances: 152
+  Avg Density Change: 1.57
+  Avg Ore Correlation: -0.091
+  Avg WaterMill Correlation: -0.042
+  Avg WaterZumpf Correlation: -0.349
+
+================================================================================
