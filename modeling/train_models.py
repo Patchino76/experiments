@@ -112,7 +112,7 @@ class CascadeModelTrainer:
         logger.info("-" * 80)
         
         # data_path = self.config.paths.output_dir / 'segmented_motifsMV.csv'
-        data_path = self.config.paths.output_dir / 'segmented_motifs_all.csv'
+        data_path = self.config.paths.output_dir / 'segmented_motifs_all_06.csv'
         
         if not data_path.exists():
             raise FileNotFoundError(
@@ -447,8 +447,8 @@ def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
     mill_number = 8
-    start_date = "2025-01-01"
-    end_date = "2025-10-19"
+    start_date = "2025-06-21"
+    end_date = "2025-11-04"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)

@@ -23,6 +23,11 @@ from config import PipelineConfig, DataConfig
 from database import DataLoader, filter_data, validate_required_columns
 from motif_discovery import MotifDiscovery, CorrelationFilter, convert_motifs_to_legacy_format
 from density_analysis import DensityMotifDiscovery, analyze_density_behavior
+from constraint_patterns import (
+    InverseConstraintMotifDiscovery,
+    DynamicMotifDiscovery,
+    PressureConstraintMotifDiscovery
+)
 from segmentation import (
     create_segmented_dataset,
     merge_motif_collections,
@@ -72,8 +77,14 @@ class DataPreparationPipeline:
         self.df = None
         self.mv_motifs = []
         self.density_motifs = []
+        self.inverse_motifs = []
+        self.dynamic_motifs = []
+        self.pressure_motifs = []
         self.all_motifs = []
         self.density_analysis = None
+        self.inverse_analysis = None
+        self.dynamic_analysis = None
+        self.pressure_analysis = None
         self.segmented_df = None
         self.data_loader = None
     
@@ -90,10 +101,8 @@ class DataPreparationPipeline:
         # Step 2: Discover MV motifs
         self.discover_mv_motifs()
         
-        # Step 3: Discover density motifs (optional)
-        if 'DensityHC' in self.df.columns:
-            self.discover_density_motifs()
-            self.analyze_density()
+        # Step 3: Discover constraint-based motifs (optional, based on config)
+        self.discover_constraint_motifs()
         
         # Step 4: Merge motifs
         self.merge_motifs()
@@ -220,63 +229,144 @@ class DataPreparationPipeline:
         self.mv_motifs = motifs
         logger.info(f"✓ MV motif discovery complete: {len(self.mv_motifs)} motifs")
     
-    def discover_density_motifs(self):
-        """Discover density-constrained motifs."""
+    def discover_constraint_motifs(self):
+        """Discover all constraint-based motifs based on configuration."""
         logger.info("\n" + "-" * 80)
-        logger.info("STEP 3: DISCOVERING DENSITY MOTIFS")
+        logger.info("STEP 3: DISCOVERING CONSTRAINT-BASED MOTIFS")
         logger.info("-" * 80)
         
-        # Initialize density motif discovery
-        density_discovery = DensityMotifDiscovery(
-            window_size=self.config.motif.density_window_size,
-            max_motifs=self.config.motif.density_max_motifs,
-            radius=self.config.motif.density_radius
-        )
-        
-        # Discover motifs
-        self.density_motifs = density_discovery.discover(self.df)
-        
-        logger.info(f"✓ Density motif discovery complete: {len(self.density_motifs)} motifs")
-    
-    def analyze_density(self):
-        """Analyze density behavior in motifs."""
-        logger.info("\n" + "-" * 80)
-        logger.info("STEP 4: ANALYZING DENSITY BEHAVIOR")
-        logger.info("-" * 80)
-        
-        if not self.density_motifs:
-            logger.info("  No density motifs to analyze")
+        required_columns = ['DensityHC', 'Ore', 'WaterMill', 'WaterZumpf']
+        if not all(col in self.df.columns for col in required_columns):
+            logger.warning(f"  ⚠ Missing required columns for constraint motifs")
             return
         
-        self.density_analysis = analyze_density_behavior(self.density_motifs)
+        # Pattern 1: Density constraint (stable WaterZumpf, varying Ore/WaterMill)
+        if self.config.motif.enable_density_pattern:
+            logger.info("\n  Pattern 1: Density Constraint (stable WaterZumpf)")
+            density_discovery = DensityMotifDiscovery(
+                window_size=self.config.motif.density_window_size,
+                max_motifs=self.config.motif.density_max_motifs,
+                radius=self.config.motif.density_radius
+            )
+            self.density_motifs = density_discovery.discover(self.df)
+            
+            if self.density_motifs:
+                self.density_analysis = analyze_density_behavior(self.density_motifs)
+                analysis_df = pd.DataFrame(self.density_analysis)
+                analysis_path = self.config.paths.analysis_dir / 'density_analysis.csv'
+                analysis_df.to_csv(analysis_path, index=False)
+                logger.info(f"    ✓ Analysis saved to {analysis_path.name}")
+        else:
+            logger.info("\n  Pattern 1: Density Constraint - DISABLED")
         
-        # Save analysis results
-        analysis_df = pd.DataFrame(self.density_analysis)
-        analysis_path = self.config.paths.analysis_dir / 'density_analysis.csv'
-        analysis_df.to_csv(analysis_path, index=False)
-        logger.info(f"  ✓ Density analysis saved to {analysis_path.name}")
+        # Pattern 2: Inverse constraint (stable Ore/WaterMill, varying WaterZumpf)
+        if self.config.motif.enable_inverse_pattern:
+            logger.info("\n  Pattern 2: Inverse Constraint (stable Ore/WaterMill)")
+            inverse_discovery = InverseConstraintMotifDiscovery(
+                window_size=self.config.motif.inverse_window_size,
+                max_motifs=self.config.motif.inverse_max_motifs,
+                radius=self.config.motif.inverse_radius
+            )
+            self.inverse_motifs = inverse_discovery.discover(self.df)
+            
+            if self.inverse_motifs:
+                self.inverse_analysis = analyze_density_behavior(self.inverse_motifs)
+                analysis_df = pd.DataFrame(self.inverse_analysis)
+                analysis_path = self.config.paths.analysis_dir / 'inverse_analysis.csv'
+                analysis_df.to_csv(analysis_path, index=False)
+                logger.info(f"    ✓ Analysis saved to {analysis_path.name}")
+        else:
+            logger.info("\n  Pattern 2: Inverse Constraint - DISABLED")
+        
+        # Pattern 3: Dynamic pattern (all MVs varying)
+        if self.config.motif.enable_dynamic_pattern:
+            logger.info("\n  Pattern 3: Dynamic Pattern (all MVs varying)")
+            dynamic_discovery = DynamicMotifDiscovery(
+                window_size=self.config.motif.dynamic_window_size,
+                max_motifs=self.config.motif.dynamic_max_motifs,
+                radius=self.config.motif.dynamic_radius
+            )
+            self.dynamic_motifs = dynamic_discovery.discover(self.df)
+            
+            if self.dynamic_motifs:
+                self.dynamic_analysis = analyze_density_behavior(self.dynamic_motifs)
+                analysis_df = pd.DataFrame(self.dynamic_analysis)
+                analysis_path = self.config.paths.analysis_dir / 'dynamic_analysis.csv'
+                analysis_df.to_csv(analysis_path, index=False)
+                logger.info(f"    ✓ Analysis saved to {analysis_path.name}")
+        else:
+            logger.info("\n  Pattern 3: Dynamic Pattern - DISABLED")
+        
+        # Pattern 4: Pressure constraint (stable PressureHC, varying MVs)
+        if self.config.motif.enable_pressure_pattern:
+            if 'PressureHC' not in self.df.columns:
+                logger.warning("\n  Pattern 4: Pressure Constraint - PressureHC column not found")
+            else:
+                logger.info("\n  Pattern 4: Pressure Constraint (stable PressureHC)")
+                pressure_discovery = PressureConstraintMotifDiscovery(
+                    window_size=self.config.motif.pressure_window_size,
+                    max_motifs=self.config.motif.pressure_max_motifs,
+                    radius=self.config.motif.pressure_radius
+                )
+                self.pressure_motifs = pressure_discovery.discover(self.df)
+                
+                if self.pressure_motifs:
+                    self.pressure_analysis = analyze_density_behavior(self.pressure_motifs)
+                    analysis_df = pd.DataFrame(self.pressure_analysis)
+                    analysis_path = self.config.paths.analysis_dir / 'pressure_analysis.csv'
+                    analysis_df.to_csv(analysis_path, index=False)
+                    logger.info(f"    ✓ Analysis saved to {analysis_path.name}")
+        else:
+            logger.info("\n  Pattern 4: Pressure Constraint - DISABLED")
+        
+        # Summary
+        total_constraint_motifs = (
+            len(self.density_motifs) + len(self.inverse_motifs) + 
+            len(self.dynamic_motifs) + len(self.pressure_motifs)
+        )
+        logger.info(f"\n✓ Constraint motif discovery complete: {total_constraint_motifs} total motifs")
+        logger.info(f"  - Density: {len(self.density_motifs)}")
+        logger.info(f"  - Inverse: {len(self.inverse_motifs)}")
+        logger.info(f"  - Dynamic: {len(self.dynamic_motifs)}")
+        logger.info(f"  - Pressure: {len(self.pressure_motifs)}")
     
     def merge_motifs(self):
-        """Merge MV and density motifs."""
+        """Merge MV and all constraint-based motifs."""
         logger.info("\n" + "-" * 80)
-        logger.info("STEP 5: MERGING MOTIF COLLECTIONS")
+        logger.info("STEP 4: MERGING MOTIF COLLECTIONS")
         logger.info("-" * 80)
         
+        # Start with MV motifs
+        self.all_motifs = self.mv_motifs.copy()
+        
+        # Collect all constraint motifs that are enabled
+        constraint_motifs = []
         if self.density_motifs:
+            constraint_motifs.extend(self.density_motifs)
+        if self.inverse_motifs:
+            constraint_motifs.extend(self.inverse_motifs)
+        if self.dynamic_motifs:
+            constraint_motifs.extend(self.dynamic_motifs)
+        if self.pressure_motifs:
+            constraint_motifs.extend(self.pressure_motifs)
+        
+        # Merge if we have constraint motifs
+        if constraint_motifs:
             self.all_motifs = merge_motif_collections(
-                self.mv_motifs,
-                self.density_motifs,
+                self.all_motifs,
+                constraint_motifs,
                 shuffle_indices=True
             )
+            logger.info(f"  ✓ Merged {len(self.mv_motifs)} MV motifs + {len(constraint_motifs)} constraint motifs")
         else:
-            self.all_motifs = self.mv_motifs
+            logger.info(f"  ✓ Using only MV motifs (no constraint motifs enabled)")
         
         logger.info(f"✓ Total motifs: {len(self.all_motifs)}")
     
     def create_segments(self):
         """Create segmented dataset from motifs."""
         logger.info("\n" + "-" * 80)
-        logger.info("STEP 6: CREATING SEGMENTED DATASET")
+        logger.info("STEP 5: CREATING SEGMENTED DATASET")
         logger.info("-" * 80)
         
         # Determine which features to include
@@ -405,9 +495,21 @@ class DataPreparationPipeline:
             stats_df.to_csv(stats_path, index=False)
             logger.info(f"  ✓ Segment statistics saved to {stats_path.name}")
         
-        # Text summary report
+        # Text summary reports for each pattern type
         report_path = self.config.paths.analysis_dir / 'summary_report.txt'
-        save_summary_report(self.all_motifs, self.density_analysis, report_path)
+        
+        # Combine all analyses for the main report
+        all_analyses = []
+        if self.density_analysis:
+            all_analyses.extend(self.density_analysis)
+        if self.inverse_analysis:
+            all_analyses.extend(self.inverse_analysis)
+        if self.dynamic_analysis:
+            all_analyses.extend(self.dynamic_analysis)
+        if self.pressure_analysis:
+            all_analyses.extend(self.pressure_analysis)
+        
+        save_summary_report(self.all_motifs, all_analyses if all_analyses else None, report_path)
     
     def create_visualizations(self):
         """Create visualization plots."""
@@ -429,10 +531,22 @@ class DataPreparationPipeline:
         overview_path = mill_plots_dir / 'motif_overview.png'
         plot_motif_overview(self.all_motifs, overview_path)
         
-        # Plot density analysis if available
+        # Plot density analysis for each pattern type
         if self.density_analysis:
             density_plot_path = mill_plots_dir / 'density_analysis.png'
             plot_density_analysis(self.density_analysis, density_plot_path)
+        
+        if self.inverse_analysis:
+            inverse_plot_path = mill_plots_dir / 'inverse_analysis.png'
+            plot_density_analysis(self.inverse_analysis, inverse_plot_path)
+        
+        if self.dynamic_analysis:
+            dynamic_plot_path = mill_plots_dir / 'dynamic_analysis.png'
+            plot_density_analysis(self.dynamic_analysis, dynamic_plot_path)
+        
+        if self.pressure_analysis:
+            pressure_plot_path = mill_plots_dir / 'pressure_analysis.png'
+            plot_density_analysis(self.pressure_analysis, pressure_plot_path)
         
         # Plot correlation heatmap
         if not self.segmented_df.empty:
@@ -453,9 +567,9 @@ class DataPreparationPipeline:
 def main():
     """Main entry point."""
     # Configuration
-    mill_number = 6
-    start_date = "2025-06-26"
-    end_date = "2025-10-26"
+    mill_number = 8
+    start_date = "2025-01-01"
+    end_date = "2025-11-03"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)

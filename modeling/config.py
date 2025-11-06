@@ -23,7 +23,7 @@ class DataConfig:
     # mv_features: List[str] = field(default_factory=lambda: ['Ore', 'WaterMill', 'WaterZumpf', 'MotorAmp'])
     mv_features: List[str] = field(default_factory=lambda: ['Ore', 'WaterMill', 'WaterZumpf'])
     cv_features: List[str] = field(default_factory=lambda: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad'])
-    dv_features: List[str] = field(default_factory=lambda: ['Class_15', 'Daiki', 'FE'])  
+    dv_features: List[str] = field(default_factory=lambda: ['Class_15', 'Daiki', 'FE', 'MotorAmp'])  
     target: str = 'PSI200'
     
     # Data filtering thresholds
@@ -52,10 +52,29 @@ class MotifConfig:
     mv_max_instances_per_motif: int = 1000
     mv_radius: float = 4.5
     
-    # Motif discovery for density analysis
+    # Motif discovery for density analysis (stable WaterZumpf, varying Ore/WaterMill)
+    enable_density_pattern: bool = True
     density_window_size: int = 60
     density_max_motifs: int = 15
     density_radius: float = 4.5
+    
+    # Inverse constraint pattern (stable Ore/WaterMill, varying WaterZumpf)
+    enable_inverse_pattern: bool = True
+    inverse_window_size: int = 60
+    inverse_max_motifs: int = 10
+    inverse_radius: float = 4.5
+    
+    # Dynamic pattern (all MVs varying)
+    enable_dynamic_pattern: bool = True
+    dynamic_window_size: int = 60
+    dynamic_max_motifs: int = 10
+    dynamic_radius: float = 4.5
+    
+    # Pressure constraint pattern (stable PressureHC, varying MVs)
+    enable_pressure_pattern: bool = False  # Optional, disabled by default
+    pressure_window_size: int = 60
+    pressure_max_motifs: int = 10
+    pressure_radius: float = 4.5
     
     # Correlation filtering
     apply_correlation_filter: bool = True

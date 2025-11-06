@@ -1,0 +1,152 @@
+2025-10-29 23:22:44,034 - __main__ - INFO - 
+================================================================================
+2025-10-29 23:22:44,034 - __main__ - INFO - STARTING CASCADE MODEL TRAINING - MILL 6
+2025-10-29 23:22:44,034 - __main__ - INFO - ================================================================================
+2025-10-29 23:22:44,034 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-10-29 23:22:44,036 - __main__ - INFO - STEP 1: LOADING DATA
+2025-10-29 23:22:44,036 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-05 08:52:06,693 - __main__ - INFO - 
+================================================================================
+2025-11-05 08:52:06,695 - __main__ - INFO - STARTING CASCADE MODEL TRAINING - MILL 8
+2025-11-05 08:52:06,695 - __main__ - INFO - ================================================================================
+2025-11-05 08:52:06,695 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-05 08:52:06,695 - __main__ - INFO - STEP 1: LOADING DATA
+2025-11-05 08:52:06,695 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-05 08:52:06,696 - __main__ - INFO - Loading data from C:\Projects\experiments\modeling\output\segmented_motifs_all_06.csv...
+2025-11-05 08:52:07,093 - __main__ - INFO -   Data shape: (144900, 22)
+2025-11-05 08:52:07,093 - __main__ - INFO -   Rows removed (NaN): 0 (0.00%)
+2025-11-05 08:52:07,093 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-05 08:52:07,093 - __main__ - INFO - STEP 2: SPLITTING DATA
+2025-11-05 08:52:07,093 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-05 08:52:07,094 - __main__ - INFO -   Train size: 115920
+2025-11-05 08:52:07,094 - __main__ - INFO -   Test size: 28980
+2025-11-05 08:52:07,094 - __main__ - INFO -   Test ratio: 20.0%
+2025-11-05 08:52:07,094 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-05 08:52:07,094 - __main__ - INFO - STEP 3: TRAINING PROCESS MODELS (MV → CV)
+2025-11-05 08:52:07,094 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-05 08:52:07,094 - __main__ - INFO - 
+Training model: MV → DensityHC
+2025-11-05 08:52:07,102 - __main__ - INFO -   Running GridSearchCV...
+2025-11-05 08:56:01,058 - __main__ - INFO -   Best parameters:
+2025-11-05 08:56:01,058 - __main__ - INFO -     colsample_bytree: 1.0
+2025-11-05 08:56:01,058 - __main__ - INFO -     learning_rate: 0.05
+2025-11-05 08:56:01,058 - __main__ - INFO -     max_depth: 8
+2025-11-05 08:56:01,059 - __main__ - INFO -     n_estimators: 150
+2025-11-05 08:56:01,059 - __main__ - INFO -     subsample: 0.6
+2025-11-05 08:56:01,148 - __main__ - INFO -   Train R²: 0.7619, RMSE: 15.6719
+2025-11-05 08:56:01,149 - __main__ - INFO -   Test R²: 0.6390, RMSE: 20.8650
+2025-11-05 08:56:01,151 - __main__ - INFO -   Feature Importance:
+2025-11-05 08:56:01,152 - __main__ - INFO -     WaterZumpf: 0.5215
+2025-11-05 08:56:01,152 - __main__ - INFO -     WaterMill: 0.2481
+2025-11-05 08:56:01,152 - __main__ - INFO -     Ore: 0.2303
+2025-11-05 08:56:01,165 - __main__ - INFO - 
+Training model: MV → PulpHC
+2025-11-05 08:56:01,176 - __main__ - INFO -   Running GridSearchCV...
+2025-11-05 09:00:11,768 - __main__ - INFO -   Best parameters:
+2025-11-05 09:00:11,768 - __main__ - INFO -     colsample_bytree: 1.0
+2025-11-05 09:00:11,769 - __main__ - INFO -     learning_rate: 0.05
+2025-11-05 09:00:11,769 - __main__ - INFO -     max_depth: 8
+2025-11-05 09:00:11,769 - __main__ - INFO -     n_estimators: 150
+2025-11-05 09:00:11,769 - __main__ - INFO -     subsample: 0.6
+2025-11-05 09:00:11,861 - __main__ - INFO -   Train R²: 0.8134, RMSE: 15.4631
+2025-11-05 09:00:11,861 - __main__ - INFO -   Test R²: 0.7358, RMSE: 18.8896
+2025-11-05 09:00:11,862 - __main__ - INFO -   Feature Importance:
+2025-11-05 09:00:11,862 - __main__ - INFO -     WaterZumpf: 0.5846
+2025-11-05 09:00:11,863 - __main__ - INFO -     WaterMill: 0.2083
+2025-11-05 09:00:11,863 - __main__ - INFO -     Ore: 0.2071
+2025-11-05 09:00:11,878 - __main__ - INFO - 
+Training model: MV → PressureHC
+2025-11-05 09:00:11,890 - __main__ - INFO -   Running GridSearchCV...
+2025-11-05 09:04:24,547 - __main__ - INFO -   Best parameters:
+2025-11-05 09:04:24,547 - __main__ - INFO -     colsample_bytree: 1.0
+2025-11-05 09:04:24,547 - __main__ - INFO -     learning_rate: 0.05
+2025-11-05 09:04:24,547 - __main__ - INFO -     max_depth: 8
+2025-11-05 09:04:24,548 - __main__ - INFO -     n_estimators: 300
+2025-11-05 09:04:24,548 - __main__ - INFO -     subsample: 0.8
+2025-11-05 09:04:24,667 - __main__ - INFO -   Train R²: 0.9412, RMSE: 0.0137
+2025-11-05 09:04:24,667 - __main__ - INFO -   Test R²: 0.8758, RMSE: 0.0183
+2025-11-05 09:04:24,671 - __main__ - INFO -   Feature Importance:
+2025-11-05 09:04:24,671 - __main__ - INFO -     WaterZumpf: 0.4151
+2025-11-05 09:04:24,671 - __main__ - INFO -     WaterMill: 0.3323
+2025-11-05 09:04:24,671 - __main__ - INFO -     Ore: 0.2526
+2025-11-05 09:04:24,691 - __main__ - INFO - 
+Training model: MV → CirculativeLoad
+2025-11-05 09:04:24,700 - __main__ - INFO -   Running GridSearchCV...
+2025-11-05 09:08:16,767 - __main__ - INFO -   Best parameters:
+2025-11-05 09:08:16,767 - __main__ - INFO -     colsample_bytree: 1.0
+2025-11-05 09:08:16,767 - __main__ - INFO -     learning_rate: 0.05
+2025-11-05 09:08:16,768 - __main__ - INFO -     max_depth: 8
+2025-11-05 09:08:16,768 - __main__ - INFO -     n_estimators: 150
+2025-11-05 09:08:16,768 - __main__ - INFO -     subsample: 0.6
+2025-11-05 09:08:16,831 - __main__ - INFO -   Train R²: 0.7661, RMSE: 0.1298
+2025-11-05 09:08:16,831 - __main__ - INFO -   Test R²: 0.6934, RMSE: 0.1676
+2025-11-05 09:08:16,832 - __main__ - INFO -   Feature Importance:
+2025-11-05 09:08:16,832 - __main__ - INFO -     Ore: 0.3842
+2025-11-05 09:08:16,832 - __main__ - INFO -     WaterZumpf: 0.3198
+2025-11-05 09:08:16,832 - __main__ - INFO -     WaterMill: 0.2960
+2025-11-05 09:08:16,846 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-05 09:08:16,847 - __main__ - INFO - STEP 4: TRAINING QUALITY MODEL (CV + DV → Target)
+2025-11-05 09:08:16,847 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-05 09:08:16,856 - __main__ - INFO -   Filtered training data: 115920 → 68856 samples
+2025-11-05 09:08:16,857 - __main__ - INFO -   Filtered test data: 28980 → 19084 samples
+2025-11-05 09:08:16,857 - __main__ - INFO - 
+Training model: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad', 'Class_15', 'Daiki', 'FE', 'MotorAmp'] → PSI200
+2025-11-05 09:08:16,869 - __main__ - INFO -   Running GridSearchCV...
+2025-11-05 09:12:09,384 - __main__ - INFO -   Best parameters:
+2025-11-05 09:12:09,384 - __main__ - INFO -     colsample_bytree: 0.8
+2025-11-05 09:12:09,385 - __main__ - INFO -     learning_rate: 0.05
+2025-11-05 09:12:09,385 - __main__ - INFO -     max_depth: 8
+2025-11-05 09:12:09,385 - __main__ - INFO -     n_estimators: 400
+2025-11-05 09:12:09,385 - __main__ - INFO -     subsample: 0.6
+2025-11-05 09:12:09,486 - __main__ - INFO -   Train R²: 0.9826, RMSE: 0.3306
+2025-11-05 09:12:09,486 - __main__ - INFO -   Test R²: 0.9673, RMSE: 0.4818
+2025-11-05 09:12:09,489 - __main__ - INFO -   Feature Importance:
+2025-11-05 09:12:09,489 - __main__ - INFO -     DensityHC: 0.2614
+2025-11-05 09:12:09,489 - __main__ - INFO -     Daiki: 0.1699
+2025-11-05 09:12:09,489 - __main__ - INFO -     Class_15: 0.1491
+2025-11-05 09:12:09,489 - __main__ - INFO -     PressureHC: 0.1026
+2025-11-05 09:12:09,490 - __main__ - INFO -     FE: 0.0897
+2025-11-05 09:12:09,490 - __main__ - INFO -     MotorAmp: 0.0881
+2025-11-05 09:12:09,490 - __main__ - INFO -     PulpHC: 0.0711
+2025-11-05 09:12:09,490 - __main__ - INFO -     CirculativeLoad: 0.0680
+2025-11-05 09:12:09,517 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-05 09:12:09,518 - __main__ - INFO - STEP 5: VALIDATING CASCADE
+2025-11-05 09:12:09,518 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-05 09:12:09,526 - __main__ - INFO -   Validating with 200 samples...
+2025-11-05 09:12:09,539 - __main__ - INFO -   Cascade Validation Results:
+2025-11-05 09:12:09,539 - __main__ - INFO -     R²: -0.4849
+2025-11-05 09:12:09,539 - __main__ - INFO -     RMSE: 75.2003
+2025-11-05 09:12:09,539 - __main__ - INFO -     MAE: 42.7143
+2025-11-05 09:12:09,540 - __main__ - INFO - 
+--------------------------------------------------------------------------------
+2025-11-05 09:12:09,540 - __main__ - INFO - STEP 6: SAVING RESULTS
+2025-11-05 09:12:09,540 - __main__ - INFO - --------------------------------------------------------------------------------
+2025-11-05 09:12:09,543 - __main__ - INFO -   ✓ Metadata saved to metadata.json
+2025-11-05 09:12:09,545 - __main__ - INFO -   ✓ Training results saved to training_results.json
+2025-11-05 09:12:09,545 - __main__ - INFO - 
+  Files created in C:\Projects\experiments\modeling\models\mill_8:
+2025-11-05 09:12:09,545 - __main__ - INFO -     - metadata.json
+2025-11-05 09:12:09,545 - __main__ - INFO -     - process_model_CirculativeLoad.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - process_model_DensityHC.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - process_model_PressureHC.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - process_model_PulpHC.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - quality_model.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - scaler_mv_to_CirculativeLoad.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - scaler_mv_to_DensityHC.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - scaler_mv_to_PressureHC.pkl
+2025-11-05 09:12:09,546 - __main__ - INFO -     - scaler_mv_to_PulpHC.pkl
+2025-11-05 09:12:09,547 - __main__ - INFO -     - scaler_quality_model.pkl
+2025-11-05 09:12:09,547 - __main__ - INFO -     - training_results.json
+2025-11-05 09:12:09,547 - __main__ - INFO - 
+================================================================================
+2025-11-05 09:12:09,547 - __main__ - INFO - MODEL TRAINING COMPLETE
+2025-11-05 09:12:09,547 - __main__ - INFO - ================================================================================
+2025-11-05 09:12:09,547 - __main__ - INFO - Models saved to: C:\Projects\experiments\modeling\models\mill_8
+2025-11-05 09:12:09,547 - __main__ - INFO - 
+✓ Model training pipeline completed successfully!
