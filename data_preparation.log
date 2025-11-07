@@ -70,3 +70,262 @@ Traceback (most recent call last):
     raise FileNotFoundError(
 FileNotFoundError: Cache file not found: C:\Projects\experiments\data_preparation\output\initial_data.csv
 Database is not available. Please provide cached data.
+2025-11-07 08:26:15,975 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2025-11-07 08:26:16,120 - db.db_connector - INFO - ✅ Database connection test successful
+2025-11-07 08:26:16,120 - core.data_loader - INFO - ✅ Database connector initialized
+2025-11-07 08:26:16,121 - pipeline - INFO - 
+================================================================================
+2025-11-07 08:26:16,121 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2025-11-07 08:26:16,121 - pipeline - INFO - ================================================================================
+2025-11-07 08:26:16,122 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-09-01 to 2025-11-03
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (5 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+  • steady_state (constraint)
+    Window: 90, Max: 15, Radius: 5.0
+    Stable: ['Ore', 'WaterMill', 'WaterZumpf', 'PSI200']
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2025-11-07 08:26:16,123 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-07 08:26:16,124 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2025-11-07 08:26:16,124 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-07 08:26:16,124 - core.data_loader - INFO - Loading data for Mill 8
+2025-11-07 08:26:16,124 - core.data_loader - INFO -   Date range: 2025-09-01 to 2025-11-03
+2025-11-07 08:26:16,124 - core.data_loader - INFO -   Resample: 1min
+2025-11-07 08:26:16,124 - core.data_loader - INFO -   Loading from cache: C:\Projects\experiments\data_preparation\output\initial_data.csv
+2025-11-07 08:26:16,359 - core.data_loader - INFO -   ✓ Loaded 76009 rows from cache
+2025-11-07 08:26:16,359 - core.data_loader - INFO -   ✓ All required columns present: 11 columns
+2025-11-07 08:26:16,360 - core.data_loader - INFO - Filtering data...
+2025-11-07 08:26:16,374 - core.data_loader - INFO -   ✓ Filtered: 76009 → 76009 rows (100.0% retained)
+2025-11-07 08:26:16,375 - core.data_loader - INFO - Calculating circulative load...
+2025-11-07 08:26:16,379 - core.data_loader - INFO -   ✓ Circulative load calculated
+2025-11-07 08:26:16,379 - core.data_loader - INFO -   Valid range [0.5, 5.0]: 99.9% of data
+2025-11-07 08:26:16,380 - core.data_loader - INFO -   Mean: 1.04, Std: 0.20
+2025-11-07 08:26:17,619 - pipeline - INFO - ✓ Data ready: 76009 rows, 28 columns
+2025-11-07 08:26:17,620 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-07 08:26:17,621 - pipeline - INFO - STEP 2: DISCOVERING PATTERNS
+2025-11-07 08:26:17,621 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-07 08:26:17,621 - pipeline - INFO - Enabled patterns: 5
+2025-11-07 08:26:17,621 - core.base_pattern - INFO - Initialized pattern: mv
+2025-11-07 08:26:17,622 - patterns.mv_pattern - INFO -   Features: ['Ore', 'WaterMill', 'WaterZumpf']
+2025-11-07 08:26:17,622 - patterns.mv_pattern - INFO -   Window: 60, Max motifs: 20, Radius: 4.5
+2025-11-07 08:26:17,622 - patterns.mv_pattern - INFO - 
+Discovering MV motifs: mv
+2025-11-07 08:26:17,624 - patterns.mv_pattern - INFO -   Computing multivariate matrix profile...
+2025-11-07 08:29:41,669 - patterns.mv_pattern - INFO -   ✓ Found 18 motifs with 229 instances
+2025-11-07 08:29:41,670 - core.pattern_registry - INFO - Pattern 'mv': 18 motifs, 229 instances
+2025-11-07 08:29:41,670 - core.base_pattern - INFO - Initialized pattern: density
+2025-11-07 08:29:41,670 - patterns.constraint_pattern - INFO -   Stable features: ['WaterZumpf']
+2025-11-07 08:29:41,670 - patterns.constraint_pattern - INFO -   Varying features: ['Ore', 'WaterMill']
+2025-11-07 08:29:41,670 - patterns.constraint_pattern - INFO -   Window: 60, Max motifs: 15, Radius: 4.5
+2025-11-07 08:29:41,670 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: density
+2025-11-07 08:29:41,671 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2025-11-07 08:34:58,350 - patterns.constraint_pattern - INFO -   ✓ Found 12 motifs with 48 instances
+2025-11-07 08:34:58,351 - core.pattern_registry - INFO - Pattern 'density': 12 motifs, 48 instances
+2025-11-07 08:34:58,352 - core.base_pattern - INFO - Initialized pattern: inverse
+2025-11-07 08:34:58,352 - patterns.constraint_pattern - INFO -   Stable features: ['Ore', 'WaterMill']
+2025-11-07 08:34:58,352 - patterns.constraint_pattern - INFO -   Varying features: ['WaterZumpf']
+2025-11-07 08:34:58,352 - patterns.constraint_pattern - INFO -   Window: 60, Max motifs: 10, Radius: 4.5
+2025-11-07 08:34:58,352 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: inverse
+2025-11-07 08:34:58,354 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2025-11-07 08:39:27,892 - patterns.constraint_pattern - INFO -   ✓ Found 10 motifs with 132 instances
+2025-11-07 08:39:27,892 - core.pattern_registry - INFO - Pattern 'inverse': 10 motifs, 132 instances
+2025-11-07 08:39:27,892 - core.base_pattern - INFO - Initialized pattern: dynamic
+2025-11-07 08:39:27,892 - patterns.constraint_pattern - INFO -   Stable features: []
+2025-11-07 08:39:27,892 - patterns.constraint_pattern - INFO -   Varying features: ['Ore', 'WaterMill', 'WaterZumpf']
+2025-11-07 08:39:27,892 - patterns.constraint_pattern - INFO -   Window: 60, Max motifs: 10, Radius: 4.5
+2025-11-07 08:39:27,892 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: dynamic
+2025-11-07 08:39:27,895 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2025-11-07 08:43:54,427 - patterns.constraint_pattern - INFO -   ✓ Found 10 motifs with 152 instances
+2025-11-07 08:43:54,429 - core.pattern_registry - INFO - Pattern 'dynamic': 10 motifs, 152 instances
+2025-11-07 08:43:54,430 - core.base_pattern - INFO - Initialized pattern: steady_state
+2025-11-07 08:43:54,430 - patterns.constraint_pattern - INFO -   Stable features: ['Ore', 'WaterMill', 'WaterZumpf', 'PSI200']
+2025-11-07 08:43:54,430 - patterns.constraint_pattern - INFO -   Varying features: []
+2025-11-07 08:43:54,430 - patterns.constraint_pattern - INFO -   Window: 90, Max motifs: 15, Radius: 5.0
+2025-11-07 08:43:54,430 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: steady_state
+2025-11-07 08:43:54,432 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2025-11-07 08:50:41,765 - patterns.constraint_pattern - INFO -   ✓ Found 1 motifs with 2 instances
+2025-11-07 08:50:41,767 - core.pattern_registry - INFO - Pattern 'steady_state': 1 motifs, 2 instances
+2025-11-07 08:50:41,767 - pipeline - INFO - 
+✓ Pattern discovery complete:
+2025-11-07 08:50:41,767 - pipeline - INFO -   Total motifs: 51
+2025-11-07 08:50:41,767 - pipeline - INFO -   Total instances: 563
+2025-11-07 08:50:41,767 - pipeline - INFO -   mv: 18 motifs, 229 instances
+2025-11-07 08:50:41,768 - pipeline - INFO -   density: 12 motifs, 48 instances
+2025-11-07 08:50:41,768 - pipeline - INFO -   inverse: 10 motifs, 132 instances
+2025-11-07 08:50:41,769 - pipeline - INFO -   dynamic: 10 motifs, 152 instances
+2025-11-07 08:50:41,769 - pipeline - INFO -   steady_state: 1 motifs, 2 instances
+2025-11-07 08:50:41,769 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-07 08:50:41,769 - pipeline - INFO - STEP 3: ANALYZING PATTERNS
+2025-11-07 08:50:41,769 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-07 08:50:41,769 - pipeline - INFO - 
+Analyzing pattern: mv
+2025-11-07 08:50:41,769 - analysis.analyzer - INFO - Analyzing density behavior for 18 motifs...
+2025-11-07 08:50:41,769 - analysis.analyzer - INFO -   ✓ Analyzed 0 instances
+2025-11-07 08:50:41,769 - analysis.analyzer - WARNING - No analyses to save for pattern 'mv'
+2025-11-07 08:50:41,769 - pipeline - INFO - 
+Analyzing pattern: density
+2025-11-07 08:50:41,770 - analysis.analyzer - INFO - Analyzing density behavior for 12 motifs...
+2025-11-07 08:50:41,934 - analysis.analyzer - INFO -   ✓ Analyzed 48 instances
+2025-11-07 08:50:41,935 - analysis.analyzer - INFO -   ✓ Saved analysis to density_analysis.csv
+2025-11-07 08:50:41,935 - pipeline - INFO - 
+Analyzing pattern: inverse
+2025-11-07 08:50:41,936 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2025-11-07 08:50:42,353 - analysis.analyzer - INFO -   ✓ Analyzed 132 instances
+2025-11-07 08:50:42,356 - analysis.analyzer - INFO -   ✓ Saved analysis to inverse_analysis.csv
+2025-11-07 08:50:42,357 - pipeline - INFO - 
+Analyzing pattern: dynamic
+2025-11-07 08:50:42,358 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2025-11-07 08:50:42,835 - analysis.analyzer - INFO -   ✓ Analyzed 152 instances
+2025-11-07 08:50:42,838 - analysis.analyzer - INFO -   ✓ Saved analysis to dynamic_analysis.csv
+2025-11-07 08:50:42,838 - pipeline - INFO - 
+Analyzing pattern: steady_state
+2025-11-07 08:50:42,838 - analysis.analyzer - INFO - Analyzing density behavior for 1 motifs...
+2025-11-07 08:50:42,846 - analysis.analyzer - INFO -   ✓ Analyzed 2 instances
+2025-11-07 08:50:42,847 - analysis.analyzer - INFO -   ✓ Saved analysis to steady_state_analysis.csv
+2025-11-07 08:50:42,847 - pipeline - INFO - 
+✓ Pattern analysis complete
+2025-11-07 08:50:42,848 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-07 08:50:42,848 - pipeline - INFO - STEP 4: CREATING SEGMENTED DATASETS
+2025-11-07 08:50:42,848 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-07 08:50:42,848 - pipeline - INFO - 
+Creating MV-only dataset (18 motifs)...
+2025-11-07 08:50:42,848 - core.segmentation - INFO - Creating segmented dataset from motifs...
+2025-11-07 08:50:42,988 - core.segmentation - INFO -   ✓ Created segmented dataset:
+2025-11-07 08:50:42,988 - core.segmentation - INFO -     - Total segments: 229
+2025-11-07 08:50:42,989 - core.segmentation - INFO -     - Total rows: 13740
+2025-11-07 08:50:42,989 - core.segmentation - INFO -     - Unique motifs: 18
+2025-11-07 08:50:43,190 - pipeline - INFO -   ✓ Saved: segmented_motifsMV_08.csv (13740 rows)
+2025-11-07 08:50:43,190 - pipeline - INFO - 
+Creating combined dataset (all patterns)...
+2025-11-07 08:50:43,190 - core.segmentation - INFO - Merging motif collections...
+2025-11-07 08:50:43,190 - core.segmentation - INFO -   mv: 18 motifs
+2025-11-07 08:50:43,190 - core.segmentation - INFO -   density: 12 motifs
+2025-11-07 08:50:43,190 - core.segmentation - INFO -   inverse: 10 motifs
+2025-11-07 08:50:43,190 - core.segmentation - INFO -   dynamic: 10 motifs
+2025-11-07 08:50:43,192 - core.segmentation - INFO -   steady_state: 1 motifs
+2025-11-07 08:50:43,192 - core.segmentation - INFO -   ✓ Reassigned motif IDs sequentially
+2025-11-07 08:50:43,193 - core.segmentation - INFO -   ✓ Total merged motifs: 51
+2025-11-07 08:50:43,193 - core.segmentation - INFO - Creating segmented dataset from motifs...
+2025-11-07 08:50:43,621 - core.segmentation - INFO -   ✓ Created segmented dataset:
+2025-11-07 08:50:43,621 - core.segmentation - INFO -     - Total segments: 563
+2025-11-07 08:50:43,621 - core.segmentation - INFO -     - Total rows: 33840
+2025-11-07 08:50:43,621 - core.segmentation - INFO -     - Unique motifs: 51
+2025-11-07 08:50:44,122 - pipeline - INFO -   ✓ Saved: segmented_motifs_all_08.csv (33840 rows)
+2025-11-07 08:50:44,123 - core.segmentation - INFO - Extracting motif summaries...
+2025-11-07 08:50:44,147 - core.segmentation - INFO -   ✓ Created summary for 51 motifs
+2025-11-07 08:50:44,148 - pipeline - INFO -   ✓ Saved: motif_summary.csv
+2025-11-07 08:50:44,148 - core.segmentation - INFO - Creating instance catalog...
+2025-11-07 08:50:44,154 - core.segmentation - INFO -   ✓ Cataloged 563 instances
+2025-11-07 08:50:44,157 - pipeline - INFO -   ✓ Saved: instance_catalog.csv
+2025-11-07 08:50:44,157 - core.segmentation - INFO - Calculating segment statistics...
+2025-11-07 08:50:44,213 - core.segmentation - INFO -   ✓ Calculated statistics for 51 motifs
+2025-11-07 08:50:44,216 - pipeline - INFO -   ✓ Saved: segment_statistics.csv
+2025-11-07 08:50:44,216 - pipeline - INFO - 
+✓ Segmented datasets created
+2025-11-07 08:50:44,217 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2025-11-07 08:50:44,217 - pipeline - INFO - STEP 5: CREATING VISUALIZATIONS
+2025-11-07 08:50:44,217 - pipeline - INFO - --------------------------------------------------------------------------------
+2025-11-07 08:50:44,217 - analysis.visualizer - INFO - Creating motif overview plot...
+2025-11-07 08:50:45,352 - analysis.visualizer - INFO -   ✓ Saved overview plot to motif_overview.png
+2025-11-07 08:50:45,352 - pipeline - INFO - 
+Creating plots for pattern: mv
+2025-11-07 08:50:45,352 - analysis.analyzer - INFO - Analyzing density behavior for 18 motifs...
+2025-11-07 08:50:45,352 - analysis.analyzer - INFO -   ✓ Analyzed 0 instances
+2025-11-07 08:50:45,352 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2025-11-07 08:50:47,130 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to mv/
+2025-11-07 08:50:47,131 - pipeline - INFO - 
+Creating plots for pattern: density
+2025-11-07 08:50:47,131 - analysis.analyzer - INFO - Analyzing density behavior for 12 motifs...
+2025-11-07 08:50:47,286 - analysis.analyzer - INFO -   ✓ Analyzed 48 instances
+2025-11-07 08:50:47,286 - analysis.visualizer - INFO - Creating density analysis plot for density...
+2025-11-07 08:50:47,810 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to density_analysis.png
+2025-11-07 08:50:47,811 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2025-11-07 08:50:49,357 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to density/
+2025-11-07 08:50:49,357 - pipeline - INFO - 
+Creating plots for pattern: inverse
+2025-11-07 08:50:49,357 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2025-11-07 08:50:49,805 - analysis.analyzer - INFO -   ✓ Analyzed 132 instances
+2025-11-07 08:50:49,806 - analysis.visualizer - INFO - Creating density analysis plot for inverse...
+2025-11-07 08:50:50,428 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to inverse_analysis.png
+2025-11-07 08:50:50,429 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2025-11-07 08:50:52,114 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to inverse/
+2025-11-07 08:50:52,115 - pipeline - INFO - 
+Creating plots for pattern: dynamic
+2025-11-07 08:50:52,116 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2025-11-07 08:50:52,657 - analysis.analyzer - INFO -   ✓ Analyzed 152 instances
+2025-11-07 08:50:52,657 - analysis.visualizer - INFO - Creating density analysis plot for dynamic...
+2025-11-07 08:50:53,172 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to dynamic_analysis.png
+2025-11-07 08:50:53,173 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2025-11-07 08:50:54,997 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to dynamic/
+2025-11-07 08:50:54,998 - pipeline - INFO - 
+Creating plots for pattern: steady_state
+2025-11-07 08:50:54,998 - analysis.analyzer - INFO - Analyzing density behavior for 1 motifs...
+2025-11-07 08:50:55,004 - analysis.analyzer - INFO -   ✓ Analyzed 2 instances
+2025-11-07 08:50:55,004 - analysis.visualizer - INFO - Creating density analysis plot for steady_state...
+2025-11-07 08:50:55,486 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to steady_state_analysis.png
+2025-11-07 08:50:55,486 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2025-11-07 08:50:55,775 - analysis.visualizer - INFO -   ✓ Saved 1 motif plots to steady_state/
+2025-11-07 08:50:55,776 - analysis.visualizer - INFO - Creating correlation heatmap...
+2025-11-07 08:50:56,059 - analysis.visualizer - INFO -   ✓ Saved correlation heatmap to correlation_heatmap.png
+2025-11-07 08:50:56,059 - analysis.visualizer - INFO - Creating feature distribution plots...
+2025-11-07 08:50:57,098 - analysis.visualizer - INFO -   ✓ Saved feature distributions to feature_distributions.png
+2025-11-07 08:50:57,098 - analysis.analyzer - INFO - Analyzing density behavior for 18 motifs...
+2025-11-07 08:50:57,098 - analysis.analyzer - INFO -   ✓ Analyzed 0 instances
+2025-11-07 08:50:57,098 - analysis.analyzer - INFO - Analyzing density behavior for 12 motifs...
+2025-11-07 08:50:57,253 - analysis.analyzer - INFO -   ✓ Analyzed 48 instances
+2025-11-07 08:50:57,254 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2025-11-07 08:50:57,842 - analysis.analyzer - INFO -   ✓ Analyzed 132 instances
+2025-11-07 08:50:57,842 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2025-11-07 08:50:58,329 - analysis.analyzer - INFO -   ✓ Analyzed 152 instances
+2025-11-07 08:50:58,330 - analysis.analyzer - INFO - Analyzing density behavior for 1 motifs...
+2025-11-07 08:50:58,337 - analysis.analyzer - INFO -   ✓ Analyzed 2 instances
+2025-11-07 08:50:58,338 - analysis.analyzer - INFO - Generating summary report...
+2025-11-07 08:50:58,343 - analysis.analyzer - INFO -   ✓ Summary report saved to summary_report.txt
+2025-11-07 08:50:58,346 - pipeline - INFO - 
+✓ Visualizations saved to C:\Projects\experiments\data_preparation\output\plots\mill_8
+2025-11-07 08:50:58,346 - pipeline - INFO - 
+================================================================================
+2025-11-07 08:50:58,346 - pipeline - INFO - DATA PREPARATION COMPLETE
+2025-11-07 08:50:58,347 - pipeline - INFO - ================================================================================
+2025-11-07 08:50:58,347 - pipeline - INFO - Output directory: C:\Projects\experiments\data_preparation\output
+2025-11-07 08:50:58,347 - pipeline - INFO - Analysis directory: C:\Projects\experiments\data_preparation\output\analysis
+2025-11-07 08:50:58,347 - pipeline - INFO - Plots directory: C:\Projects\experiments\data_preparation\output\plots
+2025-11-07 08:50:58,347 - __main__ - INFO - 
+✓ Data preparation pipeline completed successfully!

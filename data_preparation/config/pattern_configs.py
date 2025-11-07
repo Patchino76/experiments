@@ -20,6 +20,7 @@ def get_default_patterns() -> List[PatternConfig]:
         create_density_pattern(),
         create_inverse_pattern(),
         create_dynamic_pattern(),
+        create_steady_state_pattern(),  # New: Steady MVs and PSI200
         create_pressure_pattern(enabled=False)  # Optional, disabled by default
     ]
 
@@ -191,6 +192,66 @@ def create_dynamic_pattern(
             'WaterZumpf': {
                 'type': 'varying',
                 'min_cv': 0.0008
+            }
+        },
+        save_analysis=True,
+        save_plots=True
+    )
+
+
+def create_steady_state_pattern(
+    enabled: bool = True,
+    window_size: int = 90,
+    max_motifs: int = 15,
+    radius: float = 5.0
+) -> PatternConfig:
+    """
+    Create steady-state operating point pattern.
+    
+    Finds patterns where ALL MVs AND PSI200 are stable.
+    This captures different steady-state operating levels, revealing
+    how different MV settings affect the target PSI200 value.
+    
+    Use Case:
+        - Identify optimal operating points
+        - Understand MV → PSI200 relationships at steady state
+        - Find different operating regimes (e.g., coarse vs fine grinding)
+        - Validate process models at steady state
+    
+    Args:
+        enabled: Enable this pattern
+        window_size: Window size in minutes (longer for steady state)
+        max_motifs: Maximum number of motifs
+        radius: Distance threshold (slightly higher for steady state)
+        
+    Returns:
+        PatternConfig for steady-state pattern
+    """
+    return PatternConfig(
+        name='steady_state',
+        type='constraint',
+        enabled=enabled,
+        window_size=window_size,
+        max_motifs=max_motifs,
+        radius=radius,
+        constraints={
+            # All MVs should be stable
+            'Ore': {
+                'type': 'stable',
+                'max_cv': 0.008  # 0.8% - allow slight variation
+            },
+            'WaterMill': {
+                'type': 'stable',
+                'max_cv': 0.01  # 1.0%
+            },
+            'WaterZumpf': {
+                'type': 'stable',
+                'max_cv': 0.008  # 0.8%
+            },
+            # Target PSI200 should also be stable
+            'PSI200': {
+                'type': 'stable',
+                'max_cv': 0.015  # 1.5% - product quality stable
             }
         },
         save_analysis=True,

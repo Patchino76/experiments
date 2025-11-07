@@ -390,6 +390,70 @@ def create_density_pattern(
 └─────────────────────────────────────────────────────────────┘
 ```
 
+### 4. Steady-State Pattern 
+
+**Operational Scenario:** Stable operating points with steady MVs and target
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  Steady-State Pattern                        │
+├─────────────────────────────────────────────────────────────┤
+│ Constraints:                                                 │
+│   Ore:        STABLE   (CV ≤ 0.8%)                          │
+│   WaterMill:  STABLE   (CV ≤ 1.0%)                          │
+│   WaterZumpf: STABLE   (CV ≤ 0.8%)                          │
+│   PSI200:     STABLE   (CV ≤ 1.5%)                          │
+├─────────────────────────────────────────────────────────────┤
+│ Operational Meaning:                                         │
+│   • All MVs at constant levels                              │
+│   • Product quality (PSI200) stable                         │
+│   • System at equilibrium                                   │
+│   • Reveals MV → PSI200 relationship                        │
+├─────────────────────────────────────────────────────────────┤
+│ Use Case:                                                    │
+│   Captures different steady-state operating levels,         │
+│   revealing how different MV settings affect target         │
+│   PSI200 value. Essential for understanding operating       │
+│   points and optimizing process settings.                   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Configuration Code:**
+```python
+def create_steady_state_pattern(
+    enabled: bool = True,
+    window_size: int = 90,  # Longer for steady state
+    max_motifs: int = 15,
+    radius: float = 5.0
+) -> PatternConfig:
+    return PatternConfig(
+        name='steady_state',
+        type='constraint',
+        enabled=enabled,
+        window_size=window_size,
+        max_motifs=max_motifs,
+        radius=radius,
+        constraints={
+            'Ore': {
+                'type': 'stable',
+                'max_cv': 0.008  # 0.8%
+            },
+            'WaterMill': {
+                'type': 'stable',
+                'max_cv': 0.01   # 1.0%
+            },
+            'WaterZumpf': {
+                'type': 'stable',
+                'max_cv': 0.008  # 0.8%
+            },
+            'PSI200': {
+                'type': 'stable',
+                'max_cv': 0.015  # 1.5%
+            }
+        }
+    )
+```
+
 ---
 
 ## Code Structure
