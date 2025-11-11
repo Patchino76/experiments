@@ -192,6 +192,11 @@ class PipelineConfig:
                     lines.append(f"    Varying: {varying}")
         
         lines.extend([
+            f"\nOutput Options:",
+            f"  Save MV only: {self.save_mv_only}",
+            f"  Save combined: {self.save_combined}",
+            f"  Save to database: {self.save_to_database}",
+            f"  Use database: {self.use_database}",
             f"\nOutput Paths:",
             f"  Output: {self.paths.output_dir}",
             f"  Analysis: {self.paths.analysis_dir}",

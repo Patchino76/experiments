@@ -66,14 +66,14 @@ class DataLoader:
         cache_path: Optional[Path] = None
     ) -> pd.DataFrame:
         """
-        Load mill data from database or cache.
+        Load mill data from database.
         
         Args:
             mill_number: Mill identifier
             start_date: Start date (YYYY-MM-DD)
             end_date: End date (YYYY-MM-DD)
             resample_freq: Resampling frequency
-            cache_path: Path to cache file
+            cache_path: Ignored - always loads from database
             
         Returns:
             DataFrame with mill data
@@ -81,18 +81,6 @@ class DataLoader:
         logger.info(f"Loading data for Mill {mill_number}")
         logger.info(f"  Date range: {start_date} to {end_date}")
         logger.info(f"  Resample: {resample_freq}")
-        
-        # Try cache first if it exists
-        if cache_path and cache_path.exists():
-            logger.info(f"  Loading from cache: {cache_path}")
-            df = pd.read_csv(cache_path)
-            
-            # Convert TimeStamp if present
-            if 'TimeStamp' in df.columns:
-                df['TimeStamp'] = pd.to_datetime(df['TimeStamp'])
-            
-            logger.info(f"  ✓ Loaded {len(df)} rows from cache")
-            return df
         
         # Load from database
         if self.use_database and self.connector:
@@ -109,35 +97,10 @@ class DataLoader:
             if df is None or df.empty:
                 raise ValueError(f"No data retrieved for Mill {mill_number}")
             
-            # Ensure proper index
-            df = df.copy()
-            if not isinstance(df.index, pd.DatetimeIndex):
-                if 'TimeStamp' in df.columns:
-                    df.set_index('TimeStamp', inplace=True)
-                else:
-                    raise ValueError("Data must include 'TimeStamp' column")
-            
-            # Add mill_id and reset index
-            df['mill_id'] = mill_number
-            df = df.reset_index().rename(columns={'index': 'TimeStamp'})
-            df['TimeStamp'] = pd.to_datetime(df['TimeStamp'])
-            df.sort_values('TimeStamp', inplace=True)
-            df.reset_index(drop=True, inplace=True)
-            
-            logger.info(f"  ✓ Loaded {len(df)} rows, {len(df.columns)} columns from database")
-            
-            # Save to cache
-            if cache_path:
-                cache_path.parent.mkdir(parents=True, exist_ok=True)
-                df.to_csv(cache_path, index=False)
-                logger.info(f"  ✓ Cached data to {cache_path}")
-            
+            logger.info(f"  ✓ Loaded {len(df)} rows from database")
             return df
-        
-        raise FileNotFoundError(
-            f"Cache file not found: {cache_path}\n"
-            "Database is not available. Please provide cached data."
-        )
+        else:
+            raise RuntimeError("Database not available. Please ensure use_database=True and database connection is working.")
     
     def filter_data(
         self,
@@ -243,3 +206,52 @@ class DataLoader:
         
         logger.info(f"  ✓ All required columns present: {len(required_columns)} columns")
         return True
+    
+    def save_motifs_to_database(
+        self,
+        df: pd.DataFrame,
+        mill_number: int,
+        table_suffix: str = 'MOTIFS',
+        if_exists: str = 'replace'
+    ) -> bool:
+        """
+        Save segmented motifs data to database table.
+        
+        Creates a table named MOTIFS_XX where XX is the mill number (e.g., MOTIFS_06, MOTIFS_08).
+        The table is created in the 'mills' schema.
+        
+        Args:
+            df: DataFrame containing segmented motifs data
+            mill_number: Mill number (6, 7, or 8)
+            table_suffix: Prefix for the table name (default: 'MOTIFS')
+            if_exists: How to behave if table exists: 'fail', 'replace', or 'append' (default: 'replace')
+            
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        if not self.use_database or self.connector is None:
+            logger.warning("Database connector not available")
+            return False
+        
+        try:
+            logger.info(f"Saving motifs data to database table: mills.{table_suffix}_{mill_number:02d}")
+            logger.info(f"DataFrame shape: {df.shape}")
+            logger.info(f"DataFrame columns: {list(df.columns)}")
+            
+            success = self.connector.save_motifs_to_database(
+                df=df,
+                mill_number=mill_number,
+                table_suffix=table_suffix,
+                if_exists=if_exists
+            )
+            
+            if success:
+                logger.info(f"✅ Successfully saved {len(df)} rows to mills.{table_suffix}_{mill_number:02d}")
+            else:
+                logger.warning(f"⚠ Failed to save to database")
+            
+            return success
+            
+        except Exception as e:
+            logger.error(f"❌ Error saving motifs to database: {e}")
+            return False

@@ -39,8 +39,8 @@ def main():
     """Main entry point."""
     
     # Configuration
-    mill_number = 8
-    start_date = "2025-10-01"
+    mill_number = 6
+    start_date = "2025-01-01"
     end_date = "2025-11-09"
     
     # Create configuration with default patterns
@@ -53,7 +53,7 @@ def main():
     
     # Optional: Customize configuration
     # config.use_database = False  # Use cached data only
-    # config.save_to_database = True  # Save results to database
+    config.save_to_database = True  # Save results to database
     
     # Optional: Disable specific patterns
     # for pattern in config.patterns:

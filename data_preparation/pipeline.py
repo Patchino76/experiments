@@ -393,24 +393,29 @@ class DataPreparationPipeline:
             logger.warning("  ⚠ No segmented data to save")
             return
         
+        if not self.config.use_database:
+            logger.info("  Database save disabled in configuration")
+            return
+        
+        if self.data_loader is None:
+            logger.warning("  ⚠ Data loader not initialized")
+            return
+        
         try:
-            from db.db_connector import save_motifs_to_database
-            
             logger.info(f"  Saving segmented motifs for Mill {self.config.data.mill_number}...")
+            logger.info(f"  Table will be recreated (if_exists='replace')")
             
-            success = save_motifs_to_database(
+            success = self.data_loader.save_motifs_to_database(
                 df=self.segmented_df,
                 mill_number=self.config.data.mill_number,
                 table_suffix='MOTIFS',
-                if_exists='replace'
+                if_exists='replace'  # Always recreate the table
             )
             
             if success:
-                logger.info(f"✓ Data saved to database table: MOTIFS_{self.config.data.mill_number:02d}")
+                logger.info(f"✓ Segmented data saved to database table: MOTIFS_{self.config.data.mill_number:02d}")
             else:
-                logger.warning("  ⚠ Failed to save to database")
+                logger.warning("  ⚠ Failed to save segmented data to database")
                 
-        except ImportError:
-            logger.warning("  ⚠ Database module not available")
         except Exception as e:
             logger.error(f"  ⚠ Database save failed: {e}")

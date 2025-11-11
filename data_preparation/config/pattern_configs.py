@@ -89,15 +89,15 @@ def create_density_pattern(
         constraints={
             'WaterZumpf': {
                 'type': 'stable',
-                'max_cv': 0.01
+                'max_cv': 0.015  # Relaxed from 0.01
             },
             'Ore': {
                 'type': 'varying',
-                'min_cv': 0.0008
+                'min_cv': 0.0005  # Relaxed from 0.0008
             },
             'WaterMill': {
                 'type': 'varying',
-                'min_cv': 0.0015
+                'min_cv': 0.001  # Relaxed from 0.0015
             }
         },
         save_analysis=True,
@@ -136,15 +136,15 @@ def create_inverse_pattern(
         constraints={
             'Ore': {
                 'type': 'stable',
-                'max_cv': 0.01
+                'max_cv': 0.015  # Relaxed from 0.01
             },
             'WaterMill': {
                 'type': 'stable',
-                'max_cv': 0.01
+                'max_cv': 0.015  # Relaxed from 0.01
             },
             'WaterZumpf': {
                 'type': 'varying',
-                'min_cv': 0.0008
+                'min_cv': 0.0005  # Relaxed from 0.0008
             }
         },
         save_analysis=True,
@@ -183,15 +183,15 @@ def create_dynamic_pattern(
         constraints={
             'Ore': {
                 'type': 'varying',
-                'min_cv': 0.0008
+                'min_cv': 0.0005  # Relaxed from 0.0008
             },
             'WaterMill': {
                 'type': 'varying',
-                'min_cv': 0.0015
+                'min_cv': 0.001  # Relaxed from 0.0015
             },
             'WaterZumpf': {
                 'type': 'varying',
-                'min_cv': 0.0008
+                'min_cv': 0.0005  # Relaxed from 0.0008
             }
         },
         save_analysis=True,
@@ -235,23 +235,23 @@ def create_steady_state_pattern(
         max_motifs=max_motifs,
         radius=radius,
         constraints={
-            # All MVs should be stable
+            # All MVs should be stable (relaxed constraints)
             'Ore': {
                 'type': 'stable',
-                'max_cv': 0.008  # 0.8% - allow slight variation
+                'max_cv': 0.015  # 1.5% - relaxed from 0.8%
             },
             'WaterMill': {
                 'type': 'stable',
-                'max_cv': 0.01  # 1.0%
+                'max_cv': 0.02  # 2.0% - relaxed from 1.0%
             },
             'WaterZumpf': {
                 'type': 'stable',
-                'max_cv': 0.008  # 0.8%
+                'max_cv': 0.015  # 1.5% - relaxed from 0.8%
             },
-            # Target PSI200 should also be stable
+            # Target PSI200 should also be stable (relaxed)
             'PSI200': {
                 'type': 'stable',
-                'max_cv': 0.015  # 1.5% - product quality stable
+                'max_cv': 0.025  # 2.5% - relaxed from 1.5%
             }
         },
         save_analysis=True,

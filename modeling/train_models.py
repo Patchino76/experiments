@@ -26,6 +26,7 @@ if str(project_root) not in sys.path:
     sys.path.append(str(project_root))
 
 from config import PipelineConfig, ModelConfig
+from database import DataLoader
 
 # Setup logging with UTF-8 encoding
 logging.basicConfig(
@@ -72,6 +73,9 @@ class CascadeModelTrainer:
         self.metadata = {}
         
         self.df = None
+        
+        # Initialize data loader
+        self.data_loader = DataLoader(use_database=config.use_database)
     
     def run(self):
         """Execute the complete training pipeline."""
@@ -106,22 +110,29 @@ class CascadeModelTrainer:
         logger.info(f"Models saved to: {self.model_dir}")
     
     def load_data(self):
-        """Load segmented data."""
+        """Load segmented data from database or cache."""
         logger.info("\n" + "-" * 80)
         logger.info("STEP 1: LOADING DATA")
         logger.info("-" * 80)
         
-        # data_path = self.config.paths.output_dir / 'segmented_motifsMV.csv'
-        data_path = self.config.paths.output_dir / 'segmented_motifs_all_06.csv'
-        
-        if not data_path.exists():
-            raise FileNotFoundError(
-                f"Segmented data not found at {data_path}. "
-                "Please run prepare_data.py first."
-            )
-        
-        logger.info(f"Loading data from {data_path}...")
-        self.df = pd.read_csv(data_path, parse_dates=['TimeStamp'])
+        # Try to load from database first
+        if self.config.use_database:
+            logger.info("Loading motifs data from database...")
+            try:
+                cache_path = self.config.paths.output_dir / f'segmented_motifs_all_{self.mill_number:02d}.csv'
+                self.df = self.data_loader.load_motifs_data(
+                    mill_number=self.mill_number,
+                    table_suffix='MOTIFS',
+                    cache_path=cache_path
+                )
+                logger.info(f"  ✓ Loaded {len(self.df)} rows from database")
+            except Exception as e:
+                logger.warning(f"  ⚠ Failed to load from database: {e}")
+                logger.info("  Falling back to CSV file...")
+                self._load_from_csv()
+        else:
+            logger.info("Database disabled, loading from CSV...")
+            self._load_from_csv()
         
         # Validate required columns
         required_cols = self.mv_features + self.cv_features + self.dv_features + [self.dv_target]
@@ -139,6 +150,20 @@ class CascadeModelTrainer:
         
         logger.info(f"  Data shape: {cleaned_shape}")
         logger.info(f"  Rows removed (NaN): {rows_removed} ({reduction_pct:.2f}%)")
+    
+    def _load_from_csv(self):
+        """Load data from CSV file (fallback method)."""
+        data_path = self.config.paths.output_dir / f'segmented_motifs_all_{self.mill_number:02d}.csv'
+        
+        if not data_path.exists():
+            raise FileNotFoundError(
+                f"Segmented data not found at {data_path}. "
+                "Please run prepare_data.py first or ensure database contains the data."
+            )
+        
+        logger.info(f"Loading data from {data_path}...")
+        self.df = pd.read_csv(data_path, parse_dates=['TimeStamp'])
+        logger.info(f"  ✓ Loaded {len(self.df)} rows from CSV")
     
     def split_data(self):
         """Split data into train and test sets."""
@@ -209,15 +234,27 @@ class CascadeModelTrainer:
         logger.info("STEP 4: TRAINING QUALITY MODEL (CV + DV → Target)")
         logger.info("-" * 80)
         
+        # Combine train and test data, filter by target range, then split temporally
+        combined_df = pd.concat([train_df, test_df], ignore_index=False)
+        
         # Filter data based on target range (16 < target < 30)
-        train_mask = (train_df[self.dv_target] > 16) & (train_df[self.dv_target] < 30)
-        test_mask = (test_df[self.dv_target] > 16) & (test_df[self.dv_target] < 30)
+        target_mask = (combined_df[self.dv_target] > 16) & (combined_df[self.dv_target] < 30)
+        combined_df_filtered = combined_df[target_mask]
         
-        train_df_filtered = train_df[train_mask]
-        test_df_filtered = test_df[test_mask]
+        # Split temporally after filtering
+        split_idx = int(len(combined_df_filtered) * (1 - self.config.model.test_size))
+        train_df_filtered = combined_df_filtered.iloc[:split_idx]
+        test_df_filtered = combined_df_filtered.iloc[split_idx:]
         
-        logger.info(f"  Filtered training data: {len(train_df)} → {len(train_df_filtered)} samples")
-        logger.info(f"  Filtered test data: {len(test_df)} → {len(test_df_filtered)} samples")
+        logger.info(f"  Combined data: {len(combined_df)} → {len(combined_df_filtered)} samples after filtering")
+        logger.info(f"  Final split - Train: {len(train_df_filtered)}, Test: {len(test_df_filtered)} samples")
+        
+        # Check if test set is empty after filtering
+        if len(test_df_filtered) == 0:
+            logger.error("  ❌ Error: Test set is empty after target range filtering!")
+            logger.error("  This indicates the data period doesn't contain enough PSI200 values in range (16-30).")
+            logger.error("  Please use a different date range with more normal operating conditions.")
+            raise ValueError("No test data available after filtering. Adjust date range or target filter.")
         
         # Combine CV and DV features as inputs
         input_features = self.cv_features + self.dv_features
@@ -446,9 +483,9 @@ class CascadeModelTrainer:
 def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
-    mill_number = 8
+    mill_number = 6
     start_date = "2025-01-01"
-    end_date = "2025-11-03"
+    end_date = "2025-11-09"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)

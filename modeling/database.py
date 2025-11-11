@@ -221,6 +221,68 @@ class DataLoader:
             table_suffix=table_suffix,
             if_exists=if_exists
         )
+    
+    def load_motifs_data(
+        self,
+        mill_number: int,
+        table_suffix: str = 'MOTIFS',
+        cache_path: Path = None
+    ) -> pd.DataFrame:
+        """
+        Load segmented motifs data from database.
+        
+        Args:
+            mill_number: Mill number (6, 7, or 8)
+            table_suffix: Prefix for the table name (default: 'MOTIFS')
+            cache_path: Path to save/load cached data
+            
+        Returns:
+            DataFrame with motifs data
+        """
+        if self.use_database:
+            logger.info(f"Loading motifs data from database for Mill {mill_number}...")
+            table_name = f"{table_suffix}_{mill_number:02d}"
+            
+            try:
+                # Load from database
+                query = f'SELECT * FROM mills."{table_name}"'
+                df = pd.read_sql_query(query, self.connector.engine)
+                
+                if df.empty:
+                    raise ValueError(f"No data found in table {table_name}")
+                
+                # Convert TimeStamp to datetime
+                if 'TimeStamp' in df.columns:
+                    df['TimeStamp'] = pd.to_datetime(df['TimeStamp'])
+                    df.sort_values('TimeStamp', inplace=True)
+                    df.reset_index(drop=True, inplace=True)
+                
+                logger.info(f"  ✓ Loaded {len(df)} rows, {len(df.columns)} columns from {table_name}")
+                
+                # Cache if path provided
+                if cache_path:
+                    cache_path.parent.mkdir(parents=True, exist_ok=True)
+                    df.to_csv(cache_path, index=False)
+                    logger.info(f"  ✓ Cached to {cache_path}")
+                
+                return df
+                
+            except Exception as e:
+                logger.error(f"  ❌ Failed to load from database: {e}")
+                raise
+        
+        else:
+            # Load from cache
+            if not cache_path or not cache_path.exists():
+                raise FileNotFoundError(f"Cached motifs data not found at {cache_path}")
+            
+            logger.info(f"Loading cached motifs data from {cache_path}...")
+            df = pd.read_csv(cache_path, parse_dates=['TimeStamp'])
+            df.sort_values('TimeStamp', inplace=True)
+            df.reset_index(drop=True, inplace=True)
+            logger.info(f"  ✓ Loaded {len(df)} rows from cache")
+            
+            return df
 
 
 def filter_data(df: pd.DataFrame, filter_thresholds: dict) -> pd.DataFrame:
