@@ -24,9 +24,9 @@ class DataConfig:
     
     # Data filtering thresholds
     filter_thresholds: Dict[str, Tuple[float, float]] = field(default_factory=lambda: {
-        'Ore': (100, 220),
-        'PulpHC': (400, 600),
-        'DensityHC': (1600, 1800),
+        'Ore': (130, 220),
+        'PulpHC': (350, 600),
+        'DensityHC': (1600, 1920),
     })
     
     def get_all_features(self) -> List[str]:

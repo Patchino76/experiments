@@ -39,9 +39,9 @@ def main():
     """Main entry point."""
     
     # Configuration
-    mill_number = 6
+    mill_number = 8
     start_date = "2025-01-01"
-    end_date = "2025-11-09"
+    end_date = "2025-11-13"
     
     # Create configuration with default patterns
     config = PipelineConfig.create_default(

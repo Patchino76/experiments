@@ -39,7 +39,7 @@ class Settings(BaseSettings):
                 'WaterMill': (12.0, 18.0),
                 'WaterZumpf': (140.0, 240.0),
                 'PressureHC': (0.3, 0.5),
-                'DensityHC': (1500, 1900),
+                'DensityHC': (1500, 1920),
                 'MotorAmp': (170.0, 220.0)
             }
         },
@@ -53,7 +53,7 @@ class Settings(BaseSettings):
                 'WaterMill': (12.0, 18.0),
                 'WaterZumpf': (140.0, 240.0),
                 'PressureHC': (0.3, 0.5),
-                'DensityHC': (1500, 1900),
+                'DensityHC': (1500, 1920),
                 'MotorAmp': (170.0, 220.0)
             }
         }
