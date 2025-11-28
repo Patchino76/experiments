@@ -40,8 +40,8 @@ def main():
     
     # Configuration
     mill_number = 8
-    start_date = "2025-01-01"
-    end_date = "2025-11-13"
+    start_date = "2025-06-20"
+    end_date = "2025-11-24"
     
     # Create configuration with default patterns
     config = PipelineConfig.create_default(
