@@ -117,7 +117,7 @@ class CascadeModelTrainer:
         
         # Try to load from database first
         if self.config.use_database:
-            logger.info("Loading motifs data from database...")
+            logger.info("Attempting to load motifs data from database...")
             try:
                 cache_path = self.config.paths.output_dir / f'segmented_motifs_all_{self.mill_number:02d}.csv'
                 self.df = self.data_loader.load_motifs_data(
@@ -125,13 +125,14 @@ class CascadeModelTrainer:
                     table_suffix='MOTIFS',
                     cache_path=cache_path
                 )
-                logger.info(f"  ✓ Loaded {len(self.df)} rows from database")
+                logger.info(f"  ✓ Successfully loaded {len(self.df)} rows from database")
+                logger.info(f"  ✓ Data source: Database (table: MOTIFS_{self.mill_number:02d})")
             except Exception as e:
                 logger.warning(f"  ⚠ Failed to load from database: {e}")
                 logger.info("  Falling back to CSV file...")
                 self._load_from_csv()
         else:
-            logger.info("Database disabled, loading from CSV...")
+            logger.info("Database disabled in configuration, loading from CSV...")
             self._load_from_csv()
         
         # Validate required columns
@@ -161,9 +162,10 @@ class CascadeModelTrainer:
                 "Please run prepare_data.py first or ensure database contains the data."
             )
         
-        logger.info(f"Loading data from {data_path}...")
+        logger.info(f"Loading data from CSV file: {data_path}")
         self.df = pd.read_csv(data_path, parse_dates=['TimeStamp'])
-        logger.info(f"  ✓ Loaded {len(self.df)} rows from CSV")
+        logger.info(f"  ✓ Successfully loaded {len(self.df)} rows from CSV file")
+        logger.info(f"  ✓ Data source: CSV file ({data_path.name})")
     
     def split_data(self):
         """Split data into train and test sets."""
@@ -483,9 +485,9 @@ class CascadeModelTrainer:
 def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
-    mill_number = 8
+    mill_number = 6
     start_date = "2025-06-20"
-    end_date = "2025-11-24"
+    end_date = "2026-01-04"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)
