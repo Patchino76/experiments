@@ -487,7 +487,7 @@ def main():
     # Configuration - should match prepare_data.py
     mill_number = 6
     start_date = "2025-06-20"
-    end_date = "2026-01-04"
+    end_date = "2026-03-29"
     
     # Create configuration
     config = PipelineConfig.create_default(mill_number, start_date, end_date)
