@@ -6188,3 +6188,392 @@ Creating plots for pattern: steady_state
 2026-03-31 03:30:15,045 - pipeline - INFO - Plots directory: C:\Projects\experiments\data_preparation\output\plots
 2026-03-31 03:30:15,045 - __main__ - INFO - 
 ✓ Data preparation pipeline completed successfully!
+2026-03-31 18:46:18,459 - db.db_connector - INFO - Initializing database connection to s.lyubenov@em-m-db4.ellatzite-med.com:5432/em_pulse_data
+2026-03-31 18:46:18,592 - db.db_connector - INFO - ✅ Database connection test successful
+2026-03-31 18:46:18,593 - core.data_loader - INFO - ✅ Database connector initialized
+2026-03-31 18:46:18,594 - pipeline - INFO - 
+================================================================================
+2026-03-31 18:46:18,594 - pipeline - INFO - STARTING DATA PREPARATION PIPELINE v2.0
+2026-03-31 18:46:18,594 - pipeline - INFO - ================================================================================
+2026-03-31 18:46:18,594 - pipeline - INFO - ======================================================================
+DATA PREPARATION PIPELINE CONFIGURATION
+======================================================================
+
+Mill Number: 8
+Date Range: 2025-06-20 to 2026-03-29
+
+Features:
+  MV: ['Ore', 'WaterMill', 'WaterZumpf']
+  CV: ['DensityHC', 'PulpHC', 'PressureHC', 'CirculativeLoad']
+  DV: ['Class_15', 'Daiki', 'FE', 'MotorAmp']
+  Target: PSI200
+
+Patterns (5 enabled):
+  • mv (mv)
+    Window: 60, Max: 20, Radius: 4.5
+  • density (constraint)
+    Window: 60, Max: 15, Radius: 4.5
+    Stable: ['WaterZumpf']
+    Varying: ['Ore', 'WaterMill']
+  • inverse (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Stable: ['Ore', 'WaterMill']
+    Varying: ['WaterZumpf']
+  • dynamic (constraint)
+    Window: 60, Max: 10, Radius: 4.5
+    Varying: ['Ore', 'WaterMill', 'WaterZumpf']
+  • steady_state (constraint)
+    Window: 90, Max: 15, Radius: 5.0
+    Stable: ['Ore', 'WaterMill', 'WaterZumpf', 'PSI200']
+
+Output Options:
+  Save MV only: True
+  Save combined: True
+  Save to database: True
+  Use database: True
+
+Output Paths:
+  Output: C:\Projects\experiments\data_preparation\output
+  Analysis: C:\Projects\experiments\data_preparation\output\analysis
+  Plots: C:\Projects\experiments\data_preparation\output\plots
+======================================================================
+2026-03-31 18:46:18,594 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2026-03-31 18:46:18,595 - pipeline - INFO - STEP 1: LOADING AND PREPARING DATA
+2026-03-31 18:46:18,595 - pipeline - INFO - --------------------------------------------------------------------------------
+2026-03-31 18:46:18,595 - core.data_loader - INFO - Loading data for Mill 8
+2026-03-31 18:46:18,595 - core.data_loader - INFO -   Date range: 2025-06-20 to 2026-03-29
+2026-03-31 18:46:18,595 - core.data_loader - INFO -   Resample: 1min
+2026-03-31 18:46:18,595 - core.data_loader - INFO -   Loading from database...
+2026-03-31 18:46:18,596 - db.db_connector - INFO - === STARTING get_combined_data for Mill 8 ===
+2026-03-31 18:46:18,596 - db.db_connector - INFO - DEBUG: Request parameters - mill_number=8, start_date=2025-06-20, end_date=2026-03-29
+2026-03-31 18:46:18,596 - db.db_connector - INFO - DEBUG: Additional parameters - resample_freq=1min, save_to_logs=False, no_interpolation=True
+2026-03-31 18:46:18,596 - db.db_connector - INFO - Retrieving mill data for mill 8 from 2025-06-20 to 2026-03-29
+2026-03-31 18:46:18,596 - db.db_connector - INFO - DEBUG: get_mill_data called with mill_number=8, start_date=2025-06-20, end_date=2026-03-29
+2026-03-31 18:46:18,596 - db.db_connector - INFO - DEBUG: Current time: 2026-03-31 18:46:18.596130
+2026-03-31 18:46:18,600 - db.db_connector - INFO - DEBUG: Parsed start_date: 2025-06-20 00:00:00 (timezone: None)
+2026-03-31 18:46:18,601 - db.db_connector - INFO - DEBUG: Parsed end_date: 2026-03-29 00:00:00 (timezone: None)
+2026-03-31 18:46:18,601 - db.db_connector - INFO - DEBUG: Days from now to end_date: -3
+2026-03-31 18:46:18,602 - db.db_connector - INFO - DEBUG: Converted start_date 2025-06-20 -> 2025-06-20 00:00:00
+2026-03-31 18:46:18,602 - db.db_connector - INFO - DEBUG: Converted end_date 2026-03-29 -> 2026-03-29 00:00:00
+2026-03-31 18:46:18,602 - db.db_connector - INFO - DEBUG: Executing query: SELECT * FROM mills."MILL_08" WHERE "TimeStamp" >= '2025-06-20 00:00:00' AND "TimeStamp" <= '2026-03-29 00:00:00'
+2026-03-31 18:46:18,602 - db.db_connector - INFO - DEBUG: Query will search table: mills."MILL_08"
+2026-03-31 18:46:18,686 - db.db_connector - INFO - DEBUG: Table MILL_08 has 617194 total records
+2026-03-31 18:46:18,688 - db.db_connector - INFO - DEBUG: Table MILL_08 date range: 2025-01-01 02:07:00 to 2026-03-31 17:12:00
+2026-03-31 18:46:18,717 - db.db_connector - INFO - DEBUG: Table MILL_08 has 295476 records after 2025-08-12 12:54:00
+2026-03-31 18:46:21,605 - db.db_connector - INFO - Retrieved 368647 rows for Mill 8
+2026-03-31 18:46:21,606 - db.db_connector - INFO - DEBUG: Mill data date range: 2025-06-20 00:00:00 to 2026-03-29 00:00:00
+2026-03-31 18:46:21,608 - db.db_connector - INFO - DEBUG: Last 5 timestamps in mill data: [Timestamp('2026-03-28 23:56:00'), Timestamp('2026-03-28 23:57:00'), Timestamp('2026-03-28 23:58:00'), Timestamp('2026-03-28 23:59:00'), Timestamp('2026-03-29 00:00:00')]
+2026-03-31 18:46:21,624 - db.db_connector - INFO - DEBUG: Records after 2025-08-12 12:54:00: 291564
+2026-03-31 18:46:21,624 - db.db_connector - INFO - DEBUG: First timestamp after cutoff: 2025-08-12 12:55:00
+2026-03-31 18:46:21,625 - db.db_connector - INFO - DEBUG: Last timestamp after cutoff: 2026-03-29 00:00:00
+2026-03-31 18:46:21,627 - db.db_connector - INFO - Mill data retrieved: 368647 rows, 13 columns
+2026-03-31 18:46:21,627 - db.db_connector - INFO - Mill data columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200']
+2026-03-31 18:46:21,721 - db.db_connector - INFO - Mill data sample:
+                            Ore  WaterMill  WaterZumpf  ...    MotorAmp      PSI80     PSI200
+TimeStamp                                               ...                                  
+2025-06-20 00:00:00  173.312636  11.708000  200.979706  ...  193.912050  49.600000  26.000000
+2025-06-20 00:01:00  172.474474  11.708000  202.385000  ...  191.386564  49.600000  26.000000
+2025-06-20 00:02:00  173.175455  11.624932  196.978000  ...  188.397848  49.823529  25.701961
+
+[3 rows x 13 columns]
+2026-03-31 18:46:21,735 - db.db_connector - INFO - DEBUG: process_dataframe date filtering - start=2025-06-20 00:00:00, end=2026-03-29 00:00:00
+2026-03-31 18:46:21,735 - db.db_connector - INFO - DEBUG: Before date filtering: 368647 rows, date range: 2025-06-20 00:00:00 to 2026-03-29 00:00:00
+2026-03-31 18:46:21,747 - db.db_connector - INFO - DEBUG: After start date filter (2025-06-20 00:00:00): 368647 rows (removed 0 rows)
+2026-03-31 18:46:21,756 - db.db_connector - INFO - DEBUG: After end date filter (2026-03-29 00:00:00): 368647 rows (removed 0 rows)
+2026-03-31 18:46:21,757 - db.db_connector - INFO - DEBUG: After date filtering: 368647 rows, date range: 2025-06-20 00:00:00 to 2026-03-29 00:00:00
+2026-03-31 18:46:22,137 - db.db_connector - INFO - Applied resampling with interpolation
+2026-03-31 18:46:22,299 - db.db_connector - INFO - Applied smoothing with rolling window of size 15
+2026-03-31 18:46:22,299 - db.db_connector - INFO - Resampled data to 1min frequency
+2026-03-31 18:46:22,316 - db.db_connector - INFO - Processed mill data: 406081 rows, 13 columns
+2026-03-31 18:46:22,317 - db.db_connector - INFO - Retrieving ore quality data
+2026-03-31 18:46:22,317 - db.db_connector - INFO - DEBUG: get_ore_quality called with start_date=2025-06-20, end_date=2026-03-29
+2026-03-31 18:46:22,317 - db.db_connector - INFO - DEBUG: Ore quality parsed start_date: 2025-06-20 00:00:00 (timezone: None)
+2026-03-31 18:46:22,318 - db.db_connector - INFO - DEBUG: Ore quality parsed end_date: 2026-03-29 00:00:00 (timezone: None)
+2026-03-31 18:46:22,319 - db.db_connector - INFO - DEBUG: Ore quality converted start_date 2025-06-20 -> 2025-06-20 00:00:00
+2026-03-31 18:46:22,319 - db.db_connector - INFO - DEBUG: Ore quality converted end_date 2026-03-29 -> 2026-03-29 00:00:00
+2026-03-31 18:46:22,319 - db.db_connector - INFO - DEBUG: Executing ore quality query: SELECT * FROM mills.ore_quality WHERE "TimeStamp" >= '2025-06-20 00:00:00' AND "TimeStamp" <= '2026-03-29 00:00:00'
+2026-03-31 18:46:22,324 - db.db_connector - INFO - DEBUG: ore_quality table has 1362 total records
+2026-03-31 18:46:22,325 - db.db_connector - INFO - DEBUG: ore_quality table date range: 2025-01-01 06:00:00 to 2026-03-29 22:00:00
+2026-03-31 18:46:22,327 - db.db_connector - INFO - DEBUG: ore_quality table has 692 records after 2025-08-12 12:54:00
+2026-03-31 18:46:22,328 - db.db_connector - INFO - DEBUG: ore_quality has 849 records in requested range 2025-06-20 to 2026-03-29
+2026-03-31 18:46:22,341 - db.db_connector - INFO - Retrieved 849 rows of ore quality data
+2026-03-31 18:46:22,342 - db.db_connector - INFO - DEBUG: Ore quality data date range: 2025-06-20 06:00:00 to 2026-03-28 22:00:00
+2026-03-31 18:46:22,342 - db.db_connector - INFO - DEBUG: Last 5 timestamps in ore quality data: [Timestamp('2026-03-27 14:00:00'), Timestamp('2026-03-27 22:00:00'), Timestamp('2026-03-28 06:00:00'), Timestamp('2026-03-28 14:00:00'), Timestamp('2026-03-28 22:00:00')]
+2026-03-31 18:46:22,344 - db.db_connector - INFO - DEBUG: Ore quality records after 2025-08-12 12:54:00: 689
+2026-03-31 18:46:22,345 - db.db_connector - INFO - Ore data retrieved: 849 rows, 11 columns
+2026-03-31 18:46:22,346 - db.db_connector - INFO - Ore data columns: ['id', 'Date', 'Shift', 'TimeStamp', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet', 'Created_At']
+2026-03-31 18:46:22,347 - db.db_connector - WARNING - Found 6 duplicate timestamps, removing duplicates
+2026-03-31 18:46:22,348 - db.db_connector - INFO - After removing duplicates: 843 rows remaining
+2026-03-31 18:46:22,349 - db.db_connector - INFO - DEBUG: process_dataframe date filtering - start=2025-06-20 00:00:00, end=2026-03-29 00:00:00
+2026-03-31 18:46:22,349 - db.db_connector - INFO - DEBUG: Before date filtering: 843 rows, date range: 2025-06-20 06:00:00 to 2026-03-28 22:00:00
+2026-03-31 18:46:22,349 - db.db_connector - INFO - DEBUG: After start date filter (2025-06-20 00:00:00): 843 rows (removed 0 rows)
+2026-03-31 18:46:22,350 - db.db_connector - INFO - DEBUG: After end date filter (2026-03-29 00:00:00): 843 rows (removed 0 rows)
+2026-03-31 18:46:22,350 - db.db_connector - INFO - DEBUG: After date filtering: 843 rows, date range: 2025-06-20 06:00:00 to 2026-03-28 22:00:00
+2026-03-31 18:46:22,408 - db.db_connector - INFO - Applied resampling with constant values (no interpolation or smoothing)
+2026-03-31 18:46:22,409 - db.db_connector - INFO - Resampled data to 1min frequency
+2026-03-31 18:46:22,421 - db.db_connector - INFO - Processed ore data: 405601 rows, 9 columns - with constant values (no interpolation)
+2026-03-31 18:46:22,422 - db.db_connector - INFO - DF1 (mill): 406081 rows, index range: 2025-06-20 00:00:00 to 2026-03-29 00:00:00
+2026-03-31 18:46:22,423 - db.db_connector - INFO - DF2 (ore): 405601 rows, index range: 2025-06-20 06:00:00 to 2026-03-28 22:00:00
+2026-03-31 18:46:22,424 - db.db_connector - INFO - Found 405601 common timestamps
+2026-03-31 18:46:22,517 - db.db_connector - INFO - Successfully joined dataframes: 405601 rows, 22 columns
+2026-03-31 18:46:22,518 - db.db_connector - INFO - Joined dataframe columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'id', 'Date', 'Shift', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet']
+2026-03-31 18:46:22,519 - db.db_connector - INFO - DEBUG: Final combined data date range: 2025-06-20 06:00:00 to 2026-03-28 22:00:00
+2026-03-31 18:46:22,540 - db.db_connector - INFO - DEBUG: Combined data records after 2025-08-12 12:54:00: 328866
+2026-03-31 18:46:22,540 - db.db_connector - INFO - DEBUG: SUCCESS - Combined data extends beyond 2025-08-12 with 328866 records
+2026-03-31 18:46:22,541 - db.db_connector - INFO - 
+=== Combined Dataframe Head (first 3 rows) ===
+2026-03-31 18:46:22,544 - db.db_connector - INFO -                             Ore  WaterMill  WaterZumpf        Power   ZumpfLevel  PressureHC    DensityHC        FE      PulpHC     PumpRPM    MotorAmp  PSI80  PSI200   id  Date  Shift  Class_15  Class_12  Grano  Daiki  Shisti  Original_Sheet
+TimeStamp                                                                                                                                                                                                                                         
+2025-06-20 06:00:00  176.320984  12.135105  200.719117  1972.388000  1485.518446    0.448108  1720.431899  3.701667  452.019791  687.490544  186.233205   49.8    25.8  511   NaN      1       0.5       6.8  0.761  0.205   0.034             NaN
+2025-06-20 06:01:00  176.295765  12.132810  200.777339  1973.654344  1484.814644    0.448608  1720.332372  3.697333  451.536714  687.453611  186.476779   49.8    25.8  511   NaN      1       0.5       6.8  0.761  0.205   0.034             NaN
+2025-06-20 06:02:00  176.301521  12.130076  200.779225  1968.516197  1483.450447    0.449127  1720.273483  3.696933  451.217168  687.372278  186.520261   49.8    25.8  511   NaN      1       0.5       6.8  0.761  0.205   0.034             NaN
+2026-03-31 18:46:22,544 - db.db_connector - INFO - 
+=== Combined Dataframe Tail (last 3 rows) ===
+2026-03-31 18:46:22,548 - db.db_connector - INFO -                             Ore  WaterMill  WaterZumpf        Power   ZumpfLevel  PressureHC    DensityHC     FE      PulpHC     PumpRPM    MotorAmp      PSI80     PSI200    id  Date  Shift  Class_15  Class_12  Grano  Daiki  Shisti  Original_Sheet
+TimeStamp                                                                                                                                                                                                                                              
+2026-03-28 21:58:00  169.029763   5.732638  226.986113  2152.877733  1649.399711    0.374087  1635.582674  4.196  303.851228  681.505056  201.946916  51.129487  23.982692  1358   NaN      2       0.4       5.5   0.71  0.245   0.045             NaN
+2026-03-28 21:59:00  169.012956   5.732638  226.824046  2153.918156  1650.310550    0.374754  1636.192237  4.196  303.844097  681.525522  202.033338  51.036154  24.082692  1358   NaN      2       0.4       5.5   0.71  0.245   0.045             NaN
+2026-03-28 22:00:00  168.990000   5.730352  226.661980  2152.748676  1650.554871    0.375362  1636.413755  4.196  303.731284  681.545989  201.945940  50.942821  24.182692  1359   NaN      3       0.4       5.0   0.73  0.250   0.020             NaN
+2026-03-31 18:46:22,548 - db.db_connector - INFO - ==================================================
+2026-03-31 18:46:22,558 - db.db_connector - INFO - Combined data has 405601 rows and 22 columns
+2026-03-31 18:46:22,559 - db.db_connector - INFO - Combined data columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'id', 'Date', 'Shift', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'Original_Sheet']
+2026-03-31 18:46:22,569 - db.db_connector - INFO - Combined data sample:
+                            Ore  WaterMill  WaterZumpf  ...  Daiki  Shisti  Original_Sheet
+TimeStamp                                               ...                               
+2025-06-20 06:00:00  176.320984  12.135105  200.719117  ...  0.205   0.034             NaN
+2025-06-20 06:01:00  176.295765  12.132810  200.777339  ...  0.205   0.034             NaN
+2025-06-20 06:02:00  176.301521  12.130076  200.779225  ...  0.205   0.034             NaN
+
+[3 rows x 22 columns]
+2026-03-31 18:46:22,570 - db.db_connector - INFO - === COMPLETED get_combined_data for Mill 8 ===
+2026-03-31 18:46:22,570 - db.db_connector - INFO - DEBUG: Final result - 405601 total records
+2026-03-31 18:46:22,571 - db.db_connector - INFO - DEBUG: Final date range: 2025-06-20 06:00:00 to 2026-03-28 22:00:00
+2026-03-31 18:46:22,583 - core.data_loader - INFO -   ✓ Loaded 405601 rows from database
+2026-03-31 18:46:22,584 - core.data_loader - INFO -   ✓ All required columns present: 11 columns
+2026-03-31 18:46:22,584 - core.data_loader - INFO - Filtering data...
+2026-03-31 18:46:22,606 - core.data_loader - INFO -   Ore: [130, 220] - removed 6597 rows
+2026-03-31 18:46:22,624 - core.data_loader - INFO -   PulpHC: [350, 600] - removed 102046 rows
+2026-03-31 18:46:22,643 - core.data_loader - INFO -   DensityHC: [1600, 1920] - removed 1934 rows
+2026-03-31 18:46:22,644 - core.data_loader - INFO -   ✓ Filtered: 405601 → 295024 rows (72.7% retained)
+2026-03-31 18:46:22,649 - core.data_loader - INFO - Calculating circulative load...
+2026-03-31 18:46:22,663 - core.data_loader - INFO -   ✓ Circulative load calculated
+2026-03-31 18:46:22,664 - core.data_loader - INFO -   Valid range [0.5, 5.0]: 81.6% of data
+2026-03-31 18:46:22,667 - core.data_loader - INFO -   Mean: 0.79, Std: 0.30
+2026-03-31 18:46:27,286 - pipeline - INFO - ✓ Data ready: 295024 rows, 26 columns
+2026-03-31 18:46:27,286 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2026-03-31 18:46:27,286 - pipeline - INFO - STEP 2: DISCOVERING PATTERNS
+2026-03-31 18:46:27,286 - pipeline - INFO - --------------------------------------------------------------------------------
+2026-03-31 18:46:27,287 - pipeline - INFO - Enabled patterns: 5
+2026-03-31 18:46:27,287 - core.base_pattern - INFO - Initialized pattern: mv
+2026-03-31 18:46:27,287 - patterns.mv_pattern - INFO -   Features: ['Ore', 'WaterMill', 'WaterZumpf']
+2026-03-31 18:46:27,287 - patterns.mv_pattern - INFO -   Window: 60, Max motifs: 20, Radius: 4.5
+2026-03-31 18:46:27,287 - patterns.mv_pattern - INFO - 
+Discovering MV motifs: mv
+2026-03-31 18:46:27,300 - patterns.mv_pattern - INFO -   Computing multivariate matrix profile...
+2026-03-31 19:59:00,372 - patterns.mv_pattern - INFO -   ✓ Found 20 motifs with 391 instances
+2026-03-31 19:59:00,375 - core.pattern_registry - INFO - Pattern 'mv': 20 motifs, 391 instances
+2026-03-31 19:59:00,376 - core.base_pattern - INFO - Initialized pattern: density
+2026-03-31 19:59:00,376 - patterns.constraint_pattern - INFO -   Stable features: ['WaterZumpf']
+2026-03-31 19:59:00,376 - patterns.constraint_pattern - INFO -   Varying features: ['Ore', 'WaterMill']
+2026-03-31 19:59:00,376 - patterns.constraint_pattern - INFO -   Window: 60, Max motifs: 15, Radius: 4.5
+2026-03-31 19:59:00,376 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: density
+2026-03-31 19:59:00,389 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2026-03-31 21:20:22,385 - patterns.constraint_pattern - INFO -   ✓ Found 13 motifs with 167 instances
+2026-03-31 21:20:22,387 - core.pattern_registry - INFO - Pattern 'density': 13 motifs, 167 instances
+2026-03-31 21:20:22,388 - core.base_pattern - INFO - Initialized pattern: inverse
+2026-03-31 21:20:22,389 - patterns.constraint_pattern - INFO -   Stable features: ['Ore', 'WaterMill']
+2026-03-31 21:20:22,389 - patterns.constraint_pattern - INFO -   Varying features: ['WaterZumpf']
+2026-03-31 21:20:22,389 - patterns.constraint_pattern - INFO -   Window: 60, Max motifs: 10, Radius: 4.5
+2026-03-31 21:20:22,389 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: inverse
+2026-03-31 21:20:22,400 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2026-03-31 22:38:35,541 - patterns.constraint_pattern - INFO -   ✓ Found 10 motifs with 160 instances
+2026-03-31 22:38:35,543 - core.pattern_registry - INFO - Pattern 'inverse': 10 motifs, 160 instances
+2026-03-31 22:38:35,543 - core.base_pattern - INFO - Initialized pattern: dynamic
+2026-03-31 22:38:35,544 - patterns.constraint_pattern - INFO -   Stable features: []
+2026-03-31 22:38:35,544 - patterns.constraint_pattern - INFO -   Varying features: ['Ore', 'WaterMill', 'WaterZumpf']
+2026-03-31 22:38:35,544 - patterns.constraint_pattern - INFO -   Window: 60, Max motifs: 10, Radius: 4.5
+2026-03-31 22:38:35,545 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: dynamic
+2026-03-31 22:38:35,557 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2026-03-31 23:57:02,373 - patterns.constraint_pattern - INFO -   ✓ Found 10 motifs with 200 instances
+2026-03-31 23:57:02,376 - core.pattern_registry - INFO - Pattern 'dynamic': 10 motifs, 200 instances
+2026-03-31 23:57:02,377 - core.base_pattern - INFO - Initialized pattern: steady_state
+2026-03-31 23:57:02,377 - patterns.constraint_pattern - INFO -   Stable features: ['Ore', 'WaterMill', 'WaterZumpf', 'PSI200']
+2026-03-31 23:57:02,377 - patterns.constraint_pattern - INFO -   Varying features: []
+2026-03-31 23:57:02,377 - patterns.constraint_pattern - INFO -   Window: 90, Max motifs: 15, Radius: 5.0
+2026-03-31 23:57:02,377 - patterns.constraint_pattern - INFO - 
+Discovering constraint motifs: steady_state
+2026-03-31 23:57:02,400 - patterns.constraint_pattern - INFO -   Computing multivariate matrix profile...
+2026-04-01 01:41:45,699 - patterns.constraint_pattern - INFO -   ✓ Found 13 motifs with 245 instances
+2026-04-01 01:41:45,703 - core.pattern_registry - INFO - Pattern 'steady_state': 13 motifs, 245 instances
+2026-04-01 01:41:45,704 - pipeline - INFO - 
+✓ Pattern discovery complete:
+2026-04-01 01:41:45,704 - pipeline - INFO -   Total motifs: 66
+2026-04-01 01:41:45,704 - pipeline - INFO -   Total instances: 1163
+2026-04-01 01:41:45,704 - pipeline - INFO -   mv: 20 motifs, 391 instances
+2026-04-01 01:41:45,705 - pipeline - INFO -   density: 13 motifs, 167 instances
+2026-04-01 01:41:45,705 - pipeline - INFO -   inverse: 10 motifs, 160 instances
+2026-04-01 01:41:45,705 - pipeline - INFO -   dynamic: 10 motifs, 200 instances
+2026-04-01 01:41:45,705 - pipeline - INFO -   steady_state: 13 motifs, 245 instances
+2026-04-01 01:41:45,705 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2026-04-01 01:41:45,705 - pipeline - INFO - STEP 3: ANALYZING PATTERNS
+2026-04-01 01:41:45,705 - pipeline - INFO - --------------------------------------------------------------------------------
+2026-04-01 01:41:45,705 - pipeline - INFO - 
+Analyzing pattern: mv
+2026-04-01 01:41:45,706 - analysis.analyzer - INFO - Analyzing density behavior for 20 motifs...
+2026-04-01 01:41:45,706 - analysis.analyzer - INFO -   ✓ Analyzed 0 instances
+2026-04-01 01:41:45,706 - analysis.analyzer - WARNING - No analyses to save for pattern 'mv'
+2026-04-01 01:41:45,707 - pipeline - INFO - 
+Analyzing pattern: density
+2026-04-01 01:41:45,707 - analysis.analyzer - INFO - Analyzing density behavior for 13 motifs...
+2026-04-01 01:41:46,177 - analysis.analyzer - INFO -   ✓ Analyzed 167 instances
+2026-04-01 01:41:46,185 - analysis.analyzer - INFO -   ✓ Saved analysis to density_analysis.csv
+2026-04-01 01:41:46,185 - pipeline - INFO - 
+Analyzing pattern: inverse
+2026-04-01 01:41:46,186 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2026-04-01 01:41:46,673 - analysis.analyzer - INFO -   ✓ Analyzed 160 instances
+2026-04-01 01:41:46,677 - analysis.analyzer - INFO -   ✓ Saved analysis to inverse_analysis.csv
+2026-04-01 01:41:46,678 - pipeline - INFO - 
+Analyzing pattern: dynamic
+2026-04-01 01:41:46,678 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2026-04-01 01:41:47,238 - analysis.analyzer - INFO -   ✓ Analyzed 200 instances
+2026-04-01 01:41:47,243 - analysis.analyzer - INFO -   ✓ Saved analysis to dynamic_analysis.csv
+2026-04-01 01:41:47,243 - pipeline - INFO - 
+Analyzing pattern: steady_state
+2026-04-01 01:41:47,244 - analysis.analyzer - INFO - Analyzing density behavior for 13 motifs...
+2026-04-01 01:41:47,939 - analysis.analyzer - INFO -   ✓ Analyzed 245 instances
+2026-04-01 01:41:47,945 - analysis.analyzer - INFO -   ✓ Saved analysis to steady_state_analysis.csv
+2026-04-01 01:41:47,945 - pipeline - INFO - 
+✓ Pattern analysis complete
+2026-04-01 01:41:47,945 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2026-04-01 01:41:47,946 - pipeline - INFO - STEP 4: CREATING SEGMENTED DATASETS
+2026-04-01 01:41:47,946 - pipeline - INFO - --------------------------------------------------------------------------------
+2026-04-01 01:41:47,946 - pipeline - INFO - 
+Creating MV-only dataset (20 motifs)...
+2026-04-01 01:41:47,946 - core.segmentation - INFO - Creating segmented dataset from motifs...
+2026-04-01 01:41:48,213 - core.segmentation - INFO -   ✓ Created segmented dataset:
+2026-04-01 01:41:48,213 - core.segmentation - INFO -     - Total segments: 391
+2026-04-01 01:41:48,214 - core.segmentation - INFO -     - Total rows: 23460
+2026-04-01 01:41:48,214 - core.segmentation - INFO -     - Unique motifs: 20
+2026-04-01 01:41:48,541 - pipeline - INFO -   ✓ Saved: segmented_motifsMV_08.csv (23460 rows)
+2026-04-01 01:41:48,541 - pipeline - INFO - 
+Creating combined dataset (all patterns)...
+2026-04-01 01:41:48,541 - core.segmentation - INFO - Merging motif collections...
+2026-04-01 01:41:48,542 - core.segmentation - INFO -   mv: 20 motifs
+2026-04-01 01:41:48,542 - core.segmentation - INFO -   density: 13 motifs
+2026-04-01 01:41:48,542 - core.segmentation - INFO -   inverse: 10 motifs
+2026-04-01 01:41:48,542 - core.segmentation - INFO -   dynamic: 10 motifs
+2026-04-01 01:41:48,542 - core.segmentation - INFO -   steady_state: 13 motifs
+2026-04-01 01:41:48,542 - core.segmentation - INFO -   ✓ Reassigned motif IDs sequentially
+2026-04-01 01:41:48,543 - core.segmentation - INFO -   ✓ Total merged motifs: 66
+2026-04-01 01:41:48,543 - core.segmentation - INFO - Creating segmented dataset from motifs...
+2026-04-01 01:41:49,347 - core.segmentation - INFO -   ✓ Created segmented dataset:
+2026-04-01 01:41:49,348 - core.segmentation - INFO -     - Total segments: 1163
+2026-04-01 01:41:49,348 - core.segmentation - INFO -     - Total rows: 77130
+2026-04-01 01:41:49,349 - core.segmentation - INFO -     - Unique motifs: 66
+2026-04-01 01:41:50,376 - pipeline - INFO -   ✓ Saved: segmented_motifs_all_08.csv (77130 rows)
+2026-04-01 01:41:50,378 - core.segmentation - INFO - Extracting motif summaries...
+2026-04-01 01:41:50,433 - core.segmentation - INFO -   ✓ Created summary for 66 motifs
+2026-04-01 01:41:50,436 - pipeline - INFO -   ✓ Saved: motif_summary.csv
+2026-04-01 01:41:50,436 - core.segmentation - INFO - Creating instance catalog...
+2026-04-01 01:41:50,445 - core.segmentation - INFO -   ✓ Cataloged 1163 instances
+2026-04-01 01:41:50,451 - pipeline - INFO -   ✓ Saved: instance_catalog.csv
+2026-04-01 01:41:50,451 - core.segmentation - INFO - Calculating segment statistics...
+2026-04-01 01:41:50,524 - core.segmentation - INFO -   ✓ Calculated statistics for 66 motifs
+2026-04-01 01:41:50,527 - pipeline - INFO -   ✓ Saved: segment_statistics.csv
+2026-04-01 01:41:50,527 - pipeline - INFO - 
+✓ Segmented datasets created
+2026-04-01 01:41:50,529 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2026-04-01 01:41:50,529 - pipeline - INFO - STEP 5: CREATING VISUALIZATIONS
+2026-04-01 01:41:50,529 - pipeline - INFO - --------------------------------------------------------------------------------
+2026-04-01 01:41:50,530 - analysis.visualizer - INFO - Creating motif overview plot...
+2026-04-01 01:41:52,064 - analysis.visualizer - INFO -   ✓ Saved overview plot to motif_overview.png
+2026-04-01 01:41:52,065 - pipeline - INFO - 
+Creating plots for pattern: mv
+2026-04-01 01:41:52,065 - analysis.analyzer - INFO - Analyzing density behavior for 20 motifs...
+2026-04-01 01:41:52,065 - analysis.analyzer - INFO -   ✓ Analyzed 0 instances
+2026-04-01 01:41:52,065 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2026-04-01 01:41:53,853 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to mv/
+2026-04-01 01:41:53,853 - pipeline - INFO - 
+Creating plots for pattern: density
+2026-04-01 01:41:53,854 - analysis.analyzer - INFO - Analyzing density behavior for 13 motifs...
+2026-04-01 01:41:54,359 - analysis.analyzer - INFO -   ✓ Analyzed 167 instances
+2026-04-01 01:41:54,360 - analysis.visualizer - INFO - Creating density analysis plot for density...
+2026-04-01 01:41:54,900 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to density_analysis.png
+2026-04-01 01:41:54,900 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2026-04-01 01:41:56,941 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to density/
+2026-04-01 01:41:56,941 - pipeline - INFO - 
+Creating plots for pattern: inverse
+2026-04-01 01:41:56,942 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2026-04-01 01:41:57,453 - analysis.analyzer - INFO -   ✓ Analyzed 160 instances
+2026-04-01 01:41:57,453 - analysis.visualizer - INFO - Creating density analysis plot for inverse...
+2026-04-01 01:41:58,016 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to inverse_analysis.png
+2026-04-01 01:41:58,016 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2026-04-01 01:41:59,998 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to inverse/
+2026-04-01 01:41:59,998 - pipeline - INFO - 
+Creating plots for pattern: dynamic
+2026-04-01 01:41:59,998 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2026-04-01 01:42:00,584 - analysis.analyzer - INFO -   ✓ Analyzed 200 instances
+2026-04-01 01:42:00,585 - analysis.visualizer - INFO - Creating density analysis plot for dynamic...
+2026-04-01 01:42:01,125 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to dynamic_analysis.png
+2026-04-01 01:42:01,125 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2026-04-01 01:42:03,078 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to dynamic/
+2026-04-01 01:42:03,078 - pipeline - INFO - 
+Creating plots for pattern: steady_state
+2026-04-01 01:42:03,079 - analysis.analyzer - INFO - Analyzing density behavior for 13 motifs...
+2026-04-01 01:42:03,785 - analysis.analyzer - INFO -   ✓ Analyzed 245 instances
+2026-04-01 01:42:03,785 - analysis.visualizer - INFO - Creating density analysis plot for steady_state...
+2026-04-01 01:42:04,306 - analysis.visualizer - INFO -   ✓ Saved density analysis plot to steady_state_analysis.png
+2026-04-01 01:42:04,306 - analysis.visualizer - INFO - Plotting top 5 individual motifs...
+2026-04-01 01:42:06,057 - analysis.visualizer - INFO -   ✓ Saved 5 motif plots to steady_state/
+2026-04-01 01:42:06,057 - analysis.visualizer - INFO - Creating correlation heatmap...
+2026-04-01 01:42:06,366 - analysis.visualizer - INFO -   ✓ Saved correlation heatmap to correlation_heatmap.png
+2026-04-01 01:42:06,366 - analysis.visualizer - INFO - Creating feature distribution plots...
+2026-04-01 01:42:07,421 - analysis.visualizer - INFO -   ✓ Saved feature distributions to feature_distributions.png
+2026-04-01 01:42:07,421 - analysis.analyzer - INFO - Analyzing density behavior for 20 motifs...
+2026-04-01 01:42:07,422 - analysis.analyzer - INFO -   ✓ Analyzed 0 instances
+2026-04-01 01:42:07,422 - analysis.analyzer - INFO - Analyzing density behavior for 13 motifs...
+2026-04-01 01:42:07,897 - analysis.analyzer - INFO -   ✓ Analyzed 167 instances
+2026-04-01 01:42:07,897 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2026-04-01 01:42:08,378 - analysis.analyzer - INFO -   ✓ Analyzed 160 instances
+2026-04-01 01:42:08,378 - analysis.analyzer - INFO - Analyzing density behavior for 10 motifs...
+2026-04-01 01:42:08,959 - analysis.analyzer - INFO -   ✓ Analyzed 200 instances
+2026-04-01 01:42:08,959 - analysis.analyzer - INFO - Analyzing density behavior for 13 motifs...
+2026-04-01 01:42:09,654 - analysis.analyzer - INFO -   ✓ Analyzed 245 instances
+2026-04-01 01:42:09,654 - analysis.analyzer - INFO - Generating summary report...
+2026-04-01 01:42:09,660 - analysis.analyzer - INFO -   ✓ Summary report saved to summary_report.txt
+2026-04-01 01:42:09,661 - pipeline - INFO - 
+✓ Visualizations saved to C:\Projects\experiments\data_preparation\output\plots\mill_8
+2026-04-01 01:42:09,662 - pipeline - INFO - 
+--------------------------------------------------------------------------------
+2026-04-01 01:42:09,662 - pipeline - INFO - STEP 6: SAVING TO DATABASE
+2026-04-01 01:42:09,662 - pipeline - INFO - --------------------------------------------------------------------------------
+2026-04-01 01:42:09,662 - pipeline - INFO -   Saving segmented motifs for Mill 8...
+2026-04-01 01:42:09,662 - pipeline - INFO -   Table will be recreated (if_exists='replace')
+2026-04-01 01:42:09,663 - core.data_loader - INFO - Saving motifs data to database table: mills.MOTIFS_08
+2026-04-01 01:42:09,663 - core.data_loader - INFO - DataFrame shape: (77130, 22)
+2026-04-01 01:42:09,663 - core.data_loader - INFO - DataFrame columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'M_solid_to_cyclone', 'CirculativeLoad', 'motif_id', 'pattern_type']
+2026-04-01 01:42:09,663 - db.db_connector - INFO - Saving motifs data to database table: mills.MOTIFS_08
+2026-04-01 01:42:09,664 - db.db_connector - INFO - DataFrame shape: (77130, 22)
+2026-04-01 01:42:09,664 - db.db_connector - INFO - DataFrame columns: ['Ore', 'WaterMill', 'WaterZumpf', 'Power', 'ZumpfLevel', 'PressureHC', 'DensityHC', 'FE', 'PulpHC', 'PumpRPM', 'MotorAmp', 'PSI80', 'PSI200', 'Class_15', 'Class_12', 'Grano', 'Daiki', 'Shisti', 'M_solid_to_cyclone', 'CirculativeLoad', 'motif_id', 'pattern_type']
+2026-04-01 01:42:34,469 - db.db_connector - INFO - ✅ Successfully saved 77130 rows to mills.MOTIFS_08
+2026-04-01 01:42:34,469 - db.db_connector - INFO -    Action: replace
+2026-04-01 01:42:34,486 - db.db_connector - INFO -    Verification: Table mills.MOTIFS_08 now contains 77130 rows
+2026-04-01 01:42:34,488 - core.data_loader - INFO - ✅ Successfully saved 77130 rows to mills.MOTIFS_08
+2026-04-01 01:42:34,488 - pipeline - INFO - ✓ Segmented data saved to database table: MOTIFS_08
+2026-04-01 01:42:34,489 - pipeline - INFO - 
+================================================================================
+2026-04-01 01:42:34,489 - pipeline - INFO - DATA PREPARATION COMPLETE
+2026-04-01 01:42:34,489 - pipeline - INFO - ================================================================================
+2026-04-01 01:42:34,489 - pipeline - INFO - Output directory: C:\Projects\experiments\data_preparation\output
+2026-04-01 01:42:34,489 - pipeline - INFO - Analysis directory: C:\Projects\experiments\data_preparation\output\analysis
+2026-04-01 01:42:34,489 - pipeline - INFO - Plots directory: C:\Projects\experiments\data_preparation\output\plots
+2026-04-01 01:42:34,489 - __main__ - INFO - 
+✓ Data preparation pipeline completed successfully!
