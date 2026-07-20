@@ -3,15 +3,15 @@ MOTIF DISCOVERY SUMMARY REPORT
 ================================================================================
 
 Total Motifs: 66
-Total Instances: 1163
+Total Instances: 1156
 
 --------------------------------------------------------------------------------
 MOTIF DETAILS
 --------------------------------------------------------------------------------
 
 Motif 1 (mv):
-  Instances: 11
-  Avg Distance: 3.6590
+  Instances: 9
+  Avg Distance: 3.9752
 
 Motif 2 (mv):
   Instances: 20
@@ -83,11 +83,11 @@ Motif 18 (mv):
 
 Motif 19 (mv):
   Instances: 20
-  Avg Distance: 0.3966
+  Avg Distance: 0.0000
 
 Motif 20 (mv):
   Instances: 20
-  Avg Distance: 1.5620
+  Avg Distance: 0.5009
 
 Motif 21 (density):
   Instances: 20
@@ -107,19 +107,19 @@ Motif 24 (density):
 
 Motif 25 (density):
   Instances: 20
-  Avg Distance: 3.0919
+  Avg Distance: 3.1000
 
 Motif 26 (density):
-  Instances: 9
-  Avg Distance: 3.4752
+  Instances: 8
+  Avg Distance: 3.4240
 
 Motif 27 (density):
-  Instances: 10
-  Avg Distance: 3.4040
+  Instances: 13
+  Avg Distance: 3.5296
 
 Motif 28 (density):
-  Instances: 19
-  Avg Distance: 3.5454
+  Instances: 20
+  Avg Distance: 3.5394
 
 Motif 29 (density):
   Instances: 5
@@ -138,8 +138,8 @@ Motif 32 (density):
   Avg Distance: 3.4429
 
 Motif 33 (density):
-  Instances: 13
-  Avg Distance: 3.5436
+  Instances: 8
+  Avg Distance: 4.1882
 
 Motif 34 (inverse):
   Instances: 4
@@ -195,7 +195,7 @@ Motif 46 (dynamic):
 
 Motif 47 (dynamic):
   Instances: 20
-  Avg Distance: 2.3533
+  Avg Distance: 2.3490
 
 Motif 48 (dynamic):
   Instances: 20
@@ -207,19 +207,19 @@ Motif 49 (dynamic):
 
 Motif 50 (dynamic):
   Instances: 20
-  Avg Distance: 2.1765
+  Avg Distance: 2.9328
 
 Motif 51 (dynamic):
   Instances: 20
-  Avg Distance: 2.8823
+  Avg Distance: 2.1135
 
 Motif 52 (dynamic):
   Instances: 20
-  Avg Distance: 2.2428
+  Avg Distance: 2.8823
 
 Motif 53 (dynamic):
   Instances: 20
-  Avg Distance: 2.6479
+  Avg Distance: 2.2502
 
 Motif 54 (steady_state):
   Instances: 20
@@ -267,22 +267,22 @@ Motif 64 (steady_state):
 
 Motif 65 (steady_state):
   Instances: 20
-  Avg Distance: 0.0000
+  Avg Distance: 0.0007
 
 Motif 66 (steady_state):
-  Instances: 5
-  Avg Distance: 0.0003
+  Instances: 2
+  Avg Distance: 0.0032
 
 --------------------------------------------------------------------------------
 DENSITY BEHAVIOR ANALYSIS
 --------------------------------------------------------------------------------
 
 Pattern: density
-  Instances: 167
-  Avg Density Change: 1.31
-  Avg Ore Correlation: 0.087
-  Avg WaterMill Correlation: 0.076
-  Avg WaterZumpf Correlation: -0.130
+  Instances: 165
+  Avg Density Change: 0.95
+  Avg Ore Correlation: 0.107
+  Avg WaterMill Correlation: 0.088
+  Avg WaterZumpf Correlation: -0.132
 
 Pattern: inverse
   Instances: 160
@@ -293,13 +293,13 @@ Pattern: inverse
 
 Pattern: dynamic
   Instances: 200
-  Avg Density Change: 5.74
-  Avg Ore Correlation: -0.140
-  Avg WaterMill Correlation: 0.057
-  Avg WaterZumpf Correlation: -0.373
+  Avg Density Change: 4.31
+  Avg Ore Correlation: -0.149
+  Avg WaterMill Correlation: 0.091
+  Avg WaterZumpf Correlation: -0.405
 
 Pattern: steady_state
-  Instances: 245
+  Instances: 242
   Avg Density Change: -0.12
   Avg Ore Correlation: 1.000
   Avg WaterMill Correlation: 1.000
