@@ -137,6 +137,67 @@ class DataLoader:
         
         return df
     
+    def filter_data_adaptive(
+        self,
+        df: pd.DataFrame,
+        columns: List[str],
+        window: int = 1440,
+        k: float = 5.0
+    ) -> pd.DataFrame:
+        """
+        Remove statistical outliers using rolling median + MAD (median absolute deviation).
+        
+        Complements filter_data() (fixed global bounds) with bounds that adapt to
+        slow drift (liner wear, seasonal ore hardness, gradual sensor calibration
+        shift) instead of a single hand-tuned static range.
+        
+        A point is removed if it deviates from its local rolling median by more
+        than k * 1.4826 * MAD (1.4826 scales MAD to be comparable to a standard
+        deviation under normality).
+        
+        Args:
+            df: Input DataFrame (must be time-ordered)
+            columns: Columns to apply adaptive filtering to
+            window: Rolling window size in rows (e.g. 1440 = 24h at 1-min resample)
+            k: Number of scaled-MAD deviations allowed before a point is flagged
+            
+        Returns:
+            Filtered DataFrame
+        """
+        logger.info("Applying adaptive (rolling MAD) filtering...")
+        initial_rows = len(df)
+        min_periods = max(10, window // 10)
+        mask = pd.Series(True, index=df.index)
+        
+        for col in columns:
+            if col not in df.columns:
+                logger.warning(f"  Column '{col}' not found, skipping adaptive filter")
+                continue
+            
+            rolling_median = df[col].rolling(window=window, center=True, min_periods=min_periods).median()
+            abs_dev = (df[col] - rolling_median).abs()
+            rolling_mad = abs_dev.rolling(window=window, center=True, min_periods=min_periods).median()
+            
+            threshold = k * 1.4826 * rolling_mad
+            
+            # Keep the row if within threshold, OR if we don't have enough
+            # neighboring data to compute a reliable bound (avoids over-filtering
+            # at the very start/end of the series).
+            col_mask = (abs_dev <= threshold) | rolling_median.isna() | rolling_mad.isna()
+            
+            removed = int((~col_mask).sum())
+            if removed > 0:
+                logger.info(f"  {col}: adaptive filter removed {removed} rows (k={k}, window={window})")
+            
+            mask &= col_mask
+        
+        filtered_df = df[mask]
+        final_rows = len(filtered_df)
+        retained_pct = (final_rows / initial_rows * 100) if initial_rows > 0 else 0
+        logger.info(f"  ✓ Adaptive filter: {initial_rows} → {final_rows} rows ({retained_pct:.1f}% retained)")
+        
+        return filtered_df
+    
     def calculate_circulative_load(
         self,
         df: pd.DataFrame,

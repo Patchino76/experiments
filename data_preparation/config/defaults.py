@@ -22,12 +22,18 @@ class DataConfig:
     dv_features: List[str] = field(default_factory=lambda: ['Class_15', 'Daiki', 'FE', 'MotorAmp'])
     target: str = 'PSI200'
     
-    # Data filtering thresholds
+    # Data filtering thresholds (fixed global bounds - cheap first pass)
     filter_thresholds: Dict[str, Tuple[float, float]] = field(default_factory=lambda: {
         'Ore': (130, 220),
         'PulpHC': (350, 600),
         'DensityHC': (1600, 1920),
     })
+    
+    # Adaptive filtering (rolling median + MAD) - second pass, adapts to drift
+    use_adaptive_filter: bool = True
+    adaptive_filter_columns: List[str] = field(default_factory=lambda: ['Ore', 'PulpHC', 'DensityHC'])
+    adaptive_filter_window: int = 1440  # rows (~24h at 1-min resample)
+    adaptive_filter_k: float = 5.0
     
     def get_all_features(self) -> List[str]:
         """Get all features (MV + CV + DV)."""

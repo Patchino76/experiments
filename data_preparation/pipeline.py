@@ -115,8 +115,17 @@ class DataPreparationPipeline:
                         if col != 'CirculativeLoad']
         self.data_loader.validate_columns(self.df, required_cols)
         
-        # Filter data
+        # Filter data (fixed global bounds - cheap first pass)
         self.df = self.data_loader.filter_data(self.df, self.config.data.filter_thresholds)
+        
+        # Adaptive filter (rolling median + MAD - adapts to drift, second pass)
+        if self.config.data.use_adaptive_filter:
+            self.df = self.data_loader.filter_data_adaptive(
+                self.df,
+                columns=self.config.data.adaptive_filter_columns,
+                window=self.config.data.adaptive_filter_window,
+                k=self.config.data.adaptive_filter_k
+            )
         
         # Calculate circulative load
         self.df = self.data_loader.calculate_circulative_load(self.df, rho_solid=2900)

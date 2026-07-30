@@ -15,6 +15,7 @@ import pickle
 import json
 import logging
 from datetime import datetime
+from typing import Optional, Tuple
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
@@ -151,6 +152,17 @@ class CascadeModelTrainer:
         
         logger.info(f"  Data shape: {cleaned_shape}")
         logger.info(f"  Rows removed (NaN): {rows_removed} ({reduction_pct:.2f}%)")
+        
+        # Enforce strict chronological order before any train/test splitting.
+        # The segmented motifs CSV is built pattern-by-pattern (not time-ordered),
+        # so this guarantees split_data() performs a true temporal split
+        # regardless of which loading path (DB, DB cache, or CSV fallback) was used.
+        if 'TimeStamp' in self.df.columns:
+            self.df = self.df.sort_values('TimeStamp').reset_index(drop=True)
+            logger.info(f"  ✓ Data sorted chronologically by TimeStamp "
+                        f"({self.df['TimeStamp'].min()} → {self.df['TimeStamp'].max()})")
+        else:
+            logger.warning("  ⚠ 'TimeStamp' column not found - cannot guarantee chronological split!")
     
     def _load_from_csv(self):
         """Load data from CSV file (fallback method)."""
@@ -230,6 +242,33 @@ class CascadeModelTrainer:
             
             self.metadata["model_performance"][f"process_model_{cv_var}"] = result
     
+    def _predict_cv_features(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Generate CV feature values by running the already-trained process
+        models (MV → CV) on the given rows' MV inputs.
+        
+        Used to train/evaluate the quality model on the same kind of CV
+        values it will actually see in production (predicted, not measured),
+        which reduces cascade error compounding.
+        
+        Args:
+            df: DataFrame containing MV feature columns
+            
+        Returns:
+            DataFrame with one column per CV feature, index-reset, in
+            self.cv_features order.
+        """
+        X_mv = df[self.mv_features].reset_index(drop=True)
+        
+        predictions = {}
+        for cv_var in self.cv_features:
+            model = self.models[f"process_model_{cv_var}"]
+            scaler = self.scalers[f"scaler_mv_to_{cv_var}"]
+            X_scaled = scaler.transform(X_mv)
+            predictions[cv_var] = model.predict(X_scaled)
+        
+        return pd.DataFrame(predictions)
+    
     def train_quality_model(self, train_df: pd.DataFrame, test_df: pd.DataFrame):
         """Train quality model (CV + DV → Target)."""
         logger.info("\n" + "-" * 80)
@@ -258,26 +297,42 @@ class CascadeModelTrainer:
             logger.error("  Please use a different date range with more normal operating conditions.")
             raise ValueError("No test data available after filtering. Adjust date range or target filter.")
         
-        # Combine CV and DV features as inputs
+        # CV inputs: predicted (by process models) or actual/measured, per config toggle
+        use_predicted_cv = self.config.model.quality_model_use_predicted_cv
+        if use_predicted_cv:
+            logger.info("  Using PREDICTED CVs (from trained process models) as quality-model inputs")
+            logger.info("  (reduces cascade error compounding vs training on ground-truth CVs)")
+            train_cv = self._predict_cv_features(train_df_filtered)
+            test_cv = self._predict_cv_features(test_df_filtered)
+        else:
+            logger.info("  Using ACTUAL/measured CVs as quality-model inputs")
+            train_cv = train_df_filtered[self.cv_features].reset_index(drop=True)
+            test_cv = test_df_filtered[self.cv_features].reset_index(drop=True)
+        
+        train_dv = train_df_filtered[self.dv_features].reset_index(drop=True)
+        test_dv = test_df_filtered[self.dv_features].reset_index(drop=True)
+        
         input_features = self.cv_features + self.dv_features
         logger.info(f"\nTraining model: {input_features} → {self.dv_target}")
         
-        X_train = train_df_filtered[input_features]
-        y_train = train_df_filtered[self.dv_target]
-        X_test = test_df_filtered[input_features]
-        y_test = test_df_filtered[self.dv_target]
+        X_train = pd.concat([train_cv, train_dv], axis=1)
+        y_train = train_df_filtered[self.dv_target].reset_index(drop=True)
+        X_test = pd.concat([test_cv, test_dv], axis=1)
+        y_test = test_df_filtered[self.dv_target].reset_index(drop=True)
         
         result = self._train_single_model(
             X_train, y_train, X_test, y_test,
             model_name="quality_model",
             scaler_name="scaler_quality_model",
-            output_var=self.dv_target
+            output_var=self.dv_target,
+            clip_range=(self.config.model.target_clip_min, self.config.model.target_clip_max)
         )
         
         # Add additional metadata for quality model
         result["model_type"] = "quality_model"
         result["cv_vars"] = self.cv_features
         result["dv_vars"] = self.dv_features
+        result["trained_on_predicted_cv"] = use_predicted_cv
         
         self.metadata["model_performance"]["quality_model"] = result
     
@@ -289,9 +344,18 @@ class CascadeModelTrainer:
         y_test: pd.Series,
         model_name: str,
         scaler_name: str,
-        output_var: str
+        output_var: str,
+        clip_range: Optional[Tuple[float, float]] = None
     ) -> dict:
-        """Train a single XGBoost model with hyperparameter tuning."""
+        """
+        Train a single XGBoost model with hyperparameter tuning.
+        
+        Args:
+            clip_range: Optional (min, max) to clip predictions to. Used for the
+                quality model so PSI200 predictions stay within a physically/
+                operationally sensible range instead of extrapolating on noisy
+                or out-of-distribution inputs.
+        """
         
         # Scale features
         scaler = StandardScaler()
@@ -332,6 +396,15 @@ class CascadeModelTrainer:
         train_pred = model.predict(X_train_scaled)
         test_pred = model.predict(X_test_scaled)
         
+        if clip_range is not None:
+            clip_min, clip_max = clip_range
+            n_clipped_train = int(np.sum((train_pred < clip_min) | (train_pred > clip_max)))
+            n_clipped_test = int(np.sum((test_pred < clip_min) | (test_pred > clip_max)))
+            train_pred = np.clip(train_pred, clip_min, clip_max)
+            test_pred = np.clip(test_pred, clip_min, clip_max)
+            logger.info(f"  Clipping predictions to [{clip_min}, {clip_max}]: "
+                        f"{n_clipped_train} train, {n_clipped_test} test predictions clipped")
+        
         train_r2 = r2_score(y_train, train_pred)
         test_r2 = r2_score(y_test, test_pred)
         train_rmse = np.sqrt(mean_squared_error(y_train, train_pred))
@@ -363,7 +436,8 @@ class CascadeModelTrainer:
             "feature_importance": feature_importance,
             "model_type": "process_model",
             "input_vars": list(X_train.columns),
-            "output_var": output_var
+            "output_var": output_var,
+            "clip_range": list(clip_range) if clip_range is not None else None
         }
     
     def validate_cascade(self):
@@ -411,18 +485,47 @@ class CascadeModelTrainer:
         X_quality_scaled = quality_scaler.transform(X_quality)
         dv_predictions = quality_model.predict(X_quality_scaled)
         
+        # Clip predictions to sensible PSI200 range (avoids extrapolation on
+        # noisy/out-of-distribution predicted-CV inputs)
+        clip_min = self.config.model.target_clip_min
+        clip_max = self.config.model.target_clip_max
+        n_clipped = int(np.sum((dv_predictions < clip_min) | (dv_predictions > clip_max)))
+        dv_predictions = np.clip(dv_predictions, clip_min, clip_max)
+        
         # Get actual values
         y_actual = sample_df[self.dv_target].values
         
-        # Calculate metrics
+        # Calculate metrics (full cascade: MV -> predicted CV -> quality model)
         r2 = r2_score(y_actual, dv_predictions)
         rmse = np.sqrt(mean_squared_error(y_actual, dv_predictions))
         mae = mean_absolute_error(y_actual, dv_predictions)
         
-        logger.info(f"  Cascade Validation Results:")
+        logger.info(f"  Cascade Validation Results (predicted CVs, clipped to [{clip_min}, {clip_max}]):")
         logger.info(f"    R²: {r2:.4f}")
         logger.info(f"    RMSE: {rmse:.4f}")
         logger.info(f"    MAE: {mae:.4f}")
+        logger.info(f"    Predictions clipped: {n_clipped}/{n_samples}")
+        
+        # --- Item 6a: measure error-compounding gap ---
+        # Same quality model, same DV inputs, but fed ACTUAL/measured CVs
+        # instead of process-model-predicted CVs. The gap between this and
+        # the result above quantifies how much error the MV->CV stage adds
+        # on top of the quality model's own error.
+        X_cv_actual = sample_df[self.cv_features].reset_index(drop=True)
+        X_quality_actual = pd.concat([X_cv_actual, X_dv.reset_index(drop=True)], axis=1)
+        X_quality_actual_scaled = quality_scaler.transform(X_quality_actual)
+        dv_predictions_actual_cv = quality_model.predict(X_quality_actual_scaled)
+        dv_predictions_actual_cv = np.clip(dv_predictions_actual_cv, clip_min, clip_max)
+        
+        r2_actual_cv = r2_score(y_actual, dv_predictions_actual_cv)
+        rmse_actual_cv = np.sqrt(mean_squared_error(y_actual, dv_predictions_actual_cv))
+        mae_actual_cv = mean_absolute_error(y_actual, dv_predictions_actual_cv)
+        
+        logger.info(f"\n  Comparison - Quality model fed ACTUAL (measured) CVs instead:")
+        logger.info(f"    R²: {r2_actual_cv:.4f}  (predicted-CV cascade: {r2:.4f})")
+        logger.info(f"    RMSE: {rmse_actual_cv:.4f}  (predicted-CV cascade: {rmse:.4f})")
+        logger.info(f"    MAE: {mae_actual_cv:.4f}  (predicted-CV cascade: {mae:.4f})")
+        logger.info(f"    => Error attributable to MV→CV stage (RMSE delta): {rmse - rmse_actual_cv:.4f}")
         
         chain_validation = {
             "r2_score": float(r2),
@@ -432,6 +535,19 @@ class CascadeModelTrainer:
             "n_requested": int(n_samples),
             "predictions": [float(x) for x in dv_predictions],
             "actuals": [float(x) for x in y_actual],
+            "n_predictions_clipped": n_clipped,
+            "clip_range": [clip_min, clip_max],
+            "actual_cv_comparison": {
+                "r2_score": float(r2_actual_cv),
+                "rmse": float(rmse_actual_cv),
+                "mae": float(mae_actual_cv),
+                "rmse_delta_from_mv_to_cv_stage": float(rmse - rmse_actual_cv),
+                "description": (
+                    "Quality model performance when fed ACTUAL/measured CVs "
+                    "instead of process-model-predicted CVs. The RMSE delta "
+                    "quantifies error compounding introduced by the MV->CV stage."
+                )
+            },
             "validation_error": None
         }
         
@@ -485,7 +601,7 @@ class CascadeModelTrainer:
 def main():
     """Main entry point."""
     # Configuration - should match prepare_data.py
-    mill_number = 6
+    mill_number = 8
     start_date = "2025-06-20"
     end_date = "2026-07-16"
     

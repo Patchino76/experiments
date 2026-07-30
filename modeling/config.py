@@ -119,6 +119,20 @@ class ModelConfig:
     
     # Cascade validation
     cascade_validation_samples: int = 200
+    
+    # Quality model: train on process-model PREDICTED CVs instead of actual/measured
+    # CVs. This makes the quality model implicitly learn to compensate for the
+    # process models' own bias/noise, reducing error compounding in the deployed
+    # cascade (MV -> predicted CV -> quality model), at the cost of losing the
+    # "clean" ground-truth-CV training signal.
+    quality_model_use_predicted_cv: bool = True
+    
+    # Clip PSI200 predictions to a physically/operationally sensible range.
+    # The quality model is trained only on 16 < PSI200 < 30, so without clipping
+    # it can extrapolate to implausible values when fed noisy/out-of-distribution
+    # CV or DV inputs.
+    target_clip_min: float = 15.0
+    target_clip_max: float = 30.0
 
 
 @dataclass

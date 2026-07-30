@@ -82,14 +82,25 @@ class SegmentationEngine:
     def merge_motif_collections(
         self,
         motif_collections: Dict[str, List[Motif]],
-        shuffle: bool = True
+        shuffle: bool = True,
+        dedup_overlaps: bool = True
     ) -> List[Motif]:
         """
         Merge multiple motif collections into one.
         
+        Each pattern discovers motifs independently with its own internal
+        used-indices tracking, so instances from different patterns (or
+        occasionally the same pattern) can select overlapping/duplicate time
+        windows. When dedup_overlaps=True, overlapping instances are resolved
+        by keeping the lower-distance (better match) instance and discarding
+        the rest - this prevents duplicate/near-duplicate rows from later
+        landing on both sides of a chronological train/test split.
+        
         Args:
             motif_collections: Dictionary mapping pattern names to motif lists
             shuffle: If True, reassign motif IDs sequentially
+            dedup_overlaps: If True, remove time-overlapping instances across
+                (and within) patterns, keeping the best (lowest-distance) match
             
         Returns:
             Merged list of motifs
@@ -101,6 +112,15 @@ class SegmentationEngine:
             logger.info(f"  {pattern_name}: {len(motifs)} motifs")
             all_motifs.extend(motifs)
         
+        if dedup_overlaps:
+            total_before = sum(len(m) for m in all_motifs)
+            all_motifs = self._dedup_overlapping_instances(all_motifs)
+            total_after = sum(len(m) for m in all_motifs)
+            logger.info(
+                f"  ✓ Overlap dedup: {total_before} → {total_after} instances "
+                f"({total_before - total_after} overlapping instances removed)"
+            )
+        
         if shuffle:
             # Reassign IDs sequentially
             for idx, motif in enumerate(all_motifs, start=1):
@@ -110,6 +130,57 @@ class SegmentationEngine:
         logger.info(f"  ✓ Total merged motifs: {len(all_motifs)}")
         
         return all_motifs
+    
+    def _dedup_overlapping_instances(self, motifs: List[Motif]) -> List[Motif]:
+        """
+        Remove time-overlapping instances across all motifs.
+        
+        Greedy interval scheduling: instances are considered best-match-first
+        (lowest distance), and an instance is kept only if its [start, end)
+        range does not overlap any interval already kept. Motifs left with
+        zero surviving instances are dropped entirely.
+        
+        Args:
+            motifs: List of motifs (potentially from multiple patterns)
+            
+        Returns:
+            List of motifs with overlapping instances removed
+        """
+        # Flatten to (motif, instance) pairs
+        entries = []
+        for motif in motifs:
+            for instance in motif.instances:
+                entries.append((motif, instance))
+        
+        # Best (lowest-distance) matches first
+        entries.sort(key=lambda pair: pair[1].distance)
+        
+        kept_intervals: List[tuple] = []
+        kept_by_motif_id: Dict[int, List] = {}
+        motif_by_id = {}
+        
+        for motif, instance in entries:
+            s, e = instance.start, instance.end
+            overlaps = any(s < ke and ks < e for ks, ke in kept_intervals)
+            if overlaps:
+                continue
+            
+            kept_intervals.append((s, e))
+            kept_by_motif_id.setdefault(id(motif), []).append(instance)
+            motif_by_id[id(motif)] = motif
+        
+        # Rebuild motifs with only the surviving instances, preserving
+        # original ordering of motifs (drop motifs with no surviving instances)
+        result = []
+        for motif in motifs:
+            surviving = kept_by_motif_id.get(id(motif))
+            if not surviving:
+                continue
+            motif.instances = surviving
+            motif._update_avg_distance()
+            result.append(motif)
+        
+        return result
     
     def extract_motif_summary(self, motifs: List[Motif]) -> pd.DataFrame:
         """
